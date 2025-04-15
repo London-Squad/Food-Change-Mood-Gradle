@@ -1,26 +1,13 @@
-import data.CsvMealsDataSource
-import data.CsvMealsParser
 import data.FakeMealsDataSource
-import data.FileLoader
-import data.search.InMemorySearchCache
-import data.search.LevenshteinSearch
-import data.search.MealSearchRepositoryImpl
-import data.search.MealSearchService
-import model.Meal
-import model.Nutrition
-import java.io.File
-import java.time.LocalDate
-import java.util.*
+import presentation.FoodChangeModeConsoleUI
 
-fun main () {
-//    val csvFile = File("food.csv")
-//    val fileLoader = FileLoader(csvFile)
-//    val csvMealsParser = CsvMealsParser()
-//    val mealsDataSource = CsvMealsDataSource(fileLoader, csvMealsParser)
-//    val mealsDataSource = FakeMealsDataSource()
-//
-//    println(mealsDataSource.getAllMeals())
+fun main() {
 
+    //TODO: after create new feature, edit the UI class to present it then pass its useCase to the UI
+    val mealsDataSource = FakeMealsDataSource()
+
+    val ui= FoodChangeModeConsoleUI()
+    ui.start()
 
     val meals = listOf(
         Meal(1,"Spaghetti Bolognese",  30, 101, LocalDate.parse("2005-09-16"), listOf("pasta"),  Nutrition(1f,2f,3f,4f,5f,6f,7f), 5, listOf("Boil pasta"), "Tasty", listOf("pasta", "meat"), 2),
@@ -33,5 +20,5 @@ fun main () {
     val service = MealSearchService(repository)
 
     val results = service.search("Spicy Chckn Curry")
-   println(results)
+    println(results)
 }
