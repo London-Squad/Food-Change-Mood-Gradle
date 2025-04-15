@@ -3,7 +3,6 @@ package data
 import logic.MealsDataSource
 import model.Meal
 import model.Nutrition
-import java.time.LocalDate
 
 class FakeMealsDataSource : MealsDataSource {
     override fun getAllMeals(): List<Meal> {
@@ -224,7 +223,34 @@ class FakeMealsDataSource : MealsDataSource {
                     "powdered sugar"
                 ),
             ),
+            Meal(
+                id = 117699,
+                name = "deep fried dessert thingys",
+                minutes = 20,
+                tags = listOf(
+                    "30-minutes-or-less",
+                    "time-to-make",
+                    "course",
+                    "preparation",
+                    "occasion",
+                    "low-protein",
+                    "desserts",
+                    "deep-fry",
+                    "stove-top",
+                    "dietary",
+                    "high-calcium",
+                    "high-in-something",
+                    "low-in-something",
+                    "taste-mood",
+                    "sweet",
+                    "equipment",
+                    "technique"
+                ),
+                nutrition = Nutrition(1663.3f, 221.0f, 168.0f, 66.0f, 19.0f, 158.0f, 29.0f),
+                steps = listOf("in a large bowl"),
+                description = "my mother used to make this for us as a special treat. i don't know where she got this recipe or what it is called (hence the title). my husband loves this and encouraged me to submit it. this recipe is full of sugar and oil and is as unhealthy as a desert can be but very yummy.",
+                ingredients = listOf("all-purpose flour", "granulated sugar", "baking powder"),
+            )
         )
     }
-
 }
