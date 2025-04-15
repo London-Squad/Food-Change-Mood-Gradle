@@ -2,7 +2,7 @@ package presentation
 
 class FoodChangeModeConsoleUI(
     //TODO: add feature useCase to class constructor
-    private val getAListOfHealthyFoodMealsUseCase:Int   //TODO: update the type when implementing the useCase
+    private val getAListOfHealthyFoodMealsUseCase:Int =0  //TODO: update the type when implementing the useCase
 ) {
 
     fun start(){
@@ -31,7 +31,8 @@ class FoodChangeModeConsoleUI(
         //TODO: add option for new features
 
         println("\n\n=== please enter one of the following numbers ===")
-        println("1- get a List of Healthy Fast Food Meals")
+        println("1- Get a List of Healthy Fast Food Meals")
+        println("0- Exit")
         println("here: ")
     }
 
