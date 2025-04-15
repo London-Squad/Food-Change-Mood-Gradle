@@ -8,9 +8,9 @@ object ColumnIndex {
     const val submitted = 4
     const val tags = 5
     const val nutrition = 6
-    const val nSteps = 7
+    const val numberOfSteps = 7
     const val steps = 8
     const val description = 9
     const val ingredients = 10
-    const val nIngredients = 11
+    const val numberOfIngredients = 11
 }
