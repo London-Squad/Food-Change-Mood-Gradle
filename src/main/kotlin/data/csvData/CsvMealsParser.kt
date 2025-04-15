@@ -5,7 +5,7 @@ import model.Nutrition
 import java.time.LocalDate
 
 class CsvMealsParser {
-    fun parseTextToListOfMeals(text: String): List<Meal> {
+    fun parseTextToListOfMeals(text: String, numberOfMealsToBeLoaded: Int = -1): List<Meal> {
         val result: MutableList<Meal> = mutableListOf()
         val row: MutableList<String> = mutableListOf("")
         var openQuotation = false
@@ -18,6 +18,8 @@ class CsvMealsParser {
             } else if (char == ',' && !openQuotation) row.add("")
             else if (char == '"') openQuotation = !openQuotation
             else row[row.lastIndex] = row.last() + char
+
+            if(result.size == numberOfMealsToBeLoaded) break
         }
         return result
     }
