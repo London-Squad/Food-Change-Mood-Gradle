@@ -1,3 +1,9 @@
+import presentation.FoodChangeModeConsoleUI
+
 fun main() {
-    println("Hello World!")
+
+    //TODO: after create new feature, edit the UI class to present it then pass its useCase to the UI
+
+    val ui= FoodChangeModeConsoleUI(1)
+    ui.start()
 }
