@@ -38,6 +38,34 @@ class FakeMealsDataSource : MealsDataSource {
                 ingredients = listOf("prepared pizza crust", "sausage patty", "eggs", "milk", "salt and pepper", "cheese"),
                 numberOfIngredients = 6u
             ),
+            Meal(
+                id = 70971u,
+                name = "bananas 4 ice cream  pie",
+                minutes = 180u,
+                contributorId = 102353u,
+                submitted = LocalDate.parse("2003-09-10"),
+                tags = listOf("weeknight", "time-to-make", "course", "main-ingredient", "preparation", "pies-and-tarts", "desserts", "lunch", "snacks", "no-cook", "refrigerator", "kid-friendly", "frozen-desserts", "pies", "chocolate", "dietary", "inexpensive", "equipment", "number-of-servings", "technique", "4-hours-or-less"),
+                nutrition = Nutrition(4270.8f, 254.0f, 1306.0f, 111.0f, 127.0f, 431.0f, 220.0f),
+                numberOfSteps = 8u,
+                steps = listOf("crumble cookies into a 9-inch pie plate , or cake pan", "pat down to form an even layer", "drizzle 1 cup of chocolate topping evenly over the cookies with a small spoon", "scoop the vanilla ice cream on top of the chocolate and smooth down", "cover with half of the sliced bananas", "top with strawberry ice cream", "cover and freeze until firm", "before serving , top with 1 / 4 cup chocolate topping , whipped cream , and sliced bananas"),
+                description = "",
+                ingredients = listOf("chocolate sandwich style cookies", "chocolate syrup", "vanilla ice cream", "bananas", "strawberry ice cream", "whipped cream"),
+                numberOfIngredients = 6u
+            ),
+            Meal(
+                id = 107699u,
+                name = "deep fried dessert thingys",
+                minutes = 20u,
+                contributorId = 158966u,
+                submitted = LocalDate.parse("2005-01-05"),
+                tags = listOf("30-minutes-or-less", "time-to-make", "course", "preparation", "occasion", "low-protein", "desserts", "deep-fry", "stove-top", "dietary", "high-calcium", "high-in-something", "low-in-something", "taste-mood", "sweet", "equipment", "technique"),
+                nutrition = Nutrition(1663.3f, 221.0f, 168.0f, 66.0f, 19.0f, 158.0f, 29.0f),
+                numberOfSteps = 20u,
+                steps = listOf("in a large bowl , mix flour , granulated sugar , baking powder and salt", "make a well in the center of the flour mixture , and pour in milk , vanilla , egg and 2 tablespoons oil", "mix until smooth", "heat remaining vegetable oil to 400 degrees in a small deep fryer", "oil is hot enough when it starts to ripple", "be careful not to overheat", "butter one side of each bread slice", "sprinkle the brown sugar and cinnamon evenly onto the buttered side of the bread slices", "make sandwiches by placing the slices of bread together with the brown sugar on the inside", "cut the sandwiches into quarters", "now is a good time to test the oil by dropping in a very small amount of batter", "batter should sizzle and brown in about 20 seconds", "oil needs to be hot enough to melt the brown sugar inside the sandwiches but not so hot that it scorches the batter", "dip the sandwiches into the batter mixture", "using deep fryer tongs , carefully place the battered sandwiches into the heated oil", "be cautious when deep frying", "try to avoid burns from splattering hot oil", "remove sandwiches from the oil when they are golden brown", "set aside to cool for a couple of minutes", "sprinkle with powdered sugar and serve"),
+                description = "my mother used to make this for us as a special treat. i don't know where she got this recipe or what it is called (hence the title). my husband loves this and encouraged me to submit it. this recipe is full of sugar and oil and is as unhealthy as a desert can be but very yummy.",
+                ingredients = listOf("all-purpose flour", "granulated sugar", "baking powder", "salt", "vanilla extract", "egg", "milk", "vegetable oil", "bread", "brown sugar", "ground cinnamon", "butter", "powdered sugar"),
+                numberOfIngredients = 13u
+            ),
         )
     }
 
