@@ -2,7 +2,7 @@ package model
 
 import java.time.LocalDate
 
-data class Food(
+data class Meal(
     val id: Int,
     val name: String,
     val minutes: Int,
