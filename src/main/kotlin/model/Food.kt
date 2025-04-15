@@ -3,10 +3,10 @@ package model
 import java.time.LocalDate
 
 data class Food(
-    val id: Long,
+    val id: Int,
     val name: String,
     val minutes: Int,
-    val contributorId: Long,
+    val contributorId: Int,
     val submitted: LocalDate,
     val tags: List<String>,
     val nutrition: Nutrition,
