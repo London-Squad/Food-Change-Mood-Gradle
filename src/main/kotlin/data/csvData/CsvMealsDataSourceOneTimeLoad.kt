@@ -10,9 +10,12 @@ class CsvMealsDataSourceOneTimeLoad (
     private val numberOfMealsToBeLoaded: Int = -1
 ) : MealsDataSource {
 
-    private val AllMeals = parser.parseTextToListOfMeals(fileReader.getText(), numberOfMealsToBeLoaded)
+    private val allMeals = parser.parseTextToListOfMeals(
+        fileReader.getText(),
+        numberOfMealsToBeLoaded
+    )
 
     override fun getAllMeals() : List<Meal> {
-        return AllMeals
+        return allMeals
     }
 }

@@ -19,7 +19,7 @@ class CsvMealsParser {
             else if (char == '"') openQuotation = !openQuotation
             else row[row.lastIndex] = row.last() + char
 
-            if(result.size == numberOfMealsToBeLoaded) break
+            if (result.size == numberOfMealsToBeLoaded) break
         }
         return result
     }
@@ -31,22 +31,18 @@ class CsvMealsParser {
 
     private fun parseRowStringToMeal(row: List<String>): Meal {
         return Meal(
-            id = row[ColumnIndex.id].trim().toUInt(),
+            id = row[ColumnIndex.id].trim().toInt(),
             name = row[ColumnIndex.name],
-            minutes = row[ColumnIndex.minutes].trim().toUInt(),
-            contributorId = row[ColumnIndex.contributorId].trim().toUInt(),
-            submitted = LocalDate.parse(row[ColumnIndex.submitted].trim()),
+            minutes = row[ColumnIndex.minutes].trim().toInt(),
             tags = stringOfListToListOfStrings(row[ColumnIndex.tags].trim()),
             nutrition = parseNutrition(row[ColumnIndex.nutrition].trim()),
-            numberOfSteps = row[ColumnIndex.numberOfSteps].trim().toUInt(),
             steps = stringOfListToListOfStrings(row[ColumnIndex.steps].trim()),
             description = row[ColumnIndex.description],
             ingredients = stringOfListToListOfStrings(row[ColumnIndex.ingredients]),
-            numberOfIngredients = row[ColumnIndex.numberOfIngredients].trim().toUInt()
         )
     }
 
-    private fun stringOfListToListOfStrings(stringOfList: String): List<String?> {
+    private fun stringOfListToListOfStrings(stringOfList: String): List<String> {
         val result: MutableList<String> = mutableListOf("")
         var openQuot = false
         stringOfList.forEach { char ->
@@ -58,9 +54,9 @@ class CsvMealsParser {
     }
 
     private fun parseNutrition(stringOfListOfInt: String): Nutrition {
-        val list = stringOfListOfInt.slice(1..stringOfListOfInt.length-2)
+        val list = stringOfListOfInt.slice(1..stringOfListOfInt.length - 2)
             .split(",")
-            .map{it.trim().toFloatOrNull()}
+            .map { it.trim().toFloat() }
         return Nutrition(
             list[NutritionsIndex.calories],
             list[NutritionsIndex.totalFat],
@@ -69,6 +65,6 @@ class CsvMealsParser {
             list[NutritionsIndex.protein],
             list[NutritionsIndex.saturatedFat],
             list[NutritionsIndex.carbohydrates],
-            )
+        )
     }
 }
