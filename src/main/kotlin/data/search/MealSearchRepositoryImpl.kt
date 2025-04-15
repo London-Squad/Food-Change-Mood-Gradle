@@ -23,16 +23,23 @@ class MealSearchRepositoryImpl (
             .mapValues { it.value.toSet() }
 
     override fun searchMeals(keyword: String): List<Meal> =
-        cache.get(keyword)?.let { it } ?: run {
+        cache.get(keyword) ?: run {
             val candidateIndices = keyword.lowercase()
                 .split(" ")
                 .flatMap { invertedIndex[it].orEmpty() }
                 .toSet()
 
-            val results = meals.filterIndexed { idx, meal ->
-                candidateIndices.contains(idx) && searchAlgorithm.search(keyword, meal.name!!)
+            val results = if (candidateIndices.isEmpty()) {
+                meals.filter { meal ->
+                    searchAlgorithm.search(keyword, meal.name!!)
+                }
+            } else {
+                candidateIndices.mapNotNull { idx ->
+                    meals.getOrNull(idx)?.takeIf { meal ->
+                        searchAlgorithm.search(keyword, meal.name!!)
+                    }
+                }
             }
-
             cache.put(keyword, results)
             results
         }
