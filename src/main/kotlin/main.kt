@@ -11,6 +11,6 @@ fun main() {
 
     val service: MealSearchService = getKoin().get()
 
-    val results = service.search("squh")
+    val results = repository.searchMeals("squh")
     println(results)
 }
