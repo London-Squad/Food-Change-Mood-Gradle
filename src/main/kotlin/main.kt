@@ -1,6 +1,7 @@
+import data.FileReader
 import data.csvData.CsvMealsDataSource
 import data.csvData.CsvMealsParser
-import data.FileReader
+import logic.GetIraqiMealsUseCase
 import presentation.FoodChangeModeConsoleUI
 import java.io.File
 
@@ -13,7 +14,10 @@ fun main() {
     val mealsDataSource = CsvMealsDataSource(fileReader, csvMealsParser)
 
     mealsDataSource.getAllMeals()
+    //TODO: after create new feature, edit the UI class to present it then pass its useCase to the UI
+//    val mealsDataSource = FakeMealsDataSource()
+    val iraqiMealsUseCase = GetIraqiMealsUseCase(mealsDataSource)
 
-    val ui = FoodChangeModeConsoleUI()
+    val ui = FoodChangeModeConsoleUI(iraqiMealsUseCase)
     ui.start()
 }
