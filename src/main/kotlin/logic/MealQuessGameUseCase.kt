@@ -21,9 +21,9 @@ class MealGuessGameUseCase(
                 val guess = getValidGuess(attempt)
                 val result = checkGuessAttempt(guess, randomMeal.minutes!!)
                 println(result)
-                if (result == "correct") return
+                if (result == "Correct!") break
+                else if (attempt==3) println("Game Over! the correct answer is ${randomMeal.minutes}")
             }
-            println("Game Over! the correct answer is ${randomMeal.minutes}")
         }
 
     }
