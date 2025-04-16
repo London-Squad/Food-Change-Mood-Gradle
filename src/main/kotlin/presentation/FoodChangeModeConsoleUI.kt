@@ -2,6 +2,7 @@ package presentation
 
 import data.FakeMealsDataSource
 import logic.useCase.EasyMealsSuggestionUseCase
+import presentation.easyMeal.EasyMealConsoleCLI
 
 class FoodChangeModeConsoleUI(
     //TODO: add feature useCase to class constructor
@@ -18,8 +19,8 @@ class FoodChangeModeConsoleUI(
         showOptions()
         val input = getUserInput()
         when(input){
-            4 -> startEasyMealView()
             1 -> lunchHealthyFoodList()
+            4 -> startEasyMealView()
             0 -> return
             else -> println("Invalid Input")
         }
@@ -40,8 +41,8 @@ class FoodChangeModeConsoleUI(
         //TODO: add option for new features
 
         println("\n\n=== please enter one of the following numbers ===")
-        println("4- Get Easy Food Suggestion")
         println("1- Get a List of Healthy Fast Food Meals")
+        println("4- Get Easy Food Suggestion")
         println("0- Exit")
         println("here: ")
     }

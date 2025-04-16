@@ -1,4 +1,4 @@
-package presentation
+package presentation.easyMeal
 
 import logic.useCase.EasyMealsSuggestionUseCase
 import model.Meal
