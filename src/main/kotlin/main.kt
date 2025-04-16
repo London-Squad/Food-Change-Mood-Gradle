@@ -20,7 +20,7 @@ fun main() {
     val searchAlgorithm = LevenshteinSearch(maxDistance = 3)
     val cache = InMemorySearchCache()
     val invertedIndexBuilder: IndexBuilder = InvertedIndexBuilder()
-    val repository = MealSearchRepositoryImpl(mealsDataSource.getAllMeals(), searchAlgorithm, cache, invertedIndexBuilder)
+    val repository = MealSearchRepositoryImpl(mealsDataSource, searchAlgorithm, cache, invertedIndexBuilder)
 
     val results = repository.searchMeals("squh")
     println(results)

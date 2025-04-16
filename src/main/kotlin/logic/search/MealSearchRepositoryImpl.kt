@@ -1,18 +1,15 @@
 package logic.search
 
-import logic.IndexBuilder
-import logic.MealSearchRepository
-import logic.SearchCache
-import logic.TextSearchAlgorithm
+import logic.*
 import model.Meal
 
 class MealSearchRepositoryImpl(
-    private val meals: List<Meal>,
+    private val mealsDataSource: MealsDataSource,
     private val searchAlgorithm: TextSearchAlgorithm,
     private val cache: SearchCache,
     private val indexBuilder: IndexBuilder
 ) : MealSearchRepository {
-    private val invertedIndex: Map<String, Set<Int>> by lazy { indexBuilder.build(meals) }
+    private val invertedIndex: Map<String, Set<Int>> by lazy { indexBuilder.build(mealsDataSource.getAllMeals()) }
 
     override fun searchMeals(keyword: String): List<Meal> =
         cache.get(keyword) ?: run {
@@ -22,7 +19,7 @@ class MealSearchRepositoryImpl(
                 .toSet()
 
             val results = if (candidateIndices.isEmpty()) {
-                meals.filter { meal ->
+                mealsDataSource.getAllMeals().filter { meal ->
                     val keywordWords = keyword.lowercase().split(" ")
                     keywordWords.any { kw ->
                         meal.name!!.lowercase().split(" ").any { mw ->
@@ -32,7 +29,7 @@ class MealSearchRepositoryImpl(
                 }
             } else {
                 candidateIndices.mapNotNull { idx ->
-                    meals.getOrNull(idx)?.takeIf { meal ->
+                    mealsDataSource.getAllMeals().getOrNull(idx)?.takeIf { meal ->
                         val keywordWords = keyword.lowercase().split(" ")
                         keywordWords.any { kw ->
                             meal.name!!.lowercase().split(" ").any { mw ->
