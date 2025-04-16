@@ -21,8 +21,7 @@ fun main() {
     val cache = InMemorySearchCache()
     val invertedIndexBuilder: IndexBuilder = InvertedIndexBuilder()
     val repository = MealSearchRepositoryImpl(mealsDataSource.getAllMeals(), searchAlgorithm, cache, invertedIndexBuilder)
-    val service = MealSearchService(repository)
 
-    val results = service.search("squh")
+    val results = repository.searchMeals("squh")
     println(results)
 }
