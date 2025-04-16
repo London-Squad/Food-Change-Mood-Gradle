@@ -15,10 +15,10 @@ fun main() {
     val fileReader = FileReader(csvFile)
     val csvMealsParser = CsvMealsParser()
 
-//    val mealsDataSource = FakeMealsDataSource()
-//    val mealsDataSource = CsvMealsDataSource(fileReader, csvMealsParser)
-    val mealsDataSource = CsvMealsDataSourceOneTimeLoad(fileReader, csvMealsParser, numberOfMealsToBeLoaded = -1)
+    val mealsDataSource = FakeMealsDataSource()
+ //   val mealsDataSource = CsvMealsDataSource(fileReader, csvMealsParser)
+//    val mealsDataSource = CsvMealsDataSourceOneTimeLoad(fileReader, csvMealsParser, numberOfMealsToBeLoaded = 50)
 
-    val ui = FoodChangeModeConsoleUI(sweetSuggester = SweetSuggester(mealsDataSource))
-    ui.start()
+    //val ui = FoodChangeModeConsoleUI(sweetSuggester = SweetSuggester(mealsDataSource))
+    //ui.start()
 }
