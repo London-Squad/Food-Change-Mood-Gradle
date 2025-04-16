@@ -9,6 +9,7 @@ import logic.search.byName.InMemorySearchCache
 import logic.search.byName.MealNameInvertedIndexBuilder
 import logic.search.byName.MealSearchByNameUseCaseImpl
 import model.Meal
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import java.time.LocalDate
 
@@ -30,8 +31,8 @@ val useCaseModule = module {
     single<TextSearchAlgorithm> { LevenshteinSearch() }
 
     //
-    single<MealSearchUseCase<List<Meal>>> { MealSearchByNameUseCaseImpl(get<MealsDataSource>(), get(), get(), get()) }
+    single<MealSearchUseCase<List<Meal>>>(named("byName")) { MealSearchByNameUseCaseImpl(get<MealsDataSource>(), get(), get(), get()) }
 
-    single<MealSearchUseCase<List<Pair<Int, String>>>> { MealSearchByDateUseCaseImpl(get(),get()) }
+    single<MealSearchUseCase<List<Pair<Int, String>>>> (named("byDate")){ MealSearchByDateUseCaseImpl(get(),get()) }
 
 }
