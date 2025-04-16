@@ -1,7 +1,5 @@
 package presentation
 
-import logic.GetIraqiMealsUseCase
-
 class FoodChangeModeConsoleUI(
     private val getIraqiMealsView: GetIraqiMealsView
 ) : BaseView {
