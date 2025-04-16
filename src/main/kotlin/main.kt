@@ -1,12 +1,8 @@
 import data.FakeMealsDataSource
-import logic.IndexBuilder
 import data.csvData.CsvMealsParser
 import data.FileReader
-import logic.search.*
 import logic.search.byDate.MealDateInvertedIndexBuilder
-import logic.search.byDate.MealSearchByDateRepositoryImpl
-import logic.search.byName.InMemorySearchCache
-import logic.search.byName.MealNameInvertedIndexBuilder
+import logic.search.byDate.MealSearchByDateUseCaseImpl
 import utils.InvalidDateFormatException
 import utils.NoMealsFoundException
 import java.io.File
@@ -31,7 +27,7 @@ fun main() {
 //    val results = repository.searchMeals("squh")
 //    println(results)
 
-    val repository = MealSearchByDateRepositoryImpl(
+    val repository = MealSearchByDateUseCaseImpl(
         mealsDataSource = mealsDataSource,
         dateIndexBuilder = MealDateInvertedIndexBuilder()
     )

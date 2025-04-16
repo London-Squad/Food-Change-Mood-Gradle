@@ -2,14 +2,14 @@ package logic.search.byName
 
 import logic.*
 import model.Meal
-import java.time.LocalDate
 
-class MealSearchRepositoryImpl(
+class MealSearchUseCaseImpl(
     private val mealsDataSource: MealsDataSource,
     private val searchAlgorithm: TextSearchAlgorithm,
     private val cache: SearchCache,
     private val indexBuilder: IndexBuilder<String,Set<Int>>
-) : MealSearchRepository<List<Meal>> {
+) : MealSearchUseCase<List<Meal>> {
+
     private val invertedIndex: Map<String, Set<Int>> by lazy { indexBuilder.build(mealsDataSource.getAllMeals()) }
 
     override fun searchMeals(keyword: String): List<Meal> =
@@ -23,7 +23,7 @@ class MealSearchRepositoryImpl(
                 mealsDataSource.getAllMeals().filter { meal ->
                     val keywordWords = keyword.lowercase().split(" ")
                     keywordWords.all { kw ->
-                        meal.name!!.lowercase().split(" ").any { mw ->
+                        meal.name.lowercase().split(" ").any { mw ->
                             searchAlgorithm.search(kw, mw)
                         }
                     }
@@ -33,7 +33,7 @@ class MealSearchRepositoryImpl(
                     mealsDataSource.getAllMeals().getOrNull(idx)?.takeIf { meal ->
                         val keywordWords = keyword.lowercase().split(" ")
                         keywordWords.all { kw ->
-                            meal.name!!.lowercase().split(" ").any { mw ->
+                            meal.name.lowercase().split(" ").any { mw ->
                                 searchAlgorithm.search(kw, mw)
                             }
                         }

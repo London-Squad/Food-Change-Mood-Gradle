@@ -7,10 +7,11 @@ import utils.NoMealsFoundException
 import java.time.LocalDate
 import java.time.format.DateTimeParseException
 
-class MealSearchByDateRepositoryImpl(
+class MealSearchByDateUseCaseImpl(
     private val mealsDataSource: MealsDataSource,
     private val dateIndexBuilder: IndexBuilder<LocalDate, List<Int>>
-) : MealSearchRepository<List<Pair<Int, String>>> {
+) : MealSearchUseCase<List<Pair<Int, String>>> {
+
     private val dateIndex: Map<LocalDate, List<Int>> by lazy { dateIndexBuilder.build(mealsDataSource.getAllMeals()) }
     private val idIndex: Map<Int, Int> by lazy {
         mealsDataSource.getAllMeals().withIndex().associate { (idx, meal) -> meal.id to idx }
@@ -36,6 +37,6 @@ class MealSearchByDateRepositoryImpl(
     fun getMealDetails(id: Int): Meal {
         val idx = idIndex[id]
             ?: throw NoMealsFoundException("No meal found with ID: $id")
-        return  mealsDataSource.getAllMeals()[idx]
+        return mealsDataSource.getAllMeals()[idx]
     }
 }
