@@ -3,9 +3,11 @@ import data.csvData.CsvMealsDataSource
 import data.csvData.CsvMealsParser
 import data.FileReader
 import data.csvData.CsvMealsDataSourceOneTimeLoad
+import logic.SweetSuggester
 import presentation.FoodChangeModeConsoleUI
 import java.io.File
 import java.util.Date
+import model.Meal
 
 fun main() {
 
@@ -17,6 +19,6 @@ fun main() {
 //    val mealsDataSource = CsvMealsDataSource(fileReader, csvMealsParser)
     val mealsDataSource = CsvMealsDataSourceOneTimeLoad(fileReader, csvMealsParser, numberOfMealsToBeLoaded = 50)
 
-    val ui = FoodChangeModeConsoleUI()
+    val ui = FoodChangeModeConsoleUI(sweetSuggester = SweetSuggester(mealsDataSource))
     ui.start()
 }
