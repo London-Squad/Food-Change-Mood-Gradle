@@ -5,16 +5,13 @@ import model.Meal
 class GetIraqiMealsUseCase(
     private val mealsDataSource: MealsDataSource
 ) {
-    fun getIraqiMeals(): List<Meal> {
-        val meals = mealsDataSource.getAllMeals()
+    fun getIraqiMeals(): List<Meal> =
+        mealsDataSource
+            .getAllMeals()
+            .filter(::isIraqiMeals)
 
-        return meals.filter(::onlyIraqiMeals)
-    }
-
-    private fun onlyIraqiMeals(input: Meal): Boolean {
-        return input.tags.contains(IRAQI_TAG)
-                || input.description.lowercase().contains(IRAQ_KEYWORD)
-    }
+    private fun isIraqiMeals(meal: Meal): Boolean =
+        meal.tags.contains(IRAQI_TAG) || meal.description.lowercase().contains(IRAQ_KEYWORD)
 
     companion object {
         const val IRAQI_TAG = "iraqi"
