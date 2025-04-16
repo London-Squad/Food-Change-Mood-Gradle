@@ -3,7 +3,7 @@ package logic.search.byName
 import logic.*
 import model.Meal
 
-class MealSearchUseCaseImpl(
+class MealSearchByNameUseCaseImpl(
     private val mealsDataSource: MealsDataSource,
     private val searchAlgorithm: TextSearchAlgorithm,
     private val cache: SearchCache,

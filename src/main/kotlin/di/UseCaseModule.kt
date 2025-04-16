@@ -2,19 +2,36 @@ package di
 
 import data.FakeMealsDataSource
 import logic.*
-import logic.search.InMemorySearchCache
-import logic.search.InvertedIndexBuilder
 import logic.search.LevenshteinSearch
-import logic.search.MealSearchRepositoryImpl
+import logic.search.byDate.MealDateInvertedIndexBuilder
+import logic.search.byDate.MealSearchByDateUseCaseImpl
+import logic.search.byName.InMemorySearchCache
+import logic.search.byName.MealNameInvertedIndexBuilder
+import logic.search.byName.MealSearchByNameUseCaseImpl
+import model.Meal
 import org.koin.dsl.module
+import java.time.LocalDate
 
 
 val useCaseModule = module {
+
+    //
     single<MealsDataSource> { FakeMealsDataSource() }
 
-    single<IndexBuilder> { InvertedIndexBuilder() }
+    //
+    single<IndexBuilder<String, Set<Int>>> { MealNameInvertedIndexBuilder() }
+
+    single<IndexBuilder<LocalDate, List<Int>>> { MealDateInvertedIndexBuilder() }
+
+
+    //
     single<SearchCache> { InMemorySearchCache() }
+
     single<TextSearchAlgorithm> { LevenshteinSearch() }
-    single<MealSearchRepository> { MealSearchRepositoryImpl(get<MealsDataSource>(), get(), get(), get()) }
+
+    //
+    single<MealSearchUseCase<List<Meal>>> { MealSearchByNameUseCaseImpl(get<MealsDataSource>(), get(), get(), get()) }
+
+    single<MealSearchUseCase<List<Pair<Int, String>>>> { MealSearchByDateUseCaseImpl(get(),get()) }
 
 }

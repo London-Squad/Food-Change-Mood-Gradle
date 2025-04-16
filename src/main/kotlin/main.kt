@@ -1,6 +1,7 @@
 import di.appModule
 import di.useCaseModule
-import logic.MealSearchRepository
+import logic.MealSearchUseCase
+import model.Meal
 import org.koin.core.context.startKoin
 import org.koin.java.KoinJavaComponent.getKoin
 
@@ -9,8 +10,10 @@ fun main() {
         modules(appModule, useCaseModule)
     }
 
-    val repo: MealSearchRepository = getKoin().get()
+    val repo1: MealSearchUseCase<List<Pair<Int, String>>> = getKoin().get()
 
-    val results = repo.searchMeals("squh")
+    val repo2: MealSearchUseCase<List<Meal>> = getKoin().get()
+
+    val results = repo1.searchMeals("2023-04-16")
     println(results)
 }
