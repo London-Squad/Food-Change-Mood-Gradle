@@ -1,31 +1,15 @@
-import data.FakeMealsDataSource
 import data.search.*
-import logic.IndexBuilder
-import data.csvData.CsvMealsParser
-import data.FileReader
-import data.csvData.CsvMealsDataSourceOneTimeLoad
-import model.Meal
-import model.Nutrition
-import java.time.LocalDate
-import java.io.File
+import di.appModule
+import di.useCaseModule
+import org.koin.core.context.startKoin
+import org.koin.java.KoinJavaComponent.getKoin
 
 fun main() {
+    startKoin {
+        modules(appModule, useCaseModule)
+    }
 
-    val csvFile = File("food.csv")
-    val fileReader = FileReader(csvFile)
-    val csvMealsParser = CsvMealsParser()
-
-    val mealsDataSource = FakeMealsDataSource()
-//    val mealsDataSource = CsvMealsDataSource(fileReader, csvMealsParser)
-//    val mealsDataSource = CsvMealsDataSourceOneTimeLoad(fileReader, csvMealsParser, numberOfMealsToBeLoaded = 50)
-
-//    val ui = FoodChangeModeConsoleUI()
-//    ui.start()
-    val searchAlgorithm = LevenshteinSearch(maxDistance = 3)
-    val cache = InMemorySearchCache()
-    val invertedIndexBuilder: IndexBuilder = InvertedIndexBuilder()
-    val repository = MealSearchRepositoryImpl(mealsDataSource.getAllMeals(), searchAlgorithm, cache, invertedIndexBuilder)
-    val service = MealSearchService(repository)
+    val service: MealSearchService = getKoin().get()
 
     val results = service.search("squh")
     println(results)

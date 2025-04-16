@@ -1,19 +1,16 @@
 package data.search
 
-import logic.IndexBuilder
-import logic.MealSearchRepository
-import logic.SearchCache
-import logic.TextSearchAlgorithm
+import logic.*
 import model.Meal
 
 class MealSearchRepositoryImpl(
-    private val meals: List<Meal>,
+    private val mealsDataSource: MealsDataSource,
     private val searchAlgorithm: TextSearchAlgorithm,
     private val cache: SearchCache,
     private val indexBuilder: IndexBuilder
 ) : MealSearchRepository {
     private val invertedIndex: Map<String, Set<Int>> by lazy { indexBuilder.build(meals) }
-
+    private val meals: List<Meal> = mealsDataSource.getAllMeals()
     override fun searchMeals(keyword: String): List<Meal> =
         cache.get(keyword) ?: run {
             val candidateIndices = keyword.lowercase()
