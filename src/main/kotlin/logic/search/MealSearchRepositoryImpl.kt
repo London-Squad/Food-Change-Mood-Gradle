@@ -1,4 +1,4 @@
-package data.search
+package logic.search
 
 import logic.IndexBuilder
 import logic.MealSearchRepository

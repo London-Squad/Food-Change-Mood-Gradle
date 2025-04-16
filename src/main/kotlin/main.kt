@@ -1,12 +1,8 @@
 import data.FakeMealsDataSource
-import data.search.*
 import logic.IndexBuilder
 import data.csvData.CsvMealsParser
 import data.FileReader
-import data.csvData.CsvMealsDataSourceOneTimeLoad
-import model.Meal
-import model.Nutrition
-import java.time.LocalDate
+import logic.search.*
 import java.io.File
 
 fun main() {
