@@ -1,8 +1,13 @@
-import data.FakeMealsDataSource
-import logic.IndexBuilder
-import data.csvData.CsvMealsParser
 import data.FileReader
-import logic.search.*
+import data.csvData.CsvMealsDataSource
+import data.csvData.CsvMealsParser
+import logic.GetItalianFoodForLargeGroupUseCase
+import logic.IndexBuilder
+import logic.search.InMemorySearchCache
+import logic.search.InvertedIndexBuilder
+import logic.search.LevenshteinSearch
+import logic.search.MealSearchRepositoryImpl
+import presentation.FoodChangeModeConsoleUI
 import java.io.File
 
 fun main() {
@@ -11,8 +16,8 @@ fun main() {
     val fileReader = FileReader(csvFile)
     val csvMealsParser = CsvMealsParser()
 
-    val mealsDataSource = FakeMealsDataSource()
-//    val mealsDataSource = CsvMealsDataSource(fileReader, csvMealsParser)
+//    val mealsDataSource = FakeMealsDataSource()
+    val mealsDataSource = CsvMealsDataSource(fileReader, csvMealsParser)
 //    val mealsDataSource = CsvMealsDataSourceOneTimeLoad(fileReader, csvMealsParser, numberOfMealsToBeLoaded = 50)
 //    val mealsDataSource = CsvMealsDataSourceOneTimeLoad(fileReader, csvMealsParser, numberOfMealsToBeLoaded = -1)
 
@@ -24,5 +29,11 @@ fun main() {
     val repository = MealSearchRepositoryImpl(mealsDataSource, searchAlgorithm, cache, invertedIndexBuilder)
 
     val results = repository.searchMeals("squh")
-    println(results)
+//    println(results)
+
+    val italianMealsUseCase = GetItalianFoodForLargeGroupUseCase(mealsDataSource)
+
+    val ui = FoodChangeModeConsoleUI(italianMealsUseCase)
+    ui.start()
+
 }
