@@ -3,7 +3,6 @@ package data
 import logic.MealsDataSource
 import model.Meal
 import model.Nutrition
-import java.time.LocalDate
 
 class FakeMealsDataSource : MealsDataSource {
     override fun getAllMeals(): List<Meal> {
