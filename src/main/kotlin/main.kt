@@ -7,7 +7,6 @@ import logic.search.byDate.MealDateInvertedIndexBuilder
 import logic.search.byDate.MealSearchByDateRepositoryImpl
 import logic.search.byName.InMemorySearchCache
 import logic.search.byName.MealNameInvertedIndexBuilder
-import logic.search.byName.MealSearchByNameRepositoryImpl
 import utils.InvalidDateFormatException
 import utils.NoMealsFoundException
 import java.io.File
