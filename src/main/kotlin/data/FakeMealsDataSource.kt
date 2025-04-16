@@ -1,0 +1,226 @@
+package data
+
+import logic.MealsDataSource
+import model.Meal
+import model.Nutrition
+import java.time.LocalDate
+
+class FakeMealsDataSource : MealsDataSource {
+    override fun getAllMeals(): List<Meal> {
+        return listOf(
+            Meal(
+                id = 137739,
+                name = "arriba baked winter squash mexican style",
+                minutes = 55,
+                tags = listOf(
+                    "60-minutes-or-less",
+                    "time-to-make",
+                    "course",
+                    "main-ingredient",
+                    "cuisine",
+                    "preparation",
+                    "occasion",
+                    "north-american",
+                    "side-dishes",
+                    "vegetables",
+                    "mexican",
+                    "easy",
+                    "fall",
+                    "holiday-event",
+                    "vegetarian",
+                    "winter",
+                    "dietary",
+                    "christmas",
+                    "seasonal",
+                    "squash"
+                ),
+                nutrition = Nutrition(51.5f, 0f, 13f, 0f, 2f, 0f, 4f),
+                steps = listOf(
+                    "make a choice and proceed with recipe",
+                    "depending on size of squash , cut into half or fourths",
+                    "remove seeds",
+                    "for spicy squash , drizzle olive oil or melted butter over each cut squash piece",
+                    "season with mexican seasoning mix ii",
+                    "for sweet squash , drizzle melted honey , butter , grated piloncillo over each cut squash piece",
+                    "season with sweet mexican spice mix",
+                    "bake at 350 degrees , again depending on size , for 40 minutes up to an hour , until a fork can easily pierce the skin",
+                    "be careful not to burn the squash especially if you opt to use sugar or butter",
+                    "if you feel more comfortable , cover the squash with aluminum foil the first half hour , give or take , of baking",
+                    "if desired , season with salt"
+                ),
+                description = """autumn is my favorite time of year to cook! this recipe
+    can be prepared either spicy or sweet, your choice!
+    two of my posted mexican-inspired seasoning mix recipes are offered as suggestions.""",
+                ingredients = listOf(
+                    "winter squash",
+                    "mexican seasoning",
+                    "mixed spice",
+                    "honey",
+                    "butter",
+                    "olive oil",
+                    "salt"
+                ),
+            ),
+            Meal(
+                id = 31490,
+                name = "a bit different  breakfast pizza",
+                minutes = 30,
+                tags = listOf(
+                    "30-minutes-or-less",
+                    "time-to-make",
+                    "course",
+                    "main-ingredient",
+                    "cuisine",
+                    "preparation",
+                    "occasion",
+                    "north-american",
+                    "breakfast",
+                    "main-dish",
+                    "pork",
+                    "american",
+                    "oven",
+                    "easy",
+                    "kid-friendly",
+                    "pizza",
+                    "dietary",
+                    "northeastern-united-states",
+                    "meat",
+                    "equipment"
+                ),
+                nutrition = Nutrition(173.4f, 18.0f, 0.0f, 17.0f, 22.0f, 35.0f, 1.0f),
+                steps = listOf(
+                    "preheat oven to 425 degrees f",
+                    "press dough into the bottom and sides of a 12 inch pizza pan",
+                    "bake for 5 minutes until set but not browned",
+                    "cut sausage into small pieces",
+                    "whisk eggs and milk in a bowl until frothy",
+                    "spoon sausage over baked crust and sprinkle with cheese",
+                    "pour egg mixture slowly over sausage and cheese",
+                    "s& p to taste",
+                    "bake 15-20 minutes or until eggs are set and crust is brown"
+                ),
+                description = """this recipe calls for the crust to be prebaked a bit before adding ingredients. feel free to change sausage to ham or bacon. this warms well in the microwave for those late risers.""",
+                ingredients = listOf(
+                    "prepared pizza crust",
+                    "sausage patty",
+                    "eggs",
+                    "milk",
+                    "salt and pepper",
+                    "cheese"
+                ),
+            ),
+            Meal(
+                id = 70971,
+                name = "bananas 4 ice cream  pie",
+                minutes = 180,
+                tags = listOf(
+                    "weeknight",
+                    "time-to-make",
+                    "course",
+                    "main-ingredient",
+                    "preparation",
+                    "pies-and-tarts",
+                    "desserts",
+                    "lunch",
+                    "snacks",
+                    "no-cook",
+                    "refrigerator",
+                    "kid-friendly",
+                    "frozen-desserts",
+                    "pies",
+                    "chocolate",
+                    "dietary",
+                    "inexpensive",
+                    "equipment",
+                    "number-of-servings",
+                    "technique",
+                    "4-hours-or-less"
+                ),
+                nutrition = Nutrition(4270.8f, 254.0f, 1306.0f, 111.0f, 127.0f, 431.0f, 220.0f),
+                steps = listOf(
+                    "crumble cookies into a 9-inch pie plate , or cake pan",
+                    "pat down to form an even layer",
+                    "drizzle 1 cup of chocolate topping evenly over the cookies with a small spoon",
+                    "scoop the vanilla ice cream on top of the chocolate and smooth down",
+                    "cover with half of the sliced bananas",
+                    "top with strawberry ice cream",
+                    "cover and freeze until firm",
+                    "before serving , top with 1 / 4 cup chocolate topping , whipped cream , and sliced bananas"
+                ),
+                description = "",
+                ingredients = listOf(
+                    "chocolate sandwich style cookies",
+                    "chocolate syrup",
+                    "vanilla ice cream",
+                    "bananas",
+                    "strawberry ice cream",
+                    "whipped cream"
+                ),
+            ),
+            Meal(
+                id = 107699,
+                name = "deep fried dessert thingys",
+                minutes = 20,
+                tags = listOf(
+                    "30-minutes-or-less",
+                    "time-to-make",
+                    "course",
+                    "preparation",
+                    "occasion",
+                    "low-protein",
+                    "desserts",
+                    "deep-fry",
+                    "stove-top",
+                    "dietary",
+                    "high-calcium",
+                    "high-in-something",
+                    "low-in-something",
+                    "taste-mood",
+                    "sweet",
+                    "equipment",
+                    "technique"
+                ),
+                nutrition = Nutrition(1663.3f, 221.0f, 168.0f, 66.0f, 19.0f, 158.0f, 29.0f),
+                steps = listOf(
+                    "in a large bowl , mix flour , granulated sugar , baking powder and salt",
+                    "make a well in the center of the flour mixture , and pour in milk , vanilla , egg and 2 tablespoons oil",
+                    "mix until smooth",
+                    "heat remaining vegetable oil to 400 degrees in a small deep fryer",
+                    "oil is hot enough when it starts to ripple",
+                    "be careful not to overheat",
+                    "butter one side of each bread slice",
+                    "sprinkle the brown sugar and cinnamon evenly onto the buttered side of the bread slices",
+                    "make sandwiches by placing the slices of bread together with the brown sugar on the inside",
+                    "cut the sandwiches into quarters",
+                    "now is a good time to test the oil by dropping in a very small amount of batter",
+                    "batter should sizzle and brown in about 20 seconds",
+                    "oil needs to be hot enough to melt the brown sugar inside the sandwiches but not so hot that it scorches the batter",
+                    "dip the sandwiches into the batter mixture",
+                    "using deep fryer tongs , carefully place the battered sandwiches into the heated oil",
+                    "be cautious when deep frying",
+                    "try to avoid burns from splattering hot oil",
+                    "remove sandwiches from the oil when they are golden brown",
+                    "set aside to cool for a couple of minutes",
+                    "sprinkle with powdered sugar and serve"
+                ),
+                description = "my mother used to make this for us as a special treat. i don't know where she got this recipe or what it is called (hence the title). my husband loves this and encouraged me to submit it. this recipe is full of sugar and oil and is as unhealthy as a desert can be but very yummy.",
+                ingredients = listOf(
+                    "all-purpose flour",
+                    "granulated sugar",
+                    "baking powder",
+                    "salt",
+                    "vanilla extract",
+                    "egg",
+                    "milk",
+                    "vegetable oil",
+                    "bread",
+                    "brown sugar",
+                    "ground cinnamon",
+                    "butter",
+                    "powdered sugar"
+                ),
+            ),
+        )
+    }
+
+}

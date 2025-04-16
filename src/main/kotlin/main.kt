@@ -1,19 +1,31 @@
 //import data.FakeMealsDataSource
 import data.search.*
 import logic.IndexBuilder
+import data.FakeMealsDataSource
+import data.csvData.CsvMealsDataSource
+import data.csvData.CsvMealsParser
+import data.FileReader
+import data.csvData.CsvMealsDataSourceOneTimeLoad
 import presentation.FoodChangeModeConsoleUI
 import model.Meal
 import model.Nutrition
 import java.io.File
 import java.time.LocalDate
 import java.util.*
+import java.io.File
+import java.util.Date
 
 fun main() {
 
-//    //TODO: after create new feature, edit the UI class to present it then pass its useCase to the UI
+    val csvFile = File("food.csv")
+    val fileReader = FileReader(csvFile)
+    val csvMealsParser = CsvMealsParser()
+
 //    val mealsDataSource = FakeMealsDataSource()
-//
-//    val ui= FoodChangeModeConsoleUI()
+//    val mealsDataSource = CsvMealsDataSource(fileReader, csvMealsParser)
+    val mealsDataSource = CsvMealsDataSourceOneTimeLoad(fileReader, csvMealsParser, numberOfMealsToBeLoaded = 50)
+
+//    val ui = FoodChangeModeConsoleUI()
 //    ui.start()
 
     val meals = listOf(
