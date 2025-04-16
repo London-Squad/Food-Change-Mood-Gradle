@@ -2,6 +2,7 @@ package presentation
 
 class FoodChangeModeConsoleUI(
     //TODO: add feature useCase to class constructor
+    private val mealGuessGameConsoleCLI: MealGuessGameConsoleCLI
 ) {
 
     fun start(){
@@ -16,6 +17,7 @@ class FoodChangeModeConsoleUI(
         val input = getUserInput()
         when(input){
             1 -> lunchHealthyFoodList()
+            5 -> lunchMealGuessGame()
             0 -> return
             else -> println("Invalid Input")
         }
@@ -31,12 +33,16 @@ class FoodChangeModeConsoleUI(
 
         println("\n\n=== please enter one of the following numbers ===")
         println("1- Get a List of Healthy Fast Food Meals")
+        println("5- Meal Guess Game")
         println("0- Exit")
         println("here: ")
     }
 
     private fun lunchHealthyFoodList(){
         //TODO: update this when implementing the useCase
+    }
+    private fun lunchMealGuessGame(){
+        mealGuessGameConsoleCLI.displayGame()
     }
 
     private fun getUserInput(): Int?{

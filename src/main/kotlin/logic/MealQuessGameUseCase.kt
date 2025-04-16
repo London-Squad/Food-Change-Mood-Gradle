@@ -1,32 +1,12 @@
 package logic
 
-import data.FileReader
-import data.csvData.CsvMealsDataSourceOneTimeLoad
-import data.csvData.CsvMealsParser
 import model.Meal
-import java.io.File
 
-fun main(){
-    val csvFile = File("food.csv")
-    val fileReader = FileReader(csvFile)
-    val csvMealsParser = CsvMealsParser()
-
-//    val mealsDataSource = FakeMealsDataSource()
-//    val mealsDataSource = CsvMealsDataSource(fileReader, csvMealsParser)
-    val mealsDataSource = CsvMealsDataSourceOneTimeLoad(fileReader, csvMealsParser, numberOfMealsToBeLoaded = 50)
-
-    val game = MealQuessGameUseCase(mealsDataSource)
-    game.startGuessGame()
-}
-
-class MealQuessGameUseCase(
+class MealGuessGameUseCase(
     private val mealsDataSource: MealsDataSource
 ) {
 
     fun startGuessGame(){
-
-        printHeader()
-        printRules()
 
         while(true){
 
@@ -37,12 +17,12 @@ class MealQuessGameUseCase(
             val randomMeal = getRandomMeal()
 
             println(randomMeal.name)
-           for (attempt in 1..3){
-               val guess = getValidGuess(attempt)
-               val result = checkGuessAttempt(guess, randomMeal.minutes!!)
-               println(result)
-               if (result == "correct") return
-           }
+            for (attempt in 1..3){
+                val guess = getValidGuess(attempt)
+                val result = checkGuessAttempt(guess, randomMeal.minutes!!)
+                println(result)
+                if (result == "correct") return
+            }
             println("Game Over! the correct answer is ${randomMeal.minutes}")
         }
 
@@ -52,20 +32,8 @@ class MealQuessGameUseCase(
             .getRandomMeals(::isMealWithValidTime, 1).first()
     }
 
-    private fun printHeader(){
-        println("------------------------------------------")
-        println("             Meal Guess Game              ")
-        println("------------------------------------------")
-    }
-    private fun printRules(){
-        println("Rules: ")
-        println("1. A random meal will be presented and you have to guess the time needed to prepare it.")
-        println("2. You have 3 attempts only.")
-        println("3. If the guess is incorrect, there will be hint for next attempt.\n")
-    }
-
     private fun checkGuessAttempt(guess: Int, correctValue: Int): String{
-      return if (guess > correctValue) "Too high"
+        return if (guess > correctValue) "Too high"
         else if (guess < correctValue) "Too low"
         else "Correct!"
     }
@@ -76,7 +44,7 @@ class MealQuessGameUseCase(
             val guessInput = readlnOrNull()?.toIntOrNull()
             if (guessInput == null)
                 println("invalid input")
-             else {
+            else {
                 return guessInput
             }
         }

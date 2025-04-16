@@ -3,7 +3,9 @@ import data.csvData.CsvMealsDataSource
 import data.csvData.CsvMealsParser
 import data.FileReader
 import data.csvData.CsvMealsDataSourceOneTimeLoad
+import logic.MealGuessGameUseCase
 import presentation.FoodChangeModeConsoleUI
+import presentation.MealGuessGameConsoleCLI
 import java.io.File
 import java.util.Date
 
@@ -17,6 +19,8 @@ fun main() {
 //    val mealsDataSource = CsvMealsDataSource(fileReader, csvMealsParser)
     val mealsDataSource = CsvMealsDataSourceOneTimeLoad(fileReader, csvMealsParser, numberOfMealsToBeLoaded = 50)
 
-    val ui = FoodChangeModeConsoleUI()
+    val mealGuessGame = MealGuessGameUseCase(mealsDataSource)
+
+    val ui = FoodChangeModeConsoleUI(mealGuessGameConsoleCLI = MealGuessGameConsoleCLI(mealGuessGame))
     ui.start()
 }
