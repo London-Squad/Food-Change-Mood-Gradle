@@ -15,7 +15,7 @@ fun main() {
 
 //    val mealsDataSource = FakeMealsDataSource()
 //    val mealsDataSource = CsvMealsDataSource(fileReader, csvMealsParser)
-    val mealsDataSource = CsvMealsDataSourceOneTimeLoad(fileReader, csvMealsParser, numberOfMealsToBeLoaded = 50)
+    val mealsDataSource = CsvMealsDataSourceOneTimeLoad(fileReader, csvMealsParser, numberOfMealsToBeLoaded = -1)
 
     val ui = FoodChangeModeConsoleUI()
     ui.start()
