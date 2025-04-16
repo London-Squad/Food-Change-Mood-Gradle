@@ -5,7 +5,7 @@ import logic.SearchCache
 import logic.TextSearchAlgorithm
 import model.Meal
 
-class MealSearchRepositoryImpl (
+class MealSearchRepositoryImpl(
     private val meals: List<Meal>,
     private val searchAlgorithm: TextSearchAlgorithm,
     private val cache: SearchCache
@@ -31,12 +31,22 @@ class MealSearchRepositoryImpl (
 
             val results = if (candidateIndices.isEmpty()) {
                 meals.filter { meal ->
-                    searchAlgorithm.search(keyword, meal.name!!)
+                    val keywordWords = keyword.lowercase().split(" ")
+                    keywordWords.any { kw ->
+                        meal.name!!.lowercase().split(" ").any { mw ->
+                            searchAlgorithm.search(kw, mw)
+                        }
+                    }
                 }
             } else {
                 candidateIndices.mapNotNull { idx ->
                     meals.getOrNull(idx)?.takeIf { meal ->
-                        searchAlgorithm.search(keyword, meal.name!!)
+                        val keywordWords = keyword.lowercase().split(" ")
+                        keywordWords.any { kw ->
+                            meal.name!!.lowercase().split(" ").any { mw ->
+                                searchAlgorithm.search(kw, mw)
+                            }
+                        }
                     }
                 }
             }

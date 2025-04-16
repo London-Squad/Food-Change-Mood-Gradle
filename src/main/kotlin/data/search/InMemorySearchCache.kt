@@ -10,8 +10,6 @@ class InMemorySearchCache : SearchCache {
         cache[keyword.lowercase()]
 
     override fun put(keyword: String, meals: List<Meal>) {
-        synchronized(this) {
-            cache = cache + (keyword.lowercase() to meals)
-        }
+        cache = cache + (keyword.lowercase() to meals)
     }
 }
