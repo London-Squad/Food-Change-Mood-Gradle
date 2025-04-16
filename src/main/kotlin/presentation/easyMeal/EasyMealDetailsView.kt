@@ -2,7 +2,7 @@ package presentation.easyMeal
 
 import model.Meal
 
-class EasyMealDetailsConsoleCLI(private val meal: Meal) {
+class EasyMealDetailsView(private val meal: Meal) {
     fun printMealDetails() {
         printHeader()
         printIngredients()

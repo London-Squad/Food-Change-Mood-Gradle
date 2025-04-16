@@ -12,7 +12,7 @@ class EasyMealsSuggestionUseCase(
             .getRandomMeals(::isEasyMeal, count)
     }
 
-    fun isEasyMeal(meal: Meal): Boolean {
+    private fun isEasyMeal(meal: Meal): Boolean {
         return meal.minutes?.let { it <= MIN_MIN } == true
                 && meal.ingredients.size <= MIN_NUMBER_OF_INGREDIENTS
                 && meal.steps.size <= MIN_NUMBER_OF_STEPS

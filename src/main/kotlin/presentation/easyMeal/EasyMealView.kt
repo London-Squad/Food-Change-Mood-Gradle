@@ -3,7 +3,7 @@ package presentation.easyMeal
 import logic.useCase.EasyMealsSuggestionUseCase
 import model.Meal
 
-class EasyMealConsoleCLI(
+class EasyMealView(
     private val useCase: EasyMealsSuggestionUseCase
 ) {
 
@@ -53,7 +53,7 @@ class EasyMealConsoleCLI(
     }
 
     private fun navigateToMealDetails(selectedMeal: Meal) {
-        EasyMealDetailsConsoleCLI(selectedMeal).apply {
+        EasyMealDetailsView(selectedMeal).apply {
             printMealDetails()
         }
     }

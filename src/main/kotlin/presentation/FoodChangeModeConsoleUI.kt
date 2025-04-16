@@ -1,24 +1,22 @@
 package presentation
 
-import data.FakeMealsDataSource
-import logic.useCase.EasyMealsSuggestionUseCase
-import presentation.easyMeal.EasyMealConsoleCLI
+import presentation.easyMeal.EasyMealView
 
 class FoodChangeModeConsoleUI(
-    //TODO: add feature useCase to class constructor
+    private val easyMealView: EasyMealView
 ) {
 
-    fun start(){
+    fun start() {
         showWelcome()
         presentFeatures()
     }
 
-    private fun presentFeatures(){
+    private fun presentFeatures() {
         //TODO: create a function for the new useCase and add case for selecting new feature in 'when' statement (like the first case)
 
         showOptions()
         val input = getUserInput()
-        when(input){
+        when (input) {
             1 -> lunchHealthyFoodList()
             4 -> startEasyMealView()
             0 -> return
@@ -28,16 +26,14 @@ class FoodChangeModeConsoleUI(
     }
 
     private fun startEasyMealView() {
-        //TODO update this when DI with KOIN Applied
-        val useCase = EasyMealsSuggestionUseCase(FakeMealsDataSource())
-        EasyMealConsoleCLI(useCase).displayEasyMeals()
+        easyMealView.displayEasyMeals()
     }
 
-    private fun showWelcome(){
+    private fun showWelcome() {
         println("Welcome to Food Change Mode app")
     }
 
-    private fun showOptions(){
+    private fun showOptions() {
         //TODO: add option for new features
 
         println("\n\n=== please enter one of the following numbers ===")
@@ -47,11 +43,11 @@ class FoodChangeModeConsoleUI(
         println("here: ")
     }
 
-    private fun lunchHealthyFoodList(){
+    private fun lunchHealthyFoodList() {
         //TODO: update this when implementing the useCase
     }
 
-    private fun getUserInput(): Int?{
+    private fun getUserInput(): Int? {
         return readlnOrNull()?.toIntOrNull()
     }
 }
