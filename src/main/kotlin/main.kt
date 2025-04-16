@@ -1,5 +1,4 @@
 import data.FakeMealsDataSource
-import data.csvData.CsvMealsDataSource
 import data.csvData.CsvMealsParser
 import data.FileReader
 import data.csvData.CsvMealsDataSourceOneTimeLoad
@@ -18,6 +17,7 @@ fun main() {
 //    val mealsDataSource = FakeMealsDataSource()
 //    val mealsDataSource = CsvMealsDataSource(fileReader, csvMealsParser)
     val mealsDataSource = CsvMealsDataSourceOneTimeLoad(fileReader, csvMealsParser, numberOfMealsToBeLoaded = 50)
+//    val mealsDataSource = CsvMealsDataSourceOneTimeLoad(fileReader, csvMealsParser, numberOfMealsToBeLoaded = -1)
 
     val mealGuessGame = MealGuessGameUseCase(mealsDataSource)
 
