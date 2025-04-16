@@ -32,12 +32,12 @@ fun main() {
 //    println(results)
 
     val repository = MealSearchByDateRepositoryImpl(
-        meals = mealsDataSource.getAllMeals(),
+        mealsDataSource = mealsDataSource,
         dateIndexBuilder = MealDateInvertedIndexBuilder()
     )
 
     try {
-        val results = repository.searchMeals("2005-09-16")
+        val results = repository.searchMeals("20-09-16")
         println("Meals on 2023-04-16: $results")
     } catch (e: InvalidDateFormatException) {
         println(e.message)
