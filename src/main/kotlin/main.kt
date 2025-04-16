@@ -1,47 +1,16 @@
-import data.FakeMealsDataSource
-import data.csvData.CsvMealsParser
-import data.FileReader
-import logic.search.byDate.MealDateInvertedIndexBuilder
-import logic.search.byDate.MealSearchByDateUseCaseImpl
-import utils.InvalidDateFormatException
-import utils.NoMealsFoundException
-import java.io.File
+import di.appModule
+import di.useCaseModule
+import logic.MealSearchRepository
+import org.koin.core.context.startKoin
+import org.koin.java.KoinJavaComponent.getKoin
 
 fun main() {
-
-    val csvFile = File("food.csv")
-    val fileReader = FileReader(csvFile)
-    val csvMealsParser = CsvMealsParser()
-
-    val mealsDataSource = FakeMealsDataSource()
-//    val mealsDataSource = CsvMealsDataSource(fileReader, csvMealsParser)
-//    val mealsDataSource = CsvMealsDataSourceOneTimeLoad(fileReader, csvMealsParser, numberOfMealsToBeLoaded = 50)
-//    val mealsDataSource = CsvMealsDataSourceOneTimeLoad(fileReader, csvMealsParser, numberOfMealsToBeLoaded = -1)
-
-//    val ui = FoodChangeModeConsoleUI()
-//    ui.start()
-//    val searchAlgorithm = LevenshteinSearch(maxDistance = 3)
-//    val cache = InMemorySearchCache()
-//    val invertedIndexBuilder: IndexBuilder<String,Set<Int>> = MealNameInvertedIndexBuilder()
-//    val repository = MealSearchByNameRepositoryImpl(mealsDataSource.getAllMeals(), searchAlgorithm, cache, invertedIndexBuilder)
-//    val results = repository.searchMeals("squh")
-//    println(results)
-
-    val repository = MealSearchByDateUseCaseImpl(
-        mealsDataSource = mealsDataSource,
-        dateIndexBuilder = MealDateInvertedIndexBuilder()
-    )
-//for testing only
-    try {
-        val results = repository.searchMeals("2005-09-16")
-        println("Meals on 2023-04-16: $results")
-    } catch (e: InvalidDateFormatException) {
-        println(e.message)
-    } catch (e: NoMealsFoundException) {
-        println(e.message)
+    startKoin {
+        modules(appModule, useCaseModule)
     }
 
-    val input = readlnOrNull()
-   println( repository.getMealDetails(input!!.toInt()))
+    val repo: MealSearchRepository = getKoin().get()
 
+    val results = repo.searchMeals("squh")
+    println(results)
 }
