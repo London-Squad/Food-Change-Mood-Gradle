@@ -1,13 +1,13 @@
-package logic.search
+package logic.search.byName
 
 import logic.IndexBuilder
 import model.Meal
 
-class InvertedIndexBuilder : IndexBuilder {
+class MealNameInvertedIndexBuilder : IndexBuilder<String,Set<Int>> {
     override fun build(meals: List<Meal>): Map<String, Set<Int>> =
         meals.withIndex()
             .flatMap { (idx, meal) ->
-                meal.name!!.lowercase()
+                meal.name.lowercase()
                     .split(" ")
                     .map { word -> word to idx }
             }

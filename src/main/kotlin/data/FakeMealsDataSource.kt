@@ -3,6 +3,7 @@ package data
 import logic.MealsDataSource
 import model.Meal
 import model.Nutrition
+import java.time.LocalDate
 
 class FakeMealsDataSource : MealsDataSource {
     override fun getAllMeals(): List<Meal> {
@@ -11,6 +12,7 @@ class FakeMealsDataSource : MealsDataSource {
                 id = 137739,
                 name = "arriba baked winter squash mexican style",
                 minutes = 55,
+                dateSubmitted = LocalDate.parse("2005-09-16"),
                 tags = listOf(
                     "60-minutes-or-less",
                     "time-to-make",
@@ -64,6 +66,7 @@ class FakeMealsDataSource : MealsDataSource {
                 id = 31490,
                 name = "a bit different  breakfast pizza",
                 minutes = 30,
+                dateSubmitted = LocalDate.parse("2002-06-17"),
                 tags = listOf(
                     "30-minutes-or-less",
                     "time-to-make",
@@ -112,6 +115,7 @@ class FakeMealsDataSource : MealsDataSource {
                 id = 70971,
                 name = "bananas 4 ice cream  pie",
                 minutes = 180,
+                dateSubmitted = LocalDate.parse("2003-09-10"),
                 tags = listOf(
                     "weeknight",
                     "time-to-make",
@@ -160,6 +164,7 @@ class FakeMealsDataSource : MealsDataSource {
                 id = 107699,
                 name = "deep fried dessert thingys",
                 minutes = 20,
+                dateSubmitted = LocalDate.parse("2005-01-05"),
                 tags = listOf(
                     "30-minutes-or-less",
                     "time-to-make",

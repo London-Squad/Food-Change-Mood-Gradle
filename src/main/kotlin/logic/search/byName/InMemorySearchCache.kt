@@ -1,4 +1,4 @@
-package logic.search
+package logic.search.byName
 
 import logic.SearchCache
 import model.Meal
