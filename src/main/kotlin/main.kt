@@ -1,12 +1,10 @@
-import data.FakeMealsDataSource
 import data.csvData.CsvMealsParser
 import data.FileReader
 import data.csvData.CsvMealsDataSourceOneTimeLoad
 import logic.MealGuessGameUseCase
 import presentation.FoodChangeModeConsoleUI
-import presentation.MealGuessGameConsoleCLI
+import presentation.MealGuessGameView
 import java.io.File
-import java.util.Date
 
 fun main() {
 
@@ -21,6 +19,6 @@ fun main() {
 
     val mealGuessGame = MealGuessGameUseCase(mealsDataSource)
 
-    val ui = FoodChangeModeConsoleUI(mealGuessGameConsoleCLI = MealGuessGameConsoleCLI(mealGuessGame))
+    val ui = FoodChangeModeConsoleUI(mealGuessGameView = MealGuessGameView(mealGuessGame))
     ui.start()
 }

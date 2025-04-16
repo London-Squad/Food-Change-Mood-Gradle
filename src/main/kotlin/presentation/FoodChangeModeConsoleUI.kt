@@ -2,7 +2,7 @@ package presentation
 
 class FoodChangeModeConsoleUI(
     //TODO: add feature useCase to class constructor
-    private val mealGuessGameConsoleCLI: MealGuessGameConsoleCLI
+    private val mealGuessGameView: MealGuessGameView
 ) {
 
     fun start(){
@@ -42,7 +42,7 @@ class FoodChangeModeConsoleUI(
         //TODO: update this when implementing the useCase
     }
     private fun lunchMealGuessGame(){
-        mealGuessGameConsoleCLI.displayGame()
+        mealGuessGameView.displayGame()
     }
 
     private fun getUserInput(): Int?{
