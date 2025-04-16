@@ -48,7 +48,7 @@ class FoodChangeModeConsoleUI(
         val iraqiMeals = getIraqiMealsUseCase.getIraqiMeals()
         if (iraqiMeals.isNotEmpty()) {
             iraqiMeals.forEach {
-                println("${it.name}---${it.description}---${it.tags}")
+                println(it.name)
             }
         } else {
             println("There is no iraqi meals!")

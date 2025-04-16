@@ -12,7 +12,7 @@ class GetIraqiMealsUseCase(
     }
 
     private fun onlyIraqiMeals(input: Meal): Boolean {
-        return (input.tags != null && input.tags.contains(IRAQI_TAG))
+        return input.tags.contains(IRAQI_TAG)
                 || input.description.lowercase().contains(IRAQ_KEYWORD)
     }
 

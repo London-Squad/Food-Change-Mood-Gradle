@@ -1,10 +1,12 @@
-import data.FakeMealsDataSource
-import logic.IndexBuilder
 import data.FileReader
-import data.csvData.CsvMealsDataSource
+import data.csvData.CsvMealsDataSourceOneTimeLoad
 import data.csvData.CsvMealsParser
-import logic.search.*
 import logic.GetIraqiMealsUseCase
+import logic.IndexBuilder
+import logic.search.InMemorySearchCache
+import logic.search.InvertedIndexBuilder
+import logic.search.LevenshteinSearch
+import logic.search.MealSearchRepositoryImpl
 import presentation.FoodChangeModeConsoleUI
 import java.io.File
 
@@ -14,10 +16,10 @@ fun main() {
     val fileReader = FileReader(csvFile)
     val csvMealsParser = CsvMealsParser()
 
-    val mealsDataSource = FakeMealsDataSource()
+//    val mealsDataSource = FakeMealsDataSource()
 //    val mealsDataSource = CsvMealsDataSource(fileReader, csvMealsParser)
 //    val mealsDataSource = CsvMealsDataSourceOneTimeLoad(fileReader, csvMealsParser, numberOfMealsToBeLoaded = 50)
-//    val mealsDataSource = CsvMealsDataSourceOneTimeLoad(fileReader, csvMealsParser, numberOfMealsToBeLoaded = -1)
+    val mealsDataSource = CsvMealsDataSourceOneTimeLoad(fileReader, csvMealsParser, numberOfMealsToBeLoaded = -1)
     mealsDataSource.getAllMeals()
     //TODO: after create new feature, edit the UI class to present it then pass its useCase to the UI
 //    val mealsDataSource = FakeMealsDataSource()
@@ -31,7 +33,7 @@ fun main() {
     val repository = MealSearchRepositoryImpl(mealsDataSource, searchAlgorithm, cache, invertedIndexBuilder)
 
     val results = repository.searchMeals("squh")
-    println(results)
+//    println(results)
     val ui = FoodChangeModeConsoleUI(iraqiMealsUseCase)
     ui.start()
 }
