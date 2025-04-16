@@ -1,5 +1,7 @@
 package presentation
 
+import logic.GymHelper
+
 class FoodChangeModeConsoleUI(
     //TODO: add feature useCase to class constructor
 ) {
@@ -16,6 +18,7 @@ class FoodChangeModeConsoleUI(
         val input = getUserInput()
         when(input){
             1 -> lunchHealthyFoodList()
+            2 -> GymHelper()
             0 -> return
             else -> println("Invalid Input")
         }
