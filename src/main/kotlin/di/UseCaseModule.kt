@@ -1,6 +1,6 @@
 package di
 
-import data.FakeMealsDataSource
+import data.csvData.CsvMealsDataSource
 import logic.*
 import logic.search.InMemorySearchCache
 import logic.search.InvertedIndexBuilder
@@ -10,11 +10,11 @@ import org.koin.dsl.module
 
 
 val useCaseModule = module {
-    single<MealsDataSource> { FakeMealsDataSource() }
-
+    single<MealsDataSource> { CsvMealsDataSource(get(), get()) }
     single<IndexBuilder> { InvertedIndexBuilder() }
     single<SearchCache> { InMemorySearchCache() }
     single<TextSearchAlgorithm> { LevenshteinSearch() }
     single<MealSearchRepository> { MealSearchRepositoryImpl(get<MealsDataSource>(), get(), get(), get()) }
+    single { GetIraqiMealsUseCase(get()) }
 
 }
