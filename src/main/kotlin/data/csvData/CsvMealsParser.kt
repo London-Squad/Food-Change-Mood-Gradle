@@ -34,7 +34,7 @@ class CsvMealsParser {
         return Meal(
             id = row[ColumnIndex.id].trim().toInt(),
             name = row[ColumnIndex.name],
-            minutes = row[ColumnIndex.minutes].trim().toInt(),
+            minutes = row[ColumnIndex.minutes].trim().toIntOrNull()?.takeIf { it > 0 },
             dateSubmitted = parseDate(row[ColumnIndex.dateSubmitted]),
             tags = stringOfListToListOfStrings(row[ColumnIndex.tags].trim()),
             nutrition = parseNutrition(row[ColumnIndex.nutrition].trim()),
@@ -51,6 +51,7 @@ class CsvMealsParser {
             null
         }
     }
+
     private fun stringOfListToListOfStrings(stringOfList: String): List<String> {
         val result: MutableList<String> = mutableListOf("")
         var openQuot = false
@@ -65,7 +66,7 @@ class CsvMealsParser {
     private fun parseNutrition(stringOfListOfInt: String): Nutrition {
         val list = stringOfListOfInt.slice(1..stringOfListOfInt.length - 2)
             .split(",")
-            .map { it.trim().toFloat() }
+            .map { singleNutritionString -> singleNutritionString.trim().toFloatOrNull()?.takeIf { it > 0 } }
         return Nutrition(
             list[NutritionsIndex.calories],
             list[NutritionsIndex.totalFat],

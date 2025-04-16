@@ -1,14 +1,14 @@
-package logic.search.byName
+package logic.search
 
 import logic.*
 import model.Meal
 
-class MealSearchByNameRepositoryImpl(
+class MealSearchRepositoryImpl(
     private val mealsDataSource: MealsDataSource,
     private val searchAlgorithm: TextSearchAlgorithm,
     private val cache: SearchCache,
-    private val indexBuilder: IndexBuilder<String,Set<Int>>
-) : MealSearchRepository<List<Meal>> {
+    private val indexBuilder: IndexBuilder
+) : MealSearchRepository {
     private val invertedIndex: Map<String, Set<Int>> by lazy { indexBuilder.build(mealsDataSource.getAllMeals()) }
 
     override fun searchMeals(keyword: String): List<Meal> =
