@@ -21,7 +21,7 @@ class MealSearchRepositoryImpl(
             val results = if (candidateIndices.isEmpty()) {
                 mealsDataSource.getAllMeals().filter { meal ->
                     val keywordWords = keyword.lowercase().split(" ")
-                    keywordWords.any { kw ->
+                    keywordWords.all { kw ->
                         meal.name!!.lowercase().split(" ").any { mw ->
                             searchAlgorithm.search(kw, mw)
                         }
@@ -31,7 +31,7 @@ class MealSearchRepositoryImpl(
                 candidateIndices.mapNotNull { idx ->
                     mealsDataSource.getAllMeals().getOrNull(idx)?.takeIf { meal ->
                         val keywordWords = keyword.lowercase().split(" ")
-                        keywordWords.any { kw ->
+                        keywordWords.all { kw ->
                             meal.name!!.lowercase().split(" ").any { mw ->
                                 searchAlgorithm.search(kw, mw)
                             }
