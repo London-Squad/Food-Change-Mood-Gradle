@@ -3,6 +3,7 @@ import data.csvData.CsvMealsDataSource
 import data.csvData.CsvMealsParser
 import data.FileReader
 import data.csvData.CsvMealsDataSourceOneTimeLoad
+import logic.GetHealthyFastFoodMeals
 import presentation.FoodChangeModeConsoleUI
 import java.io.File
 import java.util.Date
@@ -16,7 +17,8 @@ fun main() {
 //    val mealsDataSource = FakeMealsDataSource()
 //    val mealsDataSource = CsvMealsDataSource(fileReader, csvMealsParser)
     val mealsDataSource = CsvMealsDataSourceOneTimeLoad(fileReader, csvMealsParser, numberOfMealsToBeLoaded = 50)
-
-    val ui = FoodChangeModeConsoleUI()
+    val ui = FoodChangeModeConsoleUI(
+        getHealthyFastFoodMeals = GetHealthyFastFoodMeals( mealsDataSource)
+    )
     ui.start()
 }

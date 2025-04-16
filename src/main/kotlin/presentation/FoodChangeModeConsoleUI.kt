@@ -1,7 +1,9 @@
 package presentation
 
+import logic.GetHealthyFastFoodMeals
+
 class FoodChangeModeConsoleUI(
-    //TODO: add feature useCase to class constructor
+    private val getHealthyFastFoodMeals : GetHealthyFastFoodMeals
 ) {
 
     fun start(){
@@ -15,7 +17,7 @@ class FoodChangeModeConsoleUI(
         showOptions()
         val input = getUserInput()
         when(input){
-            1 -> lunchHealthyFoodList()
+            1 -> launchHealthyFoodList()
             0 -> return
             else -> println("Invalid Input")
         }
@@ -35,9 +37,15 @@ class FoodChangeModeConsoleUI(
         println("here: ")
     }
 
-    private fun lunchHealthyFoodList(){
-        //TODO: update this when implementing the useCase
+    private fun launchHealthyFoodList() {
+        val healthyMeals = getHealthyFastFoodMeals.getHealthyFastFoodMeals()
+
+        println("🍽️ Healthy Fast Food Meals (ready in 15 minutes or less):")
+        healthyMeals.forEach { meal ->
+            println("• Meal: ${meal.name} | Preparation Time: ${meal.minutes} minutes")
+        }
     }
+
 
     private fun getUserInput(): Int?{
         return readlnOrNull()?.toIntOrNull()
