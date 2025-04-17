@@ -35,6 +35,7 @@ class FoodChangeModeConsoleUI(
 
         println("\n\n=== please enter one of the following numbers ===")
         println("1- Get a List of Healthy Fast Food Meals")
+        println("7- Get a List of Healthy Fast Food Meals")
         println("0- Exit")
         println("here: ")
     }
@@ -43,23 +44,18 @@ class FoodChangeModeConsoleUI(
         //TODO: update this when implementing the useCase
     }
     private fun suggestOneKetoDishes() {
-        val suggestedKetoMeal = ketoHelper.getSuggestedMeal()
+        val suggestedKetoMeal = ketoHelper.getKetoDishesSuggestion()
+
         if (suggestedKetoMeal != null) {
-            println("\n=== Keto Meal Suggestion ===")
-            println(suggestedKetoMeal)
-            println("==========================")
+            println("\n=== 🥑 Keto Meal Suggestion ===")
+            println("Name: ${suggestedKetoMeal.name}")
+            println("Ingredients: ${suggestedKetoMeal.ingredients.joinToString()}")
+            println("Nutrition: ${suggestedKetoMeal.nutrition}")
         } else {
-            println("\nNo more keto meals available!")
-            println("Would you like to reset suggestions? (y/n)")
-            when (readlnOrNull()?.lowercase()) {
-                "y" -> {
-                    suggestOneKetoDishes()
-                }
-                else -> return
-            }
+            println("\n⚠️ No more keto-friendly meals available.")
+            println("We are sorry! go to another resturant")
         }
     }
-
     private fun getUserInput(): Int?{
         return readlnOrNull()?.toIntOrNull()
     }

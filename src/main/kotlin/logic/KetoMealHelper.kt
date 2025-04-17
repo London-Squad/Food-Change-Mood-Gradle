@@ -1,18 +1,26 @@
 package logic
 
 import model.Meal
+import kotlin.math.min
 
-class KetoMealHelper(private val mealRepository: MealsDataSource){
+class KetoMealHelper(private val mealRepository: MealsDataSource) {
     private val suggestedMealIds = mutableSetOf<Int>()
     private val validator = KetoFriendlyValidator()
-    fun getSuggestedMeal(): Meal? {
-        val unsuggestedMeals = mealRepository.getAllMeals()
-            .filter { !suggestedMealIds.contains(it.id) }
 
-        val nextKetoSuggestedMeal = unsuggestedMeals.firstOrNull { validator.isKetoFriendly(it) }
+    fun getKetoDishesSuggestion(): Meal {
+        val allMeals = mealRepository.getAllMeals()
 
-        return nextKetoSuggestedMeal?.also { meal ->
-            suggestedMealIds.add(meal.id)
+        val candidates = allMeals.filter {
+            validator.isKetoFriendly(it) && !suggestedMealIds.contains(it.id)
+        }
+
+        val finalCandidates = candidates.ifEmpty {
+            suggestedMealIds.clear()
+            allMeals.filter { validator.isKetoFriendly(it) }
+        }
+
+        return finalCandidates.random().also {
+            suggestedMealIds.add(it.id)
         }
     }
 }
