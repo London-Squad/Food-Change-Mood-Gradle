@@ -1,9 +1,11 @@
 package presentation
 
+import presentation.easyMeal.EasyMealView
+
 class FoodChangeModeConsoleUI(
     private val getIraqiMealsView: GetIraqiMealsView,
-    private val mealGuessGameView: MealGuessGameView
-
+    private val mealGuessGameView: MealGuessGameView,
+    private val easyMealView: EasyMealView
 ) : BaseView {
 
     override fun start() {
@@ -17,6 +19,7 @@ class FoodChangeModeConsoleUI(
         when (input) {
             3 -> getIraqiMealsView.start()
             5 -> mealGuessGameView.start()
+            4 -> startEasyMealView()
             0 -> return
             else -> println("Invalid Input")
         }
@@ -32,6 +35,7 @@ class FoodChangeModeConsoleUI(
 
         println("\n\n=== please enter one of the following numbers ===\n")
         println("3- Get a List of Iraqi Meals")
+        println("4- Get Easy Food Suggestion")
         println("5- Meal Guess Game")
         println("0- Exit")
         println("here: ")
@@ -39,5 +43,9 @@ class FoodChangeModeConsoleUI(
 
     private fun getUserInput(): Int? {
         return readlnOrNull()?.toIntOrNull()
+    }
+
+    private fun startEasyMealView() {
+        easyMealView.displayEasyMeals()
     }
 }
