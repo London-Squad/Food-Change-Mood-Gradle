@@ -28,14 +28,14 @@ class GetHealthyFastFoodMealsUseCase(private val mealRepository: MealsDataSource
         return this.map(property).average().toFloat()
     }
 
-    private fun isVeryLowFatCarbMeal(
-        meal: Meal,
-        maxTotalFat: Float,
-        maxSaturatedFat: Float,
-        maxCarbohydrates: Float
-    ): Boolean {
-        return (meal.nutrition.totalFat == null || meal.nutrition.totalFat <= maxTotalFat) &&
-                (meal.nutrition.saturatedFat == null || meal.nutrition.saturatedFat <= maxSaturatedFat) &&
-                (meal.nutrition.carbohydrates == null || meal.nutrition.carbohydrates <= maxCarbohydrates)
+private fun isVeryLowFatCarbMeal(
+    meal: Meal,
+    maxTotalFat: Float,
+    maxSaturatedFat: Float,
+    maxCarbohydrates: Float
+): Boolean {
+  return  (meal.nutrition.totalFat == null || meal.nutrition.totalFat <= maxTotalFat) &&
+            (meal.nutrition.saturatedFat == null || meal.nutrition.saturatedFat <= maxSaturatedFat) &&
+            (meal.nutrition.carbohydrates == null || meal.nutrition.carbohydrates <= maxCarbohydrates)
 
-    }
+}
