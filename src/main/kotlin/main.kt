@@ -1,24 +1,15 @@
-import data.csvData.CsvMealsParser
-import data.FileReader
-import data.csvData.CsvMealsDataSourceOneTimeLoad
-import logic.MealGuessGameUseCase
+import di.appModule
+import di.presentationModule
+import di.useCaseModule
+import org.koin.core.context.startKoin
+import org.koin.java.KoinJavaComponent.getKoin
 import presentation.FoodChangeModeConsoleUI
-import presentation.MealGuessGameView
-import java.io.File
 
 fun main() {
+    startKoin {
+        modules(appModule, useCaseModule, presentationModule)
+    }
 
-    val csvFile = File("food.csv")
-    val fileReader = FileReader(csvFile)
-    val csvMealsParser = CsvMealsParser()
-
-//    val mealsDataSource = FakeMealsDataSource()
-//    val mealsDataSource = CsvMealsDataSource(fileReader, csvMealsParser)
-    val mealsDataSource = CsvMealsDataSourceOneTimeLoad(fileReader, csvMealsParser, numberOfMealsToBeLoaded = 50)
-//    val mealsDataSource = CsvMealsDataSourceOneTimeLoad(fileReader, csvMealsParser, numberOfMealsToBeLoaded = -1)
-
-    val mealGuessGame = MealGuessGameUseCase(mealsDataSource)
-
-    val ui = FoodChangeModeConsoleUI(mealGuessGameView = MealGuessGameView(mealGuessGame))
+    val ui : FoodChangeModeConsoleUI = getKoin().get()
     ui.start()
 }
