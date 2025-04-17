@@ -1,6 +1,6 @@
 import di.appModule
 import di.useCaseModule
-import logic.MealSearchRepository
+import logic.MealsDataSource
 import org.koin.core.context.startKoin
 import org.koin.java.KoinJavaComponent.getKoin
 
@@ -9,8 +9,5 @@ fun main() {
         modules(appModule, useCaseModule)
     }
 
-    val repo: MealSearchRepository = getKoin().get()
 
-    val results = repo.searchMeals("squh")
-    println(results)
 }
