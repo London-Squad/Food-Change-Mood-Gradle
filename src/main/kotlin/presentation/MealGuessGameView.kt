@@ -4,9 +4,9 @@ import logic.MealGuessGameUseCase
 
 class MealGuessGameView(
     private val mealGuessGameUseCase: MealGuessGameUseCase
-) {
+) : BaseView {
 
-    fun displayGame(){
+    override fun start(){
         printHeader()
         printRules()
 

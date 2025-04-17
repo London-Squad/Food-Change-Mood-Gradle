@@ -16,7 +16,7 @@ class FoodChangeModeConsoleUI(
         val input = getUserInput()
         when (input) {
             3 -> getIraqiMealsView.start()
-            5 -> lunchMealGuessGame()
+            5 -> mealGuessGameView.start()
             0 -> return
             else -> println("Invalid Input")
         }
@@ -35,10 +35,6 @@ class FoodChangeModeConsoleUI(
         println("5- Meal Guess Game")
         println("0- Exit")
         println("here: ")
-    }
-
-    private fun lunchMealGuessGame(){
-        mealGuessGameView.displayGame()
     }
 
     private fun getUserInput(): Int?{

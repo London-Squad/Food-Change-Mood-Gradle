@@ -18,5 +18,5 @@ val useCaseModule = module {
     single<MealSearchRepository> { MealSearchRepositoryImpl(get(), get(), get(), get()) }
 
     single{GetIraqiMealsUseCase(get())}
-
+    single{MealGuessGameUseCase(get())}
 }
