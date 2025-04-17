@@ -4,9 +4,8 @@ import presentation.easyMeal.EasyMealView
 
 class FoodChangeModeConsoleUI(
     private val getIraqiMealsView: GetIraqiMealsView,
-    private val mealGuessGameView: MealGuessGameView
+    private val mealGuessGameView: MealGuessGameView,
     private val easyMealView: EasyMealView
-
 ) : BaseView {
 
     override fun start() {
