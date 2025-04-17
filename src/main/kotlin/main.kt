@@ -17,8 +17,8 @@ fun main() {
 
     val repo2: MealSearchUseCase<List<Meal>> = getKoin().get(named("byName"))
 
-    val results = repo2.searchMeals("2023-04-16")
-    println(results)
-    val ui : FoodChangeModeConsoleUI = getKoin().get()
-    ui.start()
+    val results = repo2.searchMeals("arab")
+    println(results.size)
+//    val ui : FoodChangeModeConsoleUI = getKoin().get()
+//    ui.start()
 }
