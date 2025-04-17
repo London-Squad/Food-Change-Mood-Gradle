@@ -1,17 +1,15 @@
 import di.appModule
+import di.presentationModule
 import di.useCaseModule
 import org.koin.core.context.startKoin
 import org.koin.java.KoinJavaComponent.getKoin
 import presentation.FoodChangeModeConsoleUI
-import presentation.easyMeal.EasyMealView
 
 fun main() {
     startKoin {
-        modules(appModule, useCaseModule)
+        modules(appModule, useCaseModule, presentationModule)
     }
 
-    val easyMealView = EasyMealView(getKoin().get())
-    FoodChangeModeConsoleUI(easyMealView).apply {
-        start()
-    }
+    val ui : FoodChangeModeConsoleUI = getKoin().get()
+    ui.start()
 }
