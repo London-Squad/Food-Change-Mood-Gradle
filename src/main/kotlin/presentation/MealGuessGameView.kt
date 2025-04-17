@@ -24,7 +24,7 @@ class MealGuessGameView(
 
         println("\nMeal Name: ${randomMeal.name}")
         var attempt = 1
-        var result = ""
+        var result: String
         do{
             val guess = getValidGuess(attempt)
             result = mealGuessGameUseCase.checkGuessAttempt(guess, randomMeal.minutes!!)
