@@ -10,12 +10,14 @@ val presentationModule = module {
     single { GetIraqiMealsView(get(), get()) }
     single { MealGuessGameView(get()) }
     single { MealSearchByNameView(get(named("byName")), get()) }
+    single { MealSearchByDateView(get(named("byDate")), get()) }
 
     single {
         FoodChangeModeConsoleUI(
             getIraqiMealsView = get(),
             mealGuessGameView = get(),
-            mealSearchByNameView = get()
+            mealSearchByNameView = get(),
+            mealSearchByDateView = get()
         )
     }
 }
