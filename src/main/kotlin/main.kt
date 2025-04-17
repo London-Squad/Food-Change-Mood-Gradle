@@ -3,6 +3,7 @@ import data.csvData.CsvMealsDataSource
 import data.csvData.CsvMealsParser
 import data.FileReader
 import data.csvData.CsvMealsDataSourceOneTimeLoad
+import logic.KetoMealHelper
 import presentation.FoodChangeModeConsoleUI
 import java.io.File
 import java.util.Date
@@ -17,6 +18,9 @@ fun main() {
 //    val mealsDataSource = CsvMealsDataSource(fileReader, csvMealsParser)
     val mealsDataSource = CsvMealsDataSourceOneTimeLoad(fileReader, csvMealsParser, numberOfMealsToBeLoaded = -1)
 
-    val ui = FoodChangeModeConsoleUI()
+    val ui = FoodChangeModeConsoleUI(
+      ketoHelper= KetoMealHelper(mealsDataSource)
+    )
+
     ui.start()
 }

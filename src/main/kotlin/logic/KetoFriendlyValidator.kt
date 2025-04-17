@@ -19,7 +19,12 @@ class KetoFriendlyValidator {
         val allowedFruits = listOf("strawberry", "blueberry", "raspberry", "blackberry")
     }
 
-    fun isPassesKetoNutritionCheck(nutrition: Nutrition): Boolean {
+    fun isKetoFriendly(meal: Meal): Boolean {
+        return isPassesKetoNutritionCheck(meal.nutrition) &&
+                containsAllowedIngredients(meal)
+    }
+
+    private fun isPassesKetoNutritionCheck(nutrition: Nutrition): Boolean {
         return (nutrition.carbohydrates ?: 0f) <= MAX_CARBOHYDRATES_GRAMS &&
                 (nutrition.sugar ?: 0f) <= MAX_SUGAR_GRAMS &&
                 (nutrition.totalFat ?: 0f) >= MIN_TOTAL_FAT_GRAMS &&
@@ -28,7 +33,7 @@ class KetoFriendlyValidator {
                 (nutrition.sodium ?: 0f) >= MIN_SODIUM_MG
     }
 
-    fun containsAllowedIngredients(meal: Meal): Boolean {
+    private fun containsAllowedIngredients(meal: Meal): Boolean {
       val hasNotAllowedIngredients:Boolean =  meal.ingredients.any{ingredient->
            val lowerIngredient = ingredient.lowercase()
            notAllowedIngredients.any{it-> lowerIngredient.contains(it.lowercase())} && !isAllowedFruites(lowerIngredient)

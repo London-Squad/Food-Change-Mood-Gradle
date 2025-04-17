@@ -1,7 +1,10 @@
 package presentation
 
+import logic.KetoMealHelper
+
 class FoodChangeModeConsoleUI(
-    //TODO: add feature useCase to class constructor
+    private val ketoHelper:KetoMealHelper
+
 ) {
 
     fun start(){
@@ -16,6 +19,7 @@ class FoodChangeModeConsoleUI(
         val input = getUserInput()
         when(input){
             1 -> lunchHealthyFoodList()
+            7-> suggestOneKetoDishes()
             0 -> return
             else -> println("Invalid Input")
         }
@@ -37,6 +41,23 @@ class FoodChangeModeConsoleUI(
 
     private fun lunchHealthyFoodList(){
         //TODO: update this when implementing the useCase
+    }
+    private fun suggestOneKetoDishes() {
+        val suggestedKetoMeal = ketoHelper.getSuggestedMeal()
+        if (suggestedKetoMeal != null) {
+            println("\n=== Keto Meal Suggestion ===")
+            println(suggestedKetoMeal)
+            println("==========================")
+        } else {
+            println("\nNo more keto meals available!")
+            println("Would you like to reset suggestions? (y/n)")
+            when (readlnOrNull()?.lowercase()) {
+                "y" -> {
+                    suggestOneKetoDishes()
+                }
+                else -> return
+            }
+        }
     }
 
     private fun getUserInput(): Int?{
