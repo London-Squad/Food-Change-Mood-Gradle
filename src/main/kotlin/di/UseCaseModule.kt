@@ -10,7 +10,7 @@ import logic.search.MealSearchRepositoryImpl
 import org.koin.dsl.module
 
 val useCaseModule = module {
-    single<MealsDataSource> { CsvMealsDataSourceOneTimeLoad(get(), get(), 500) }
+    single<MealsDataSource> { CsvMealsDataSourceOneTimeLoad(get(), get(), 50000) }
 
     single<IndexBuilder> { InvertedIndexBuilder() }
     single<SearchCache> { InMemorySearchCache() }
@@ -18,6 +18,7 @@ val useCaseModule = module {
     single<MealSearchRepository> { MealSearchRepositoryImpl(get(), get(), get(), get()) }
 
     single { GetIraqiMealsUseCase(get()) }
+    single { MealGuessGameUseCase(get()) }
     single { IngredientGameUseCase(get()) }
 
 }

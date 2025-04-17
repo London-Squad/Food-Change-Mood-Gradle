@@ -2,6 +2,7 @@ package presentation
 
 class FoodChangeModeConsoleUI(
     private val getIraqiMealsView: GetIraqiMealsView,
+    private val mealGuessGameView: MealGuessGameView,
     private val ingredientGameView: IngredientGameView
 ) : BaseView {
 
@@ -15,6 +16,7 @@ class FoodChangeModeConsoleUI(
         val input = getUserInput()
         when (input) {
             3 -> getIraqiMealsView.start()
+            5 -> mealGuessGameView.start()
             11 -> ingredientGameView.start()
             0 -> return
             else -> println("Invalid Input")
@@ -31,6 +33,7 @@ class FoodChangeModeConsoleUI(
 
         println("\n\n=== please enter one of the following numbers ===\n")
         println("3- Get a List of Iraqi Meals")
+        println("5- Meal Guess Game")
         println("11- Ingredient Game")
         println("0- Exit")
         println("here: ")
