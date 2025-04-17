@@ -1,6 +1,7 @@
 package di
 
-import data.FakeMealsDataSource
+//import data.FakeMealsDataSource
+import data.csvData.CsvMealsDataSourceOneTimeLoad
 import logic.*
 import logic.search.LevenshteinSearch
 import logic.search.byDate.MealDateInvertedIndexBuilder
@@ -13,11 +14,8 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import java.time.LocalDate
 
-
 val useCaseModule = module {
-
-    //
-    single<MealsDataSource> { FakeMealsDataSource() }
+    single<MealsDataSource> { CsvMealsDataSourceOneTimeLoad(get(), get(), 50000) }
 
     //
     single<IndexBuilder<String, Set<Int>>> { MealNameInvertedIndexBuilder() }
@@ -35,4 +33,6 @@ val useCaseModule = module {
 
     single<MealSearchUseCase<List<Pair<Int, String>>>> (named("byDate")){ MealSearchByDateUseCaseImpl(get(),get()) }
 
+    single { GetIraqiMealsUseCase(get()) }
+    single { MealGuessGameUseCase(get()) }
 }
