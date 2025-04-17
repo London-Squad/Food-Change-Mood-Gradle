@@ -1,24 +1,16 @@
-import data.FakeMealsDataSource
-import data.csvData.CsvMealsDataSource
-import data.csvData.CsvMealsParser
-import data.FileReader
-import data.csvData.CsvMealsDataSourceOneTimeLoad
-import logic.SweetSuggester
+import di.appModule
+import di.presentationModule
+import di.useCaseModule
+import org.koin.core.context.startKoin
+import org.koin.java.KoinJavaComponent.getKoin
 import presentation.FoodChangeModeConsoleUI
-import java.io.File
-import java.util.Date
-import model.Meal
+
 
 fun main() {
+    startKoin {
+        modules(appModule, useCaseModule, presentationModule)
+    }
 
-    val csvFile = File("food.csv")
-    val fileReader = FileReader(csvFile)
-    val csvMealsParser = CsvMealsParser()
-
-    val mealsDataSource = FakeMealsDataSource()
- //   val mealsDataSource = CsvMealsDataSource(fileReader, csvMealsParser)
-//    val mealsDataSource = CsvMealsDataSourceOneTimeLoad(fileReader, csvMealsParser, numberOfMealsToBeLoaded = 50)
-
-    //val ui = FoodChangeModeConsoleUI(sweetSuggester = SweetSuggester(mealsDataSource))
-    //ui.start()
+    val ui : FoodChangeModeConsoleUI = getKoin().get()
+    ui.start()
 }

@@ -1,49 +1,44 @@
 package presentation
 
-import logic.SweetSuggester
-
-
 class FoodChangeModeConsoleUI(
-    //TODO: add feature useCase to class constructor
+    private val getIraqiMealsView: GetIraqiMealsView,
+    private val mealGuessGameView: MealGuessGameView,
     private val sweetSuggester: SweetSuggester
-) {
+) : BaseView {
 
-    fun start(){
+    override fun start() {
         showWelcome()
         presentFeatures()
     }
 
-    private fun presentFeatures(){
-        //TODO: create a function for the new useCase and add case for selecting new feature in 'when' statement (like the first case)
-
+    private fun presentFeatures() {
         showOptions()
         val input = getUserInput()
-        when(input){
-            1 -> lunchHealthyFoodList()
+        when (input) {
             2 -> runSweetsWithoutEggsFeature()
+            3 -> getIraqiMealsView.start()
+            5 -> mealGuessGameView.start()
             0 -> return
             else -> println("Invalid Input")
         }
         presentFeatures()
     }
 
-    private fun showWelcome(){
+    private fun showWelcome() {
         println("Welcome to Food Change Mode app")
     }
 
-    private fun showOptions(){
+    private fun showOptions() {
         //TODO: add option for new features
 
         println("\n\n=== please enter one of the following numbers ===")
-        println("1- Get a List of Healthy Fast Food Meals")
         println("2- Suggest Sweets Without Eggs")
+        println("3- Get a List of Iraqi Meals")
+        println("5- Meal Guess Game")
         println("0- Exit")
         println("here: ")
     }
 
-    private fun lunchHealthyFoodList(){
-        //TODO: update this when implementing the useCase
-    }
 
     private fun runSweetsWithoutEggsFeature() {
         println("Sweets Without Eggs")
