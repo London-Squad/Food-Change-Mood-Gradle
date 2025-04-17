@@ -2,7 +2,7 @@ package logic
 
 import model.Meal
 
-class GetHealthyFastFoodMeals(private val mealRepository: MealsDataSource) {
+class GetHealthyFastFoodMealsUseCase(private val mealRepository: MealsDataSource) {
     companion object {
         private const val MAX_PREPARATION_TIME =15
     }
