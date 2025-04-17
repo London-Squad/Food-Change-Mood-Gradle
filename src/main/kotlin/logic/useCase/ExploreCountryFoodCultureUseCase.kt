@@ -1,15 +1,15 @@
 package logic.useCase
 
 import logic.MealsDataSource
+import logic.util.getRandomMeals
 import model.Meal
 
 class ExploreCountryFoodCultureUseCase(
     private val dataSource: MealsDataSource
 ) {
-    fun exploreFoodCulture(country: String) {
-        //search in name, tags, and description
-        dataSource.getAllMeals()
-            .filter { isExist(it, country) }
+    fun exploreCountryFoodCulture(country: String): List<Meal> {
+        return dataSource.getAllMeals()
+            .getRandomMeals(20) { isExist(it, country) }
     }
 
     private fun isExist(meal: Meal, country: String): Boolean {
@@ -27,6 +27,4 @@ class ExploreCountryFoodCultureUseCase(
     private fun isExistInTags(mealTags: List<String>, country: String): Boolean {
         return mealTags.any { country.equals(it, ignoreCase = true) }
     }
-
-
 }

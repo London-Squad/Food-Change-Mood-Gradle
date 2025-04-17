@@ -1,12 +1,17 @@
-package presentation.easyMeal
+package presentation.meal
 
 import model.Meal
+import presentation.BaseView
 
-class EasyMealDetailsView(private val meal: Meal) {
-    fun printMealDetails() {
+class MealDetailsView(
+    private val meal: Meal
+) : BaseView {
+
+    override fun start() {
         printHeader()
         printIngredients()
         printNutrition()
+        println()
     }
 
     private fun printHeader() {

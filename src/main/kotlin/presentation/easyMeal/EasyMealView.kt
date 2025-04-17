@@ -2,31 +2,18 @@ package presentation.easyMeal
 
 import logic.useCase.EasyMealsSuggestionUseCase
 import model.Meal
+import presentation.BaseView
+import presentation.meal.MealDetailsView
+import presentation.meal.MealListView
 
 class EasyMealView(
-    private val useCase: EasyMealsSuggestionUseCase
-) {
+    useCase: EasyMealsSuggestionUseCase
+) : BaseView {
+    private val easyMealList = useCase.getRandomMeals()
 
-    fun displayEasyMeals() {
-        val easyMealList = useCase.getRandomMeals()
+    override fun start() {
         printHeader()
-        if (easyMealList.isEmpty()) {
-            println("there is no Easy Meals")
-            return
-        }
-
-        while (true) {
-            try {
-                easyMealList.forEachIndexed(::printMeal)
-                getMealIndexFromUser(easyMealList.size).also { index ->
-                    val selectedMeal = easyMealList[index]
-                    navigateToMealDetails(selectedMeal)
-                }
-                return
-            } catch (ex: Exception) {
-                println(ex.message)
-            }
-        }
+        printMeals()
     }
 
     private fun printHeader() {
@@ -35,26 +22,7 @@ class EasyMealView(
         println("------------------------------------------")
     }
 
-    private fun getMealIndexFromUser(size: Int): Int {
-        println()
-        when (size) {
-            1 -> println("enter 1 to display details")
-            else -> println("choose a meal to display its details(1 - $size)")
-        }
-        print("your choice: ")
-        val index = readlnOrNull()?.toInt()?.minus(1) ?: throw Exception("please Enter a valid input")
-        if (index >= size || index < 0) throw Exception("please enter a valid number")
-        println()
-        return index
-    }
-
-    private fun printMeal(index: Int, meal: Meal) {
-        println("${index + 1}- ${meal.name}")
-    }
-
-    private fun navigateToMealDetails(selectedMeal: Meal) {
-        EasyMealDetailsView(selectedMeal).apply {
-            printMealDetails()
-        }
+    private fun printMeals() {
+        MealListView(easyMealList).apply { start() }
     }
 }
