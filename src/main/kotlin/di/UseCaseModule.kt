@@ -17,6 +17,6 @@ val useCaseModule = module {
     single<TextSearchAlgorithm> { LevenshteinSearch() }
     single<MealSearchRepository> { MealSearchRepositoryImpl(get(), get(), get(), get()) }
 
-    single{GetIraqiMealsUseCase(get())}
-
+    single { GetIraqiMealsUseCase(get()) }
+    single { MealGuessGameUseCase(get()) }
 }
