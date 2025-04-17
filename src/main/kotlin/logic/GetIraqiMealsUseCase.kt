@@ -13,7 +13,7 @@ class GetIraqiMealsUseCase(
     private fun isIraqiMeals(meal: Meal): Boolean =
         meal.tags.contains(IRAQI_TAG) || meal.description.lowercase().contains(IRAQ_KEYWORD)
 
-    companion object {
+    private companion object {
         const val IRAQI_TAG = "iraqi"
         const val IRAQ_KEYWORD = "iraq"
     }

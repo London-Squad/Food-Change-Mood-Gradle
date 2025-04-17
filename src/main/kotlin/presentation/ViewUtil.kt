@@ -52,7 +52,7 @@ class ViewUtil {
         println("---------------------------------------------")
     }
 
-    fun printTextWithinWidth(text: String, indent: Int = 0) {
+    private fun printTextWithinWidth(text: String, indent: Int = 0) {
         text.chunked(VIEW_WIDTH).forEach {
             println(
                 List(indent){""}.joinToString(" ") + it
@@ -60,7 +60,7 @@ class ViewUtil {
         }
     }
 
-    companion object {
+    private companion object {
         const val VIEW_WIDTH = 70
     }
 }

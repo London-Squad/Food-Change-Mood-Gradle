@@ -73,7 +73,7 @@ class GetIraqiMealsView(
         readlnOrNull()
     }
 
-    companion object {
+    private companion object {
         const val MAX_NUMBER_OF_MEALS_TO_BE_PRINTED_AT_ONCE = 10
     }
 
