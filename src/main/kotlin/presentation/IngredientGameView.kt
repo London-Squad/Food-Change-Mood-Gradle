@@ -1,6 +1,7 @@
 package presentation
 
 import logic.IngredientGameUseCase
+import model.Meal
 
 class IngredientGameView(
     private val ingredientGameUseCase: IngredientGameUseCase
@@ -18,8 +19,7 @@ class IngredientGameView(
         if (ingredientGameUseCase.isWin()) {
             println("You Win!")
             println("your points are: ${ingredientGameUseCase.getScore()}")
-        }
-        else if (ingredientGameUseCase.isLoss()) {
+        } else if (ingredientGameUseCase.isLoss()) {
             println("------------------------------------------")
             println("                 Game Over                ")
             println("your points are: ${ingredientGameUseCase.getScore()}")
@@ -32,15 +32,20 @@ class IngredientGameView(
     }
 
     private fun startRound() {
-        ingredientGameUseCase.getMealAndIngredientOptions().also {
-            println("\nMeal Name: ${it.first.name}\n")
-            it.second.forEachIndexed { index, ingredient ->
-                println("${index + 1}. $ingredient")
-            }
-        }.also {
-            ingredientGameUseCase.evaluateChoice(it.first, it.second, getValidGuess())
+        ingredientGameUseCase.apply {
+            getMealAndIngredientOptions()
+                .also(::printMealAndIngredientOptions)
+                .also {
+                    evaluateChoice(it.first, it.second, getValidGuessFromUser())
+                }
         }
+    }
 
+    private fun printMealAndIngredientOptions(pair: Pair<Meal, List<String>>) {
+        println("\nMeal Name: ${pair.first.name}\n")
+        pair.second.forEachIndexed { index, ingredient ->
+            println("${index + 1}. $ingredient")
+        }
     }
 
     private fun printHeader() {
@@ -57,14 +62,14 @@ class IngredientGameView(
         println("4. The game also ends after 15 correct answers\n")
     }
 
-    private fun getValidGuess(): Int {
+    private fun getValidGuessFromUser(): Int {
         print("your choice: ")
         val guessInput = readln().trim()
         return if (guessInput in listOf("1", "2", "3"))
             guessInput.toInt()
         else {
             println("invalid input")
-            getValidGuess()
+            getValidGuessFromUser()
         }
     }
 
