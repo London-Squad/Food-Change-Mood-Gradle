@@ -2,8 +2,8 @@ package presentation
 
 class FoodChangeModeConsoleUI(
     private val getIraqiMealsView: GetIraqiMealsView,
-    private val mealGuessGameView: MealGuessGameView
-
+    private val mealGuessGameView: MealGuessGameView,
+    private val mealSearchByNameView: MealSearchByNameView
 ) : BaseView {
 
     override fun start() {
@@ -15,6 +15,7 @@ class FoodChangeModeConsoleUI(
         showOptions()
         val input = getUserInput()
         when (input) {
+            2 -> mealSearchByNameView.start()
             3 -> getIraqiMealsView.start()
             5 -> mealGuessGameView.start()
             0 -> return
@@ -28,13 +29,12 @@ class FoodChangeModeConsoleUI(
     }
 
     private fun showOptions() {
-        //TODO: add option for new features
-
-        println("\n\n=== please enter one of the following numbers ===\n")
+        println("\n\n=== Please enter one of the following numbers ===\n")
+        println("2- Search Meals by Name")
         println("3- Get a List of Iraqi Meals")
         println("5- Meal Guess Game")
         println("0- Exit")
-        println("here: ")
+        println("Here: ")
     }
 
     private fun getUserInput(): Int? {
