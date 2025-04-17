@@ -17,6 +17,7 @@ val presentationModule = module {
     single {
         FoodChangeModeConsoleUI(
             get(),
+            get(),
             get()
         )
     }

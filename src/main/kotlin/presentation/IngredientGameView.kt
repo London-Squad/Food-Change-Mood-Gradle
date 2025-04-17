@@ -20,8 +20,10 @@ class IngredientGameView(
             println("your points are: ${ingredientGameUseCase.getScore()}")
         }
         else if (ingredientGameUseCase.isLoss()) {
-            println("Game Over")
+            println("------------------------------------------")
+            println("                 Game Over                ")
             println("your points are: ${ingredientGameUseCase.getScore()}")
+            println("------------------------------------------")
         } else {
             println("correct!")
             println("-----------------------")
