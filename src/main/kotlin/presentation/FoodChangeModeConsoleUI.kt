@@ -1,9 +1,10 @@
 package presentation
 
-import logic.GymHelper
+import logic.GymHelperUseCase
 
 class FoodChangeModeConsoleUI(
     //TODO: add feature useCase to class constructor
+    private val getGymHelperUseCase: GymHelperUseCase
 ) {
 
     fun start(){
@@ -18,7 +19,7 @@ class FoodChangeModeConsoleUI(
         val input = getUserInput()
         when(input){
             1 -> lunchHealthyFoodList()
-            2 -> GymHelper()
+            9 -> lunchGymHelper()
             0 -> return
             else -> println("Invalid Input")
         }
@@ -34,6 +35,7 @@ class FoodChangeModeConsoleUI(
 
         println("\n\n=== please enter one of the following numbers ===")
         println("1- Get a List of Healthy Fast Food Meals")
+        println("9- Get a List of Gym Meals")
         println("0- Exit")
         println("here: ")
     }
@@ -44,5 +46,10 @@ class FoodChangeModeConsoleUI(
 
     private fun getUserInput(): Int?{
         return readlnOrNull()?.toIntOrNull()
+    }
+    private fun lunchGymHelper(){
+        getGymHelperUseCase.getGymMembersMeals().forEach {
+            println(it)
+        }
     }
 }
