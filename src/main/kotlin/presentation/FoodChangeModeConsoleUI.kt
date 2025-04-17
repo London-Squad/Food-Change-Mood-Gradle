@@ -37,7 +37,7 @@ class FoodChangeModeConsoleUI(
         println("here: ")
     }
 
-    private fun getUserInput(): Int?{
+    private fun getUserInput(): Int? {
         return readlnOrNull()?.toIntOrNull()
     }
 }

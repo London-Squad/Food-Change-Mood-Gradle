@@ -6,12 +6,12 @@ class MealGuessGameUseCase(
     private val mealsDataSource: MealsDataSource
 ) {
 
-     fun getRandomMeal(): Meal {
+    fun getRandomMeal(): Meal {
         return mealsDataSource.getAllMeals()
             .getRandomMeals(::isMealWithValidTime, 1).first()
     }
 
-     fun checkGuessAttempt(guess: Int, correctValue: Int): String{
+    fun checkGuessAttempt(guess: Int, correctValue: Int): String {
         return if (guess > correctValue) "Too high"
         else if (guess < correctValue) "Too low"
         else "correct"
@@ -32,6 +32,6 @@ class MealGuessGameUseCase(
     }
 
     private companion object {
-      const val  MAX_NUMBER_OF_ATTEMPT= 3
+        const val MAX_NUMBER_OF_ATTEMPT = 3
     }
 }

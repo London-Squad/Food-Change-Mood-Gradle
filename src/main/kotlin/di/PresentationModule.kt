@@ -9,8 +9,8 @@ import presentation.ViewUtil
 
 val presentationModule = module {
     single { ViewUtil() }
-    single{GetIraqiMealsView(get(), get())}
-    single{MealGuessGameView(get())}
+    single { GetIraqiMealsView(get(), get()) }
+    single { MealGuessGameView(get()) }
 
     single {
         FoodChangeModeConsoleUI(
