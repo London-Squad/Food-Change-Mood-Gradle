@@ -34,7 +34,8 @@ class GetHealthyFastFoodMealsUseCase(private val mealRepository: MealsDataSource
         maxSaturatedFat: Float,
         maxCarbohydrates: Float
     ): Boolean {
-        return (meal.nutrition.totalFat ?: 0f) <= maxTotalFat &&
-                (meal.nutrition.saturatedFat ?: 0f) <= maxSaturatedFat &&
-                (meal.nutrition.carbohydrates ?: 0f) <= maxCarbohydrates
+        return (meal.nutrition.totalFat == null || meal.nutrition.totalFat <= maxTotalFat) &&
+                (meal.nutrition.saturatedFat == null || meal.nutrition.saturatedFat <= maxSaturatedFat) &&
+                (meal.nutrition.carbohydrates == null || meal.nutrition.carbohydrates <= maxCarbohydrates)
+
     }
