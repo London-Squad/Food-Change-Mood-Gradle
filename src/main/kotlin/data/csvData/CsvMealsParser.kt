@@ -3,6 +3,7 @@ package data.csvData
 import model.Meal
 import model.Nutrition
 import java.time.LocalDate
+import java.time.format.DateTimeParseException
 
 class CsvMealsParser {
     fun parseTextToListOfMeals(text: String, numberOfMealsToBeLoaded: Int = -1): List<Meal> {
@@ -33,13 +34,22 @@ class CsvMealsParser {
         return Meal(
             id = row[ColumnIndex.id].trim().toInt(),
             name = row[ColumnIndex.name],
-            minutes = row[ColumnIndex.minutes].trim().toInt(),
+            minutes = row[ColumnIndex.minutes].trim().toIntOrNull()?.takeIf { it > 0 },
+            dateSubmitted = parseDate(row[ColumnIndex.dateSubmitted]),
             tags = stringOfListToListOfStrings(row[ColumnIndex.tags].trim()),
             nutrition = parseNutrition(row[ColumnIndex.nutrition].trim()),
             steps = stringOfListToListOfStrings(row[ColumnIndex.steps].trim()),
             description = row[ColumnIndex.description],
             ingredients = stringOfListToListOfStrings(row[ColumnIndex.ingredients]),
         )
+    }
+
+    private fun parseDate(dateString: String) : LocalDate? {
+        return try {
+            LocalDate.parse(dateString.trim())
+        } catch (e: DateTimeParseException) {
+            null
+        }
     }
 
     private fun stringOfListToListOfStrings(stringOfList: String): List<String> {
@@ -56,7 +66,7 @@ class CsvMealsParser {
     private fun parseNutrition(stringOfListOfInt: String): Nutrition {
         val list = stringOfListOfInt.slice(1..stringOfListOfInt.length - 2)
             .split(",")
-            .map { it.trim().toFloat() }
+            .map { singleNutritionString -> singleNutritionString.trim().toFloatOrNull()?.takeIf { it > 0 } }
         return Nutrition(
             list[NutritionsIndex.calories],
             list[NutritionsIndex.totalFat],
