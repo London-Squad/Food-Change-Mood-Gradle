@@ -17,7 +17,7 @@ val presentationModule = module {
     factory { EasyMealView(get()) }
     factory { CountryFoodCultureView(get()) }
     factory { IngredientGameView(get()) }
-    single { KetoSuggetionHelperView(get(),get())}
+    factory { KetoSuggetionHelperView(get(), get()) }
 
     factoryOf(::FoodChangeModeConsoleUI)
 }
