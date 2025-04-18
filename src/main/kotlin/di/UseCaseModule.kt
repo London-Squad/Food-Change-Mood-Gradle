@@ -1,5 +1,6 @@
 package di
 
+//import data.FakeMealsDataSource
 import data.csvData.CsvMealsDataSourceOneTimeLoad
 import logic.*
 import logic.search.InMemorySearchCache
@@ -22,6 +23,7 @@ val useCaseModule = module {
     single { MealGuessGameUseCase(get()) }
     single { KetoFriendlyValidator() }
     single { KetoMealHelper(get(), get()) }
+    single{GetHealthyFastFoodMealsUseCase(get())}
     single { IngredientGameUseCase(get()) }
     single { EasyMealsSuggestionUseCase(get()) }
     single { ExploreCountryFoodCultureUseCase(get()) }

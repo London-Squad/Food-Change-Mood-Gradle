@@ -1,14 +1,16 @@
 package presentation
+
 import presentation.easyMeal.EasyMealView
 import presentation.foodCulture.CountryFoodCultureView
 
 class FoodChangeModeConsoleUI(
-    private val iraqiMealsView: IraqiMealsView,
+    private val getIraqiMealsView: GetIraqiMealsView,
     private val suggestSweetWithoutEggView: SuggestSweetWithoutEggView,
     private val mealGuessGameView: MealGuessGameView,
+    private val getHealthyFastFoodMealsView: GetHealthyFastFoodMealsView,
     private val easyMealView: EasyMealView,
     private val italianFoodForLargeGroupView: ItalianFoodForLargeGroupView,
-    private val ketoSuggetionHelperView:KetoSuggetionHelperView,
+    private val ketoSuggestionHelperView: KetoSuggestionHelperView,
     private val countryFoodCultureView: CountryFoodCultureView,
     private val ingredientGameView: IngredientGameView,
 ) : BaseView {
@@ -22,14 +24,15 @@ class FoodChangeModeConsoleUI(
         showOptions()
         val input = getUserInput()
         when (input) {
+            1 -> getHealthyFastFoodMealsView.start()
             2 -> suggestSweetWithoutEggView.start()
-            3 -> iraqiMealsView.start()
+            3 -> getIraqiMealsView.start()
             4 -> easyMealView.start()
             5 -> mealGuessGameView.start()
-            7->ketoSuggetionHelperView.start()
-            15 -> italianFoodForLargeGroupView.start()
+            7 -> ketoSuggestionHelperView.start()
             10 -> countryFoodCultureView.start()
             11 -> ingredientGameView.start()
+            15 -> italianFoodForLargeGroupView.start()
             0 -> return
             else -> println("Invalid Input")
         }
@@ -41,8 +44,8 @@ class FoodChangeModeConsoleUI(
     }
 
     private fun showOptions() {
-
-        println("\n\n=== please enter one of the following numbers ===")
+        println("\n\n=== please enter one of the following numbers ===\n")
+        println("1- Get a List of Healthy Fast Food Meals")
         println("2- Suggest Sweets Without Eggs")
         println("3- Get a List of Iraqi Meals")
         println("4- Get Easy Food Suggestion")

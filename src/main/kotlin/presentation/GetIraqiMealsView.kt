@@ -3,7 +3,7 @@ package presentation
 import logic.GetIraqiMealsUseCase
 import model.Meal
 
-class IraqiMealsView(
+class GetIraqiMealsView(
     private val getIraqiMealsUseCase: GetIraqiMealsUseCase,
     private val viewUtil: ViewUtil
 ) : BaseView {
