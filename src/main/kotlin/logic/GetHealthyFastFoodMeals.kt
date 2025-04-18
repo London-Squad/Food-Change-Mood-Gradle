@@ -9,7 +9,7 @@ class GetHealthyFastFoodMealsUseCase(private val mealRepository: MealsDataSource
 
     fun getHealthyFastFoodMeals(): List<Meal> {
         val mealsWithLessPreparationTime = mealRepository.getAllMeals().
-        filter { it.minutes  != null && it.minutes <= MAX_PREPARATION_TIME || it.tags.contains("15-minutes-or-less") }
+        filter { it.minutes  != null && it.minutes <= MAX_PREPARATION_TIME  }
         val maxTotalFat = mealsWithLessPreparationTime.calculateAverage { it.nutrition.totalFat?:0f}
         val maxSaturatedFat = mealsWithLessPreparationTime.calculateAverage { it.nutrition.saturatedFat?:0f }
         val maxCarbohydrates =mealsWithLessPreparationTime.calculateAverage { it.nutrition.carbohydrates?:0f }
