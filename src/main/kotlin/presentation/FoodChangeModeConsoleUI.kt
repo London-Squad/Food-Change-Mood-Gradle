@@ -5,7 +5,6 @@ import presentation.foodCulture.CountryFoodCultureView
 class FoodChangeModeConsoleUI(
     private val iraqiMealsView: IraqiMealsView,
     private val suggestSweetWithoutEggView: SuggestSweetWithoutEggView,
-    private val getIraqiMealsView: GetIraqiMealsView,
     private val mealGuessGameView: MealGuessGameView,
     private val easyMealView: EasyMealView,
     private val italianFoodForLargeGroupView: ItalianFoodForLargeGroupView,
@@ -23,15 +22,12 @@ class FoodChangeModeConsoleUI(
         showOptions()
         val input = getUserInput()
         when (input) {
-            3 -> iraqiMealsView.start()
-            4 -> startEasyMealView()
-            5 -> mealGuessGameView.start()
-            15 -> italianFoodForLargeGroupView.start()
             2 -> suggestSweetWithoutEggView.start()
-            3 -> getIraqiMealsView.start()
+            3 -> iraqiMealsView.start()
             4 -> easyMealView.start()
             5 -> mealGuessGameView.start()
             7->ketoSuggetionHelperView.start()
+            15 -> italianFoodForLargeGroupView.start()
             10 -> countryFoodCultureView.start()
             11 -> ingredientGameView.start()
             0 -> return
