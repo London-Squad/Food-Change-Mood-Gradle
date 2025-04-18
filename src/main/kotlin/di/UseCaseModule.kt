@@ -13,7 +13,7 @@ import org.koin.dsl.module
 import kotlin.math.sin
 
 val useCaseModule = module {
-    single<MealsDataSource> { CsvMealsDataSourceOneTimeLoad(get(), get(), 50000) }
+    single<MealsDataSource> { CsvMealsDataSourceOneTimeLoad(get(), get(), -1) }
 
     single<IndexBuilder> { InvertedIndexBuilder() }
     single<SearchCache> { InMemorySearchCache() }
