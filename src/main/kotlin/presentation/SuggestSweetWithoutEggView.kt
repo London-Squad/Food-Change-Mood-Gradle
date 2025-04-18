@@ -12,7 +12,7 @@ class SuggestSweetWithoutEggView(
         suggestSweetWithoutEggUseCase.clearSuggestedList()
 
         printHeader()
-        suggestSweetWithoutEggs()
+        printSweetSuggestion()
     }
 
     private fun printHeader() {
@@ -22,7 +22,7 @@ class SuggestSweetWithoutEggView(
         println("you can like the meal to see full detail, or dislike it to get another meal.")
     }
 
-    private fun suggestSweetWithoutEggs() {
+    private fun printSweetSuggestion() {
 
         val sweet = suggestSweetWithoutEggUseCase.suggestSweet()
 
@@ -38,7 +38,7 @@ class SuggestSweetWithoutEggView(
 
         when (getValidInputFromUser()) {
             "y" -> viewUtil.printMeal(sweet)
-            "n" -> suggestSweetWithoutEggs()
+            "n" -> printSweetSuggestion()
             "x" -> println("Returning to main menu...")
         }
 
