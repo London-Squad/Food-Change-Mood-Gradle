@@ -1,64 +1,62 @@
 package logic
 
 import model.Meal
-import kotlin.random.Random
+import kotlin.properties.Delegates
 
 class IngredientGameUseCase(
     private val mealsDataSource: MealsDataSource
 ) {
+
     private var score: Int = 0
     private var loss: Boolean = false
+    private var correctChoice by Delegates.notNull<Int>()
 
     fun getScore() = score
 
-    fun getMealAndIngredientOptions(): Pair<Meal, List<String>> =
+    fun getRandomMealNameAndIngredientOptions(): Pair<String, List<String>> =
         getRandomMeal().run {
             Pair(
-                this,
-                listOf(
-                    getCorrectIngredient(),
-                    getIncorrectIngredient(),
-                    getIncorrectIngredient()
-                ).shuffled()
+                name,
+                generateIngredientOptions(ingredients)
+                    .also { options -> correctChoice = 1 + options.indexOfFirst { it in ingredients } }
             )
         }
+
+    private fun getRandomMeal(): Meal = mealsDataSource.getAllMeals().random()
+
+    private fun generateIngredientOptions(ingredients: List<String>): List<String> =
+        listOf(
+            ingredients.random(),
+            getIngredientNotUsedInMeal(ingredients),
+            getIngredientNotUsedInMeal(ingredients)
+        ).shuffled()
 
     fun resetGame() {
         score = 0
         loss = false
     }
 
-    private fun getRandomMeal(): Meal = mealsDataSource.getAllMeals().random()
+    fun isAllRoundsFinished() = (score >= MAX_POINTS)
+    fun isChoiceWrong() = loss
 
-    private fun Meal.getCorrectIngredient(): String =
-        ingredients[Random.nextInt(0, ingredients.size)]
-
-    fun isWin() = score >= MAX_POINTS
-    fun isLoss() = loss
-
-    fun evaluateChoice(meal: Meal, ingredientOptions: List<String>, choice: Int) {
-        if (isCorrect(meal, ingredientOptions[choice - 1])) {
+    fun evaluateChoice(choice: Int) {
+        if (choice == correctChoice) {
             score += POINTS_PER_CORRECT_ANSWER
         } else {
             loss = true
         }
     }
 
-    private fun Meal.getIncorrectIngredient(
+    private fun getIngredientNotUsedInMeal(
+        excludedIngredients: List<String>,
         numberOfAttempts: Int = DEFAULT_MAX_NUMBER_OF_ATTEMPTS_TO_FIND_INVALID_INGREDIENT
     ): String =
-        if (numberOfAttempts <= 0) {
-            ""
-        } else {
-            getRandomMeal().let { anotherMeal ->
-                anotherMeal.ingredients.firstOrNull { incorrectIngredient ->
-                    ingredients.all { incorrectIngredient !in it }
-                } ?: getIncorrectIngredient(numberOfAttempts - 1)
-            }
+        "".takeIf { numberOfAttempts <= 0 } ?: getRandomMeal().run {
+            ingredients.firstOrNull { ingredient -> ingredient !in excludedIngredients } ?: getIngredientNotUsedInMeal(
+                excludedIngredients,
+                numberOfAttempts - 1
+            )
         }
-
-    private fun isCorrect(meal: Meal, ingredient: String): Boolean =
-        meal.ingredients.any { it == ingredient }
 
     private companion object {
         const val DEFAULT_MAX_NUMBER_OF_ATTEMPTS_TO_FIND_INVALID_INGREDIENT = 10
