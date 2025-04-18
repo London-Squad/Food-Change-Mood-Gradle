@@ -13,7 +13,7 @@ class MealListView(
         while (true) {
             try {
                 printAllMeals()
-                val mealIndexFromUser = getMealIndexFromUser()
+                val mealIndexFromUser = getValidOptionFromUser(mealList.size)
                 mealList[mealIndexFromUser].apply { printMealDetails(this) }
                 print("press any key to continue:")
                 readln()
@@ -38,18 +38,15 @@ class MealListView(
         println("${index + 1}- ${meal.name}")
     }
 
-    private fun getMealIndexFromUser(): Int {
-        println()
-        val size = mealList.size
-        when (size) {
-            1 -> println("enter 1 to display details")
-            else -> println("choose a meal to display its details(1 - $size)")
-        }
+    private fun getValidOptionFromUser(max: Int): Int {
         print("your choice: ")
-        val index = readlnOrNull()?.toInt()?.minus(1) ?: throw Exception("please Enter a valid input")
-        if (index >= size || index < 0) throw Exception("please enter a valid number")
-        println()
-        return index
+        val userInput = readln().trim()
+        return if (userInput.toIntOrNull() in 0..max)
+            userInput.toInt()
+        else {
+            println("invalid input")
+            getValidOptionFromUser(max)
+        }
     }
 
     private fun printMealDetails(selectedMeal: Meal) {
