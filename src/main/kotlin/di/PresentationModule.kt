@@ -2,19 +2,15 @@ package di
 
 import org.koin.dsl.module
 import presentation.*
+import presentation.easyMeal.EasyMealView
 
 
 val presentationModule = module {
-    single { ViewUtil() }
-    single { GetIraqiMealsView(get(), get()) }
-    single { MealGuessGameView(get()) }
-    single { SuggestSweetWithoutEggView(get(), get()) }
+    factory { ViewUtil() }
+    factory { GetIraqiMealsView(get(), get()) }
+    factory { MealGuessGameView(get()) }
+    factory { EasyMealView(get()) }
+    factory { SuggestSweetWithoutEggView(get(), get()) }
 
-    single {
-        FoodChangeModeConsoleUI(
-            get(),
-            get(),
-            get()
-        )
-    }
+    factoryOf(::FoodChangeModeConsoleUI)
 }
