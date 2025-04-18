@@ -1,15 +1,15 @@
 package presentation
 
-import logic.GetIraqiMealsUseCase
+import logic.GetItalianFoodForLargeGroupUseCase
 import model.Meal
 
-class GetIraqiMealsView(
-    private val getIraqiMealsUseCase: GetIraqiMealsUseCase,
+class ItalianFoodForLargeGroupView(
+    private val getItalianFoodForLargeGroupUseCase: GetItalianFoodForLargeGroupUseCase,
     private val viewUtil: ViewUtil
-) : BaseView {
 
+) : BaseView {
     override fun start() {
-        val chunkedIraqiMeals = getIraqiMealsUseCase.getIraqiMeals()
+        val chunkedItalianMeals = getItalianFoodForLargeGroupUseCase.getItalianMealsForLargeGroup()
             .chunked(MAX_NUMBER_OF_MEALS_TO_BE_PRINTED_AT_ONCE)
 
         var userInput: String?
@@ -17,10 +17,10 @@ class GetIraqiMealsView(
         var mealsChunk: List<Meal>
 
         do {
-            mealsChunk = chunkedIraqiMeals[mealsChunkIndex]
+            mealsChunk = chunkedItalianMeals[mealsChunkIndex]
 
             printMealsNames(mealsChunk)
-            printOptions(mealsChunkIndex, chunkedIraqiMeals.size)
+            printOptions(mealsChunkIndex, chunkedItalianMeals.size)
 
             userInput = readln()
 
@@ -38,12 +38,13 @@ class GetIraqiMealsView(
                 else -> println("Invalid input, try again")
             }
 
-        } while (mealsChunkIndex < chunkedIraqiMeals.size && mealsChunkIndex >= 0)
+        } while (mealsChunkIndex < chunkedItalianMeals.size && mealsChunkIndex >= 0)
     }
 
-    private fun printOptions(mealsChunkIndex: Int, mealsChunksize: Int) {
+
+    private fun printOptions(mealsChunkIndex: Int, mealsChunkSize: Int) {
         println()
-        if ((mealsChunkIndex + 1) < mealsChunksize) {
+        if ((mealsChunkIndex + 1) < mealsChunkSize) {
             println("If you want more meals, write 'next'")
         }
         if (mealsChunkIndex > 0) {
@@ -59,7 +60,7 @@ class GetIraqiMealsView(
 
         println()
         println("---------------------------------------------")
-        println("                 Iraqi Meals                 ")
+        println("        Italian Meals Fore Large Group       ")
         println("---------------------------------------------")
 
         meals.forEachIndexed { mealIndex, meal ->
@@ -77,5 +78,4 @@ class GetIraqiMealsView(
     private companion object {
         const val MAX_NUMBER_OF_MEALS_TO_BE_PRINTED_AT_ONCE = 10
     }
-
 }

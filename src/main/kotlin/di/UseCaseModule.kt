@@ -15,6 +15,7 @@ import logic.useCase.EasyMealsSuggestionUseCase
 import logic.useCase.ExploreCountryFoodCultureUseCase
 import org.koin.dsl.module
 import java.time.LocalDate
+import kotlin.math.sin
 
 val useCaseModule = module {
     single<MealsDataSource> { CsvMealsDataSourceOneTimeLoad(get(), get(), 50000) }
@@ -27,6 +28,7 @@ val useCaseModule = module {
     // Search Cache and Algorithm
     single<SearchCache> { InMemorySearchCache() }
     single<TextSearchAlgorithm> { LevenshteinSearch() }
+    single<MealSearchRepository> { MealSearchRepositoryImpl(get(), get(), get(), get()) }
 
     // Use Cases
     single<MealSearchUseCase<List<Meal>>>(named("byName")) {
@@ -48,8 +50,13 @@ val useCaseModule = module {
 
     single { GetIraqiMealsUseCase(get()) }
     single { MealGuessGameUseCase(get()) }
+    single { KetoFriendlyValidator() }
+    single { KetoMealHelper(get(), get()) }
+    single { GetHealthyFastFoodMealsUseCase(get()) }
     single { IngredientGameUseCase(get()) }
     single { EasyMealsSuggestionUseCase(get()) }
     single { ExploreCountryFoodCultureUseCase(get()) }
     single { SuggestSweetWithoutEggUseCase(get()) }
+    single { GetItalianFoodForLargeGroupUseCase(get()) }
+    single { GymHelperUseCase(get()) }
 }
