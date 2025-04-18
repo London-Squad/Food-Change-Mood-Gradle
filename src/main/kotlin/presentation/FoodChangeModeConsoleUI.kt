@@ -1,8 +1,7 @@
 package presentation
+
 import presentation.easyMeal.EasyMealView
 import presentation.foodCulture.CountryFoodCultureView
-
-import logic.GymHelperUseCase
 
 class FoodChangeModeConsoleUI(
     private val iraqiMealsView: IraqiMealsView,
@@ -10,10 +9,10 @@ class FoodChangeModeConsoleUI(
     private val mealGuessGameView: MealGuessGameView,
     private val easyMealView: EasyMealView,
     private val italianFoodForLargeGroupView: ItalianFoodForLargeGroupView,
-    private val ketoSuggetionHelperView:KetoSuggetionHelperView,
+    private val ketoSuggestionHelperView: KetoSuggetionHelperView,
     private val countryFoodCultureView: CountryFoodCultureView,
     private val ingredientGameView: IngredientGameView,
-    private val getGymHelperUseCase: GymHelperUseCase,
+    private val gymHelperView: GymHelperView,
 ) : BaseView {
 
     override fun start() {
@@ -25,13 +24,12 @@ class FoodChangeModeConsoleUI(
         showOptions()
         val input = getUserInput()
         when (input) {
-            1 -> lunchHealthyFoodList()
             2 -> suggestSweetWithoutEggView.start()
             3 -> iraqiMealsView.start()
             4 -> easyMealView.start()
             5 -> mealGuessGameView.start()
-            7->ketoSuggetionHelperView.start()
-            9 -> lunchGymHelper()
+            7 -> ketoSuggestionHelperView.start()
+            9 -> gymHelperView.start()
             15 -> italianFoodForLargeGroupView.start()
             10 -> countryFoodCultureView.start()
             11 -> ingredientGameView.start()
@@ -64,10 +62,5 @@ class FoodChangeModeConsoleUI(
 
     private fun getUserInput(): Int? {
         return readlnOrNull()?.toIntOrNull()
-    }
-    private fun lunchGymHelper(){
-        getGymHelperUseCase.getGymMembersMeals().forEach {
-            println(it)
-        }
     }
 }
