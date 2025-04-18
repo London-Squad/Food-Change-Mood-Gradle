@@ -7,6 +7,7 @@ import logic.search.InMemorySearchCache
 import logic.search.InvertedIndexBuilder
 import logic.search.LevenshteinSearch
 import logic.search.MealSearchRepositoryImpl
+import logic.useCase.EasyMealsSuggestionUseCase
 import org.koin.dsl.module
 
 val useCaseModule = module {
@@ -16,8 +17,10 @@ val useCaseModule = module {
     single<SearchCache> { InMemorySearchCache() }
     single<TextSearchAlgorithm> { LevenshteinSearch() }
     single<MealSearchRepository> { MealSearchRepositoryImpl(get(), get(), get(), get()) }
-
     single { GetIraqiMealsUseCase(get()) }
     single { MealGuessGameUseCase(get()) }
     single{KetoMealHelper(get())}
+    single { IngredientGameUseCase(get()) }
+    single { EasyMealsSuggestionUseCase(get()) }
+    single { SuggestSweetWithoutEggUseCase(get()) }
 }
