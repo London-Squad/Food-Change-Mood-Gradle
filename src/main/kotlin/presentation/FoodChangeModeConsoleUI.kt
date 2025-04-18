@@ -38,7 +38,6 @@ class FoodChangeModeConsoleUI(
     private fun showOptions() {
         println("\n\n=== please enter one of the following numbers ===\n")
         println("1- Get a List of Healthy Fast Food Meals")
-        println("\n\n=== please enter one of the following numbers ===")
         println("2- Suggest Sweets Without Eggs")
         println("3- Get a List of Iraqi Meals")
         println("4- Get Easy Food Suggestion")

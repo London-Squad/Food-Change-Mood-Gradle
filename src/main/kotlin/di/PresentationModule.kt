@@ -15,7 +15,7 @@ val presentationModule = module {
     factory { MealGuessGameView(get()) }
     factory { EasyMealView(get()) }
     factory { IngredientGameView(get()) }
-    single {GetHealtyFastFoodMealsView(get(),get())}
+    factory {GetHealtyFastFoodMealsView(get(),get())}
 
 
     factoryOf(::FoodChangeModeConsoleUI)
