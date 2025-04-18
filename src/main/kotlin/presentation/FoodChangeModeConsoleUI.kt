@@ -8,7 +8,7 @@ class FoodChangeModeConsoleUI(
     private val getIraqiMealsView: GetIraqiMealsView,
     private val mealGuessGameView: MealGuessGameView,
     private val mealSearchByNameView: MealSearchByNameView,
-    private val mealSearchByDateView: MealSearchByDateView
+    private val mealSearchByDateView: MealSearchByDateView,
     private val easyMealView: EasyMealView,
     private val countryFoodCultureView: CountryFoodCultureView,
     private val ingredientGameView: IngredientGameView,
