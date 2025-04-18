@@ -1,16 +1,16 @@
 package presentation
 
-import logic.SweetWithoutEggSuggesterUseCase
+import logic.SuggestSweetWithoutEggUseCase
 
-class SweetWithoutEggSuggesterView(
-    private val sweetWithoutEggSuggesterUseCase: SweetWithoutEggSuggesterUseCase,
+class SuggestSweetWithoutEggView(
+    private val suggestSweetWithoutEggUseCase: SuggestSweetWithoutEggUseCase,
     private val viewUtil: ViewUtil
 ) : BaseView {
 
     override fun start() {
         printHeader()
 
-        sweetWithoutEggSuggesterUseCase.clearSuggestedList()
+        suggestSweetWithoutEggUseCase.clearSuggestedList()
         getSweetWithoutEggs()
     }
 
@@ -22,7 +22,7 @@ class SweetWithoutEggSuggesterView(
 
     private fun getSweetWithoutEggs() {
 
-        val sweet = sweetWithoutEggSuggesterUseCase.suggestSweet()
+        val sweet = suggestSweetWithoutEggUseCase.suggestSweet()
 
         if (sweet == null) {
             println("No more sweets to suggest!")

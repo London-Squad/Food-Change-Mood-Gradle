@@ -2,7 +2,7 @@ package logic
 
 import model.Meal
 
-class SweetWithoutEggSuggesterUseCase(mealsDataSource: MealsDataSource) {
+class SuggestSweetWithoutEggUseCase(mealsDataSource: MealsDataSource) {
     private val eggFreeSweets = getSweetsWithoutEggs(mealsDataSource.getAllMeals())
     private val suggested = mutableSetOf<Int>()
 

@@ -3,7 +3,7 @@ package presentation
 class FoodChangeModeConsoleUI(
     private val getIraqiMealsView: GetIraqiMealsView,
     private val mealGuessGameView: MealGuessGameView,
-    private val sweetWithoutEggSuggesterView: SweetWithoutEggSuggesterView
+    private val suggestSweetWithoutEggView: SuggestSweetWithoutEggView
 ) : BaseView {
 
     override fun start() {
@@ -15,7 +15,7 @@ class FoodChangeModeConsoleUI(
         showOptions()
         val input = getUserInput()
         when (input) {
-            2 -> sweetWithoutEggSuggesterView.start()
+            2 -> suggestSweetWithoutEggView.start()
             3 -> getIraqiMealsView.start()
             5 -> mealGuessGameView.start()
             0 -> return
