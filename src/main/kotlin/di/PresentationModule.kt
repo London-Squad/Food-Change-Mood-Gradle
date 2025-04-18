@@ -7,7 +7,7 @@ import presentation.*
 val presentationModule = module {
     single { ViewUtil() }
     single { GetIraqiMealsView(get(), get()) }
-    single { MealGuessGameView(get()) }
+    single { GuessMealGameView(get()) }
     single { GetMealsContainPotatoView(get(), get()) }
 
     single {

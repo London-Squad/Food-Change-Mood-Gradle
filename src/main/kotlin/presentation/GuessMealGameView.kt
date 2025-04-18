@@ -1,9 +1,9 @@
 package presentation
 
-import logic.MealGuessGameUseCase
+import logic.GuessMealGameUseCase
 
-class MealGuessGameView(
-    private val mealGuessGameUseCase: MealGuessGameUseCase
+class GuessMealGameView(
+    private val guessMealGameUseCase: GuessMealGameUseCase
 ) : BaseView {
 
     override fun start() {
@@ -20,17 +20,17 @@ class MealGuessGameView(
 
     private fun startGuessGame() {
 
-        val randomMeal = mealGuessGameUseCase.getRandomMeal()
+        val randomMeal = guessMealGameUseCase.getRandomMeal()
 
         println("\nMeal Name: ${randomMeal.name}")
         var attempt = 1
         var result: String
         do {
             val guess = getValidGuess(attempt)
-            result = mealGuessGameUseCase.checkGuessAttempt(guess, randomMeal.minutes!!)
+            result = guessMealGameUseCase.checkGuessAttempt(guess, randomMeal.minutes!!)
             println(result)
             attempt++
-        } while (!mealGuessGameUseCase.isAttemptExceeded(attempt) && result != "correct")
+        } while (!guessMealGameUseCase.isAttemptExceeded(attempt) && result != "correct")
 
         if (result != "correct") {
             println("Game Over! the correct answer is ${randomMeal.minutes}")
