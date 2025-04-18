@@ -3,9 +3,11 @@ package logic
 import model.Meal
 import kotlin.math.min
 
-class KetoMealHelper(private val mealRepository: MealsDataSource) {
+class KetoMealHelper(
+    private val mealRepository: MealsDataSource,
+    private val validator: KetoFriendlyValidator
+) {
     private val suggestedMealIds = mutableSetOf<Int>()
-    private val validator = KetoFriendlyValidator()
 
     fun getKetoDishesSuggestion(): Meal {
         val allMeals = mealRepository.getAllMeals()
