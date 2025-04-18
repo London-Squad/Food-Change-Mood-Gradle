@@ -6,7 +6,8 @@ class FoodChangeModeConsoleUI(
     private val suggestSweetWithoutEggView: SuggestSweetWithoutEggView,
     private val getIraqiMealsView: GetIraqiMealsView,
     private val mealGuessGameView: MealGuessGameView,
-    private val easyMealView: EasyMealView
+    private val easyMealView: EasyMealView,
+    private val ingredientGameView: IngredientGameView,
 ) : BaseView {
 
     override fun start() {
@@ -22,6 +23,7 @@ class FoodChangeModeConsoleUI(
             3 -> getIraqiMealsView.start()
             4 -> startEasyMealView()
             5 -> mealGuessGameView.start()
+            11 -> ingredientGameView.start()
             0 -> return
             else -> println("Invalid Input")
         }
@@ -40,6 +42,7 @@ class FoodChangeModeConsoleUI(
         println("3- Get a List of Iraqi Meals")
         println("4- Get Easy Food Suggestion")
         println("5- Meal Guess Game")
+        println("11- Ingredient Game")
         println("0- Exit")
         println("here: ")
     }
