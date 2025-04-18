@@ -11,6 +11,10 @@ build/
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
+*.xml
+.idea/.name
+.idea/kotlinc.xml
+
 *.iws
 *.iml
 *.ipr
