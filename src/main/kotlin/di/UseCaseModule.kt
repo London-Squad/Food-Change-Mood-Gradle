@@ -11,6 +11,8 @@ import logic.search.byName.MealNameInvertedIndexBuilder
 import logic.search.byName.MealSearchByNameUseCaseImpl
 import model.Meal
 import org.koin.core.qualifier.named
+import logic.useCase.EasyMealsSuggestionUseCase
+import logic.useCase.ExploreCountryFoodCultureUseCase
 import org.koin.dsl.module
 import java.time.LocalDate
 
@@ -46,4 +48,8 @@ val useCaseModule = module {
 
     single { GetIraqiMealsUseCase(get()) }
     single { MealGuessGameUseCase(get()) }
+    single { IngredientGameUseCase(get()) }
+    single { EasyMealsSuggestionUseCase(get()) }
+    single { ExploreCountryFoodCultureUseCase(get()) }
+    single { SuggestSweetWithoutEggUseCase(get()) }
 }

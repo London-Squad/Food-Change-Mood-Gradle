@@ -1,23 +1,26 @@
 package di
 
 import org.koin.core.qualifier.named
+import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 import presentation.*
+import presentation.*
+import presentation.*
+import presentation.easyMeal.EasyMealView
+import presentation.foodCulture.CountryFoodCultureView
 
 
 val presentationModule = module {
-    single { ViewUtil() }
-    single { GetIraqiMealsView(get(), get()) }
-    single { MealGuessGameView(get()) }
-    single { MealSearchByNameView(get(named("byName")), get()) }
-    single { MealSearchByDateView(get(named("byDate")), get()) }
+    factory { MealSearchByNameView(get(named("byName")), get()) }
+    factory { MealSearchByDateView(get(named("byDate")), get()) }
 
-    single {
-        FoodChangeModeConsoleUI(
-            getIraqiMealsView = get(),
-            mealGuessGameView = get(),
-            mealSearchByNameView = get(),
-            mealSearchByDateView = get()
-        )
-    }
+    factory { ViewUtil() }
+    factory { SuggestSweetWithoutEggView(get(), get()) }
+    factory { GetIraqiMealsView(get(), get()) }
+    factory { MealGuessGameView(get()) }
+    factory { EasyMealView(get()) }
+    factory { CountryFoodCultureView(get()) }
+    factory { IngredientGameView(get()) }
+
+    factoryOf(::FoodChangeModeConsoleUI)
 }
