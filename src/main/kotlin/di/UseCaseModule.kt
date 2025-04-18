@@ -28,7 +28,6 @@ val useCaseModule = module {
     // Search Cache and Algorithm
     single<SearchCache> { InMemorySearchCache() }
     single<TextSearchAlgorithm> { LevenshteinSearch() }
-    single<MealSearchRepository> { MealSearchRepositoryImpl(get(), get(), get(), get()) }
 
     // Use Cases
     single<MealSearchUseCase<List<Meal>>>(named("byName")) {
