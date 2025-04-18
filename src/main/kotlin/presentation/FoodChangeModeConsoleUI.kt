@@ -3,11 +3,12 @@ import presentation.easyMeal.EasyMealView
 import presentation.foodCulture.CountryFoodCultureView
 
 class FoodChangeModeConsoleUI(
+    private val iraqiMealsView: IraqiMealsView,
     private val suggestSweetWithoutEggView: SuggestSweetWithoutEggView,
-    private val getIraqiMealsView: GetIraqiMealsView,
     private val mealGuessGameView: MealGuessGameView,
-    private val ketoSuggetionHelperView:KetoSuggetionHelperView,
     private val easyMealView: EasyMealView,
+    private val italianFoodForLargeGroupView: ItalianFoodForLargeGroupView,
+    private val ketoSuggetionHelperView:KetoSuggetionHelperView,
     private val countryFoodCultureView: CountryFoodCultureView,
     private val ingredientGameView: IngredientGameView,
 ) : BaseView {
@@ -22,10 +23,11 @@ class FoodChangeModeConsoleUI(
         val input = getUserInput()
         when (input) {
             2 -> suggestSweetWithoutEggView.start()
-            3 -> getIraqiMealsView.start()
+            3 -> iraqiMealsView.start()
             4 -> easyMealView.start()
             5 -> mealGuessGameView.start()
             7->ketoSuggetionHelperView.start()
+            15 -> italianFoodForLargeGroupView.start()
             10 -> countryFoodCultureView.start()
             11 -> ingredientGameView.start()
             0 -> return
@@ -48,6 +50,7 @@ class FoodChangeModeConsoleUI(
         println("7- Get one Keto by Keto Helper")
         println("10- Explore other country culture")
         println("11- Ingredient Game")
+        println("15- Get a List of Italian food that is suitable for large group of friends")
         println("0- Exit")
         println("here: ")
     }
