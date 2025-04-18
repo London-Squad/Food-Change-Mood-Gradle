@@ -18,7 +18,7 @@ import java.time.LocalDate
 import kotlin.math.sin
 
 val useCaseModule = module {
-    single<MealsDataSource> { CsvMealsDataSourceOneTimeLoad(get(), get(), 50000) }
+    single<MealsDataSource> { CsvMealsDataSourceOneTimeLoad(get(), get(), -1) }
 
     // Index Builders
     single<IndexBuilder<String, Set<Int>>>(named("NAME")) { MealNameInvertedIndexBuilder(get<MealsDataSource>()) }
@@ -58,4 +58,5 @@ val useCaseModule = module {
     single { SuggestSweetWithoutEggUseCase(get()) }
     single { GetItalianFoodForLargeGroupUseCase(get()) }
     single { GymHelperUseCase(get()) }
+    single { GetMealsContainPotatoUseCase(get()) }
 }

@@ -16,7 +16,7 @@ val presentationModule = module {
     factory { MealSearchByDateView(get(named("byDate")), get()) }
 
     factory { ViewUtil() }
-    factory { GetIraqiMealsView(get(), get()) }
+    factory { IraqiMealsView(get(), get()) }
     factory { SuggestSweetWithoutEggView(get(), get()) }
     factory { MealGuessGameView(get()) }
     factory { EasyMealView(get()) }
@@ -26,6 +26,7 @@ val presentationModule = module {
     factory { GymHelperView(get(), get()) }
     factory { GetHealthyFastFoodMealsView(get()) }
     factory { KetoSuggestionHelperView(get(), get()) }
+    single { GetMealsContainPotatoView(get(), get()) }
 
     factoryOf(::FoodChangeModeConsoleUI)
 }
