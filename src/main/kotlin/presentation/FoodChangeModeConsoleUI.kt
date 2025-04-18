@@ -2,8 +2,8 @@ package presentation
 
 import presentation.easyMeal.EasyMealView
 import presentation.foodCulture.CountryFoodCultureView
-import presentation.getHealthyFastFoodMeals.GetHealthyFastFoodMealsView
-import presentation.getIraqiMeals.GetIraqiMealsView
+import presentation.healthyFastFoodMeals.GetHealthyFastFoodMealsView
+import presentation.iraqiMeals.GetIraqiMealsView
 import presentation.gymHelper.GymHelperView
 import presentation.ingredientGame.IngredientGameView
 import presentation.italianFoodForLargeGroup.ItalianFoodForLargeGroupView
