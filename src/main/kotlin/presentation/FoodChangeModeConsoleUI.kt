@@ -1,25 +1,25 @@
 package presentation
 
-import logic.GetItalianFoodForLargeGroupUseCase
+import presentation.easyMeal.EasyMealView
 
 class FoodChangeModeConsoleUI(
-    //TODO: add feature useCase to class constructor
-    private val italianFoodForLargeGroupUseCase: GetItalianFoodForLargeGroupUseCase
-) {
+    private val getIraqiMealsView: GetIraqiMealsView,
+    private val mealGuessGameView: MealGuessGameView,
+    private val easyMealView: EasyMealView
+) : BaseView {
 
-    fun start() {
+    override fun start() {
         showWelcome()
         presentFeatures()
     }
 
     private fun presentFeatures() {
-        //TODO: create a function for the new useCase and add case for selecting new feature in 'when' statement (like the first case)
-
         showOptions()
         val input = getUserInput()
         when (input) {
-            1 -> lunchHealthyFoodList()
-            15 -> launchItalianFoodForLargeGroup()
+            3 -> getIraqiMealsView.start()
+            5 -> mealGuessGameView.start()
+            4 -> startEasyMealView()
             0 -> return
             else -> println("Invalid Input")
         }
@@ -33,31 +33,20 @@ class FoodChangeModeConsoleUI(
     private fun showOptions() {
         //TODO: add option for new features
 
-        println("\n\n=== please enter one of the following numbers ===")
-        println("1- Get a List of Healthy Fast Food Meals")
+        println("\n\n=== please enter one of the following numbers ===\n")
+        println("3- Get a List of Iraqi Meals")
+        println("4- Get Easy Food Suggestion")
+        println("5- Meal Guess Game")
         println("15- Get a List of Italian food that is suitable for large group of friends")
         println("0- Exit")
         println("here: ")
     }
 
-    private fun lunchHealthyFoodList() {
-        //TODO: update this when implementing the useCase
-    }
-
-    private fun launchItalianFoodForLargeGroup() {
-        val italianMeals = italianFoodForLargeGroupUseCase.getItalianMealsForLargeGroup()
-
-        if (italianMeals.isNotEmpty()) {
-            italianMeals.forEach {
-                println(it.name)
-            }
-        } else {
-            println("There is no italian meals!")
-        }
-    }
-
-
     private fun getUserInput(): Int? {
         return readlnOrNull()?.toIntOrNull()
+    }
+
+    private fun startEasyMealView() {
+        easyMealView.displayEasyMeals()
     }
 }
