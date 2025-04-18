@@ -1,11 +1,16 @@
 package data
 
 import java.io.File
+import java.io.FileNotFoundException
 
 class FileReader (
     private val file : File
 ) {
     fun getText() : String {
-        return file.readText()
+        return try {
+            file.readText()
+        } catch (e: FileNotFoundException){
+            ""
+        }
     }
 }
