@@ -1,6 +1,5 @@
 package di
 
-//import data.FakeMealsDataSource
 import data.csvData.CsvMealsDataSourceOneTimeLoad
 import logic.*
 import logic.search.InMemorySearchCache
@@ -8,7 +7,9 @@ import logic.search.InvertedIndexBuilder
 import logic.search.LevenshteinSearch
 import logic.search.MealSearchRepositoryImpl
 import logic.useCase.EasyMealsSuggestionUseCase
+import logic.useCase.ExploreCountryFoodCultureUseCase
 import org.koin.dsl.module
+import kotlin.math.sin
 
 val useCaseModule = module {
     single<MealsDataSource> { CsvMealsDataSourceOneTimeLoad(get(), get(), 50000) }
@@ -17,9 +18,13 @@ val useCaseModule = module {
     single<SearchCache> { InMemorySearchCache() }
     single<TextSearchAlgorithm> { LevenshteinSearch() }
     single<MealSearchRepository> { MealSearchRepositoryImpl(get(), get(), get(), get()) }
-
     single { GetIraqiMealsUseCase(get()) }
     single { MealGuessGameUseCase(get()) }
+    single { KetoFriendlyValidator() }
+    single { KetoMealHelper(get(), get()) }
+    single { IngredientGameUseCase(get()) }
     single { EasyMealsSuggestionUseCase(get()) }
+    single { ExploreCountryFoodCultureUseCase(get()) }
+    single { SuggestSweetWithoutEggUseCase(get()) }
     single { GetItalianFoodForLargeGroupUseCase(get()) }
 }
