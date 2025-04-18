@@ -3,6 +3,7 @@ package di
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 import presentation.*
+
 import presentation.easyMeal.EasyMealView
 import presentation.foodCulture.CountryFoodCultureView
 
@@ -10,6 +11,7 @@ import presentation.foodCulture.CountryFoodCultureView
 val presentationModule = module {
     factory { ViewUtil() }
     factory { IraqiMealsView(get(), get()) }
+    factory { GetIraqiMealsView(get(), get()) }
     factory { SuggestSweetWithoutEggView(get(), get()) }
     factory { MealGuessGameView(get()) }
     factory { EasyMealView(get()) }
@@ -18,6 +20,8 @@ val presentationModule = module {
     factory { IngredientGameView(get()) }
     factory { KetoSuggetionHelperView(get(), get()) }
     factory { GymHelperView(get(), get()) }
+    factory { GetHealthyFastFoodMealsView(get()) }
+    factory { KetoSuggestionHelperView(get(), get()) }
 
     factoryOf(::FoodChangeModeConsoleUI)
 }
