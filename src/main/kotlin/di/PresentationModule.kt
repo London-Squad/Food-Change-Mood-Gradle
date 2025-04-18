@@ -1,5 +1,6 @@
 package di
 
+import org.koin.core.qualifier.named
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 import presentation.*
@@ -9,8 +10,11 @@ import presentation.foodCulture.CountryFoodCultureView
 
 
 val presentationModule = module {
+    factory { MealSearchByNameView(get(named("byName")), get()) }
+    factory { MealSearchByDateView(get(named("byDate")), get()) }
+
     factory { ViewUtil() }
-    factory { GetIraqiMealsView(get(), get()) }
+    factory { IraqiMealsView(get(), get()) }
     factory { SuggestSweetWithoutEggView(get(), get()) }
     factory { MealGuessGameView(get()) }
     factory { EasyMealView(get()) }
@@ -20,6 +24,7 @@ val presentationModule = module {
     factory { GymHelperView(get(), get()) }
     factory { GetHealthyFastFoodMealsView(get()) }
     factory { KetoSuggestionHelperView(get(), get()) }
+    single { GetMealsContainPotatoView(get(), get()) }
     factory { GetHighCalorieMealsView(get(), get()) }
 
     factoryOf(::FoodChangeModeConsoleUI)

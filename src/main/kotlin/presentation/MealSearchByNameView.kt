@@ -1,26 +1,34 @@
 package presentation
 
-import logic.GetIraqiMealsUseCase
+import logic.MealSearchUseCase
 import model.Meal
 
-class GetIraqiMealsView(
-    private val getIraqiMealsUseCase: GetIraqiMealsUseCase,
+class MealSearchByNameView(
+    private val mealSearchUseCase: MealSearchUseCase<List<Meal>>,
     private val viewUtil: ViewUtil
 ) : BaseView {
 
     override fun start() {
-        val chunkedIraqiMeals = getIraqiMealsUseCase.getIraqiMeals()
-            .chunked(MAX_NUMBER_OF_MEALS_TO_BE_PRINTED_AT_ONCE)
+        println("Enter a keyword to search for meals (or '0' to return to main menu):")
+        val keyword = readlnOrNull() ?: ""
+        if (keyword == "0") return
 
-        var userInput: String?
+        val searchResults = mealSearchUseCase.searchMeals(keyword)
+        if (searchResults.isEmpty()) {
+            println("No meals found for keyword '$keyword'.")
+            return
+        }
+
+        val chunkedMeals = searchResults.chunked(MAX_NUMBER_OF_MEALS_TO_BE_PRINTED_AT_ONCE)
         var mealsChunkIndex = 0
+        var userInput: String?
         var mealsChunk: List<Meal>
 
         do {
-            mealsChunk = chunkedIraqiMeals[mealsChunkIndex]
+            mealsChunk = chunkedMeals[mealsChunkIndex]
 
-            printMealsNames(mealsChunk)
-            printOptions(mealsChunkIndex, chunkedIraqiMeals.size)
+            printMealsNames(mealsChunk, keyword)
+            printOptions(mealsChunkIndex, chunkedMeals.size)
 
             userInput = readln()
 
@@ -29,37 +37,32 @@ class GetIraqiMealsView(
                 "back" -> mealsChunkIndex--
                 "0" -> break
                 in (1..mealsChunk.size).map { it.toString() } -> {
-                    printMealAndWaitForEnter(
-                        mealsChunk[userInput.toInt() - 1]
-                    )
+                    printMealAndWaitForEnter(mealsChunk[userInput.toInt() - 1])
                     break
                 }
-
                 else -> println("Invalid input, try again")
             }
-
-        } while (mealsChunkIndex < chunkedIraqiMeals.size && mealsChunkIndex >= 0)
+        } while (mealsChunkIndex < chunkedMeals.size && mealsChunkIndex >= 0)
     }
 
-    private fun printOptions(mealsChunkIndex: Int, mealsChunksize: Int) {
+    private fun printOptions(mealsChunkIndex: Int, mealsChunkSize: Int) {
         println()
-        if ((mealsChunkIndex + 1) < mealsChunksize) {
+        if ((mealsChunkIndex + 1) < mealsChunkSize) {
             println("If you want more meals, write 'next'")
         }
         if (mealsChunkIndex > 0) {
             println("If you want the previous meals, write 'back'")
         }
-        println("If you want the details of one of the meal, enter its number")
+        println("If you want the details of one of the meals, enter its number")
         println("If you want to go back to the main menu, enter 0")
         println()
-        print("your input: ")
+        print("Your input: ")
     }
 
-    private fun printMealsNames(meals: List<Meal>) {
-
+    private fun printMealsNames(meals: List<Meal>, keyword: String) {
         println()
         println("---------------------------------------------")
-        println("                 Iraqi Meals                 ")
+        println("          Search Results for '$keyword'       ")
         println("---------------------------------------------")
 
         meals.forEachIndexed { mealIndex, meal ->
@@ -70,12 +73,11 @@ class GetIraqiMealsView(
 
     private fun printMealAndWaitForEnter(meal: Meal) {
         viewUtil.printMeal(meal)
-        println("press Enter to go back to main menu")
+        println("Press Enter to go back to main menu")
         readlnOrNull()
     }
 
     private companion object {
         const val MAX_NUMBER_OF_MEALS_TO_BE_PRINTED_AT_ONCE = 10
     }
-
 }
