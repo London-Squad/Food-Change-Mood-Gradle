@@ -20,6 +20,7 @@ val presentationModule = module {
     factory { GymHelperView(get(), get()) }
     factory { GetHealthyFastFoodMealsView(get()) }
     factory { KetoSuggestionHelperView(get(), get()) }
+    factory { GetSeaFoodMealsView(get(), get()) }
 
     factoryOf(::FoodChangeModeConsoleUI)
 }

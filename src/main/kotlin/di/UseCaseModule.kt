@@ -10,7 +10,6 @@ import logic.search.MealSearchRepositoryImpl
 import logic.useCase.EasyMealsSuggestionUseCase
 import logic.useCase.ExploreCountryFoodCultureUseCase
 import org.koin.dsl.module
-import kotlin.math.sin
 
 val useCaseModule = module {
     single<MealsDataSource> { CsvMealsDataSourceOneTimeLoad(get(), get(), 50000) }
@@ -23,11 +22,12 @@ val useCaseModule = module {
     single { MealGuessGameUseCase(get()) }
     single { KetoFriendlyValidator() }
     single { KetoMealHelper(get(), get()) }
-    single{GetHealthyFastFoodMealsUseCase(get())}
+    single { GetHealthyFastFoodMealsUseCase(get()) }
     single { IngredientGameUseCase(get()) }
     single { EasyMealsSuggestionUseCase(get()) }
     single { ExploreCountryFoodCultureUseCase(get()) }
     single { SuggestSweetWithoutEggUseCase(get()) }
     single { GetItalianFoodForLargeGroupUseCase(get()) }
     single { GymHelperUseCase(get()) }
+    single { GetSeaFoodMealsUseCase(get()) }
 }
