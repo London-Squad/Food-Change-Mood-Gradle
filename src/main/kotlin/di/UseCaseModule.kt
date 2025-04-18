@@ -1,23 +1,62 @@
 package di
 
-//import data.FakeMealsDataSource
 import data.csvData.CsvMealsDataSourceOneTimeLoad
 import logic.*
-import logic.search.InMemorySearchCache
-import logic.search.InvertedIndexBuilder
-import logic.search.LevenshteinSearch
-import logic.search.MealSearchRepositoryImpl
-import logic.useCase.EasyMealsSuggestionUseCase
-import logic.useCase.ExploreCountryFoodCultureUseCase
+import logic.ketoMealHelper.KetoFriendlyValidator
+import logic.ketoMealHelper.KetoMealHelper
+import logic.getIraqiMeals.GetIraqiMealsUseCase
+import logic.search.byDate.IdIndexBuilder
+import logic.search.byDate.MealDateInvertedIndexBuilder
+import logic.search.byDate.MealSearchByDateUseCaseImpl
+import logic.search.byName.InMemorySearchCache
+import logic.search.byName.MealNameInvertedIndexBuilder
+import logic.search.byName.MealSearchByNameUseCaseImpl
+import model.Meal
+import org.koin.core.qualifier.named
+import logic.easyMealsSuggestion.EasyMealsSuggestionUseCase
+import logic.exploreCountryFoodCulture.ExploreCountryFoodCultureUseCase
+import logic.getHealthyFastFoodMeals.GetHealthyFastFoodMealsUseCase
+import logic.getHighCalorieMeals.GetHighCalorieMealsUseCase
+import logic.getItalianFoodForLargeGroup.GetItalianFoodForLargeGroupUseCase
+import logic.getMealsContainPotato.GetMealsContainPotatoUseCase
+import logic.gymHelper.GymHelperUseCase
+import logic.ingredientGame.IngredientGameUseCase
+import logic.mealGuessGame.MealGuessGameUseCase
+import logic.search.*
+import logic.suggestSweetWithoutEgg.SuggestSweetWithoutEggUseCase
 import org.koin.dsl.module
+import java.time.LocalDate
 
 val useCaseModule = module {
-    single<MealsDataSource> { CsvMealsDataSourceOneTimeLoad(get(), get(), 50000) }
+    single<MealsDataSource> { CsvMealsDataSourceOneTimeLoad(get(), get(), 5000) }
 
-    single<IndexBuilder> { InvertedIndexBuilder() }
+    // Index Builders
+    single<IndexBuilder<String, Set<Int>>>(named("NAME")) { MealNameInvertedIndexBuilder(get<MealsDataSource>()) }
+    single<IndexBuilder<LocalDate, List<Int>>>(named("DATE")) { MealDateInvertedIndexBuilder(get<MealsDataSource>()) }
+    single<IndexBuilder<Int, Int>>(named("ID")) { IdIndexBuilder(get<MealsDataSource>()) }
+
+    // Search Cache and Algorithm
     single<SearchCache> { InMemorySearchCache() }
     single<TextSearchAlgorithm> { LevenshteinSearch() }
-    single<MealSearchRepository> { MealSearchRepositoryImpl(get(), get(), get(), get()) }
+
+    // Use Cases
+    single<MealSearchUseCase<List<Meal>>>(named("byName")) {
+        MealSearchByNameUseCaseImpl(
+            mealsDataSource = get<MealsDataSource>(),
+            searchAlgorithm = get<TextSearchAlgorithm>(),
+            cache = get<SearchCache>(),
+            indexBuilder = get<IndexBuilder<String, Set<Int>>>(named("NAME"))
+        )
+    }
+
+    single<MealSearchUseCase<List<Pair<Int, String>>>>(named("byDate")) {
+        MealSearchByDateUseCaseImpl(
+            mealsDataSource = get<MealsDataSource>(),
+            dateIndexBuilder = get<IndexBuilder<LocalDate, List<Int>>>(named("DATE")),
+            idIndexBuilder = get<IndexBuilder<Int, Int>>(named("ID"))
+        )
+    }
+
     single { GetIraqiMealsUseCase(get()) }
     single { MealGuessGameUseCase(get()) }
     single { KetoFriendlyValidator() }
@@ -29,5 +68,7 @@ val useCaseModule = module {
     single { SuggestSweetWithoutEggUseCase(get()) }
     single { GetItalianFoodForLargeGroupUseCase(get()) }
     single { GymHelperUseCase(get()) }
+    single { GetHighCalorieMealsUseCase(get()) }
+    single { GetMealsContainPotatoUseCase(get()) }
     single { GetSeaFoodMealsUseCase(get()) }
 }

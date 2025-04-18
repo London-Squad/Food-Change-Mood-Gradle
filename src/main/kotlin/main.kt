@@ -10,7 +10,6 @@ fun main() {
     startKoin {
         modules(appModule, useCaseModule, presentationModule)
     }
-
-    val ui : FoodChangeModeConsoleUI = getKoin().get()
+    val ui: FoodChangeModeConsoleUI = getKoin().get()
     ui.start()
 }

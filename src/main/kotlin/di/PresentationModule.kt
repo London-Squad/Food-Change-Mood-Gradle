@@ -1,16 +1,33 @@
 package di
 
+import org.koin.core.qualifier.named
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 import presentation.*
 
 import presentation.easyMeal.EasyMealView
 import presentation.foodCulture.CountryFoodCultureView
+import presentation.healthyFastFoodMeals.GetHealthyFastFoodMealsView
+import presentation.gymHelper.GymHelperView
+import presentation.highCalorieMeals.GetHighCalorieMealsView
+import presentation.ingredientGame.IngredientGameView
+import presentation.iraqiMeals.IraqiMealsView
+import presentation.italianFoodForLargeGroup.ItalianFoodForLargeGroupView
+import presentation.ketoSuggestionHelper.KetoSuggestionHelperView
+import presentation.mealGuessGame.MealGuessGameView
+import presentation.mealSearchByDate.MealSearchByDateView
+import presentation.mealSearchByName.MealSearchByNameView
+import presentation.mealsContainPotato.GetMealsContainPotatoView
+import presentation.suggestSweetWithoutEgg.SuggestSweetWithoutEggView
+import presentation.utils.ViewUtil
 
 
 val presentationModule = module {
+    factory { MealSearchByNameView(get(named("byName")), get()) }
+    factory { MealSearchByDateView(get(named("byDate")), get()) }
+
     factory { ViewUtil() }
-    factory { GetIraqiMealsView(get(), get()) }
+    factory { IraqiMealsView(get(), get()) }
     factory { SuggestSweetWithoutEggView(get(), get()) }
     factory { MealGuessGameView(get()) }
     factory { EasyMealView(get()) }
@@ -21,6 +38,8 @@ val presentationModule = module {
     factory { GetHealthyFastFoodMealsView(get()) }
     factory { KetoSuggestionHelperView(get(), get()) }
     factory { GetSeaFoodMealsView(get(), get()) }
+    factory { GetMealsContainPotatoView(get(), get()) }
+    factory { GetHighCalorieMealsView(get(), get()) }
 
     factoryOf(::FoodChangeModeConsoleUI)
 }

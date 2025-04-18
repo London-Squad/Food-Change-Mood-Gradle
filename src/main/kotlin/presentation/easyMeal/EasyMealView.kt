@@ -1,10 +1,8 @@
 package presentation.easyMeal
 
-import logic.useCase.EasyMealsSuggestionUseCase
-import model.Meal
+import logic.easyMealsSuggestion.EasyMealsSuggestionUseCase
 import presentation.BaseView
-import presentation.meal.MealDetailsView
-import presentation.meal.MealListView
+import presentation.mealDetails.MealListView
 
 class EasyMealView(
     useCase: EasyMealsSuggestionUseCase

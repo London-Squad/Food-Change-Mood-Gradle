@@ -1,8 +1,8 @@
 package presentation.foodCulture
 
-import logic.useCase.ExploreCountryFoodCultureUseCase
+import logic.exploreCountryFoodCulture.ExploreCountryFoodCultureUseCase
 import presentation.BaseView
-import presentation.meal.MealListView
+import presentation.mealDetails.MealListView
 
 class CountryFoodCultureView(
     private val useCase: ExploreCountryFoodCultureUseCase
