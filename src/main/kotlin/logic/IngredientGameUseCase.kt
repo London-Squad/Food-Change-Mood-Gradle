@@ -11,6 +11,8 @@ class IngredientGameUseCase(
     private var loss: Boolean = false
     private var correctChoice by Delegates.notNull<Int>()
 
+    fun isGamePlayable(): Boolean = mealsDataSource.getAllMeals().size > 2
+
     fun getScore() = score
 
     fun getRandomMealNameAndIngredientOptions(): Pair<String, List<String>> =

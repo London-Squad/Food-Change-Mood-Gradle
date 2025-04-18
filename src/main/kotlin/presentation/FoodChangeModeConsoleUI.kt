@@ -14,7 +14,7 @@ class FoodChangeModeConsoleUI(
     private val countryFoodCultureView: CountryFoodCultureView,
     private val ingredientGameView: IngredientGameView,
     private val gymHelperView: GymHelperView,
-    private val getSeaFoodMealsView: GetSeaFoodMealsView,
+    private val getSeaFoodMealsView: GetSeaFoodMealsView
 ) : BaseView {
 
     override fun start() {

@@ -7,6 +7,9 @@ class KetoSuggestionHelperView(private val ketoHelperUseCase:KetoMealHelper,
     override fun start() {
         println("🥑 Keto Meal Suggestion")
         val suggestedMeal = ketoHelperUseCase.getKetoDishesSuggestion()
+
+        if (suggestedMeal==null) {println("no meals found :'("); return}
+
         viewUtil.printMeal(suggestedMeal)
     }
 

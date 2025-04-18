@@ -12,6 +12,8 @@ class GetSeaFoodMealsView(
             .getSeaFoodMealsSortedByProtein()
             .chunked(MAX_NUMBER_OF_MEALS_TO_BE_PRINTED_AT_ONCE)
 
+        if (chunkedMeals.isEmpty()) {println("no meals found :'("); return}
+
         var userInput: String?
         var mealsChunkIndex = 0
         var mealsChunk: List<Meal>

@@ -11,6 +11,8 @@ class MealGuessGameUseCase(
             .getRandomMeals(::isMealWithValidTime, 1).first()
     }
 
+    fun isTwoOrMoreMealsAvailable() = mealsDataSource.getAllMeals().size > 2
+
     fun checkGuessAttempt(guess: Int, correctValue: Int): String {
         return if (guess > correctValue) "Too high"
         else if (guess < correctValue) "Too low"

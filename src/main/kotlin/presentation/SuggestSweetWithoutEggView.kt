@@ -27,7 +27,7 @@ class SuggestSweetWithoutEggView(
         val sweet = suggestSweetWithoutEggUseCase.suggestSweet()
 
         if (sweet == null) {
-            println("No more sweets to suggest!")
+            println("\nNo more sweets to suggest!")
             return
         }
 

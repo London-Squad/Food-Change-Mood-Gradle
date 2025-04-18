@@ -1,7 +1,6 @@
 package logic
 
 import model.Meal
-import kotlin.math.min
 
 class KetoMealHelper(
     private val mealRepository: MealsDataSource,
@@ -9,8 +8,10 @@ class KetoMealHelper(
 ) {
     private val suggestedMealIds = mutableSetOf<Int>()
 
-    fun getKetoDishesSuggestion(): Meal {
+    fun getKetoDishesSuggestion(): Meal? {
         val allMeals = mealRepository.getAllMeals()
+
+        if (allMeals.isEmpty()) return null
 
         val candidates = allMeals.filter {
             validator.isKetoFriendly(it) && !suggestedMealIds.contains(it.id)

@@ -8,8 +8,7 @@ class GetSeaFoodMealsUseCase(
     fun getSeaFoodMealsSortedByProtein(): List<Meal> =
         mealDataSource
             .getAllMeals()
-            .filter { meal-> meal.nutrition.protein != null  }
-            .filter(::isSeaFood)
+            .filter { meal-> meal.nutrition.protein != null  && isSeaFood(meal)}
             .sortedByDescending { meal-> meal.nutrition.protein }
 
 
@@ -20,7 +19,7 @@ class GetSeaFoodMealsUseCase(
             || meal.name.lowercase().contains(it)
         }
 
-    companion object {
+    private companion object {
         val SEA_FOOD_KEYWORDS = listOf(
             "seafood",
             "sea food",

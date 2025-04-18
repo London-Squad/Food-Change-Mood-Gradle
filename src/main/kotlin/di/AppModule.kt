@@ -6,7 +6,7 @@ import org.koin.dsl.module
 import java.io.File
 
 val appModule = module {
-    single { File("food.csv") }
+    single { File("foood.csv") }
     single { FileReader(get()) }
     single { CsvMealsParser() }
 }
