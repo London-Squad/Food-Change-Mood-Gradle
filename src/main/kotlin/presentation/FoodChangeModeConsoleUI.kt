@@ -2,6 +2,16 @@ package presentation
 
 import presentation.easyMeal.EasyMealView
 import presentation.foodCulture.CountryFoodCultureView
+import presentation.getHealthyFastFoodMeals.GetHealthyFastFoodMealsView
+import presentation.getIraqiMeals.GetIraqiMealsView
+import presentation.gymHelper.GymHelperView
+import presentation.ingredientGame.IngredientGameView
+import presentation.italianFoodForLargeGroup.ItalianFoodForLargeGroupView
+import presentation.ketoSuggestionHelper.KetoSuggestionHelperView
+import presentation.mealGuessGame.MealGuessGameView
+import presentation.mealSearchByDate.MealSearchByDateView
+import presentation.mealSearchByName.MealSearchByNameView
+import presentation.suggestSweetWithoutEgg.SuggestSweetWithoutEggView
 
 class FoodChangeModeConsoleUI(
     private val suggestSweetWithoutEggView: SuggestSweetWithoutEggView,

@@ -1,6 +1,6 @@
 package logic.search.byName
 
-import logic.IndexBuilder
+import logic.search.IndexBuilder
 import logic.MealsDataSource
 import model.Meal
 

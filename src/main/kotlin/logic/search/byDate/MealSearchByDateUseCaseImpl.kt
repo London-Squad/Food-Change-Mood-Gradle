@@ -1,7 +1,7 @@
 package logic.search.byDate
 
-import logic.IndexBuilder
-import logic.MealSearchUseCase
+import logic.search.IndexBuilder
+import logic.search.MealSearchUseCase
 import logic.MealsDataSource
 import model.Meal
 import utils.InvalidDateFormatException

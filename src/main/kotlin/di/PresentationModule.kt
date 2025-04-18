@@ -4,11 +4,20 @@ import org.koin.core.qualifier.named
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 import presentation.*
-import presentation.*
-import presentation.*
 
 import presentation.easyMeal.EasyMealView
 import presentation.foodCulture.CountryFoodCultureView
+import presentation.getHealthyFastFoodMeals.GetHealthyFastFoodMealsView
+import presentation.getIraqiMeals.GetIraqiMealsView
+import presentation.gymHelper.GymHelperView
+import presentation.ingredientGame.IngredientGameView
+import presentation.italianFoodForLargeGroup.ItalianFoodForLargeGroupView
+import presentation.ketoSuggestionHelper.KetoSuggestionHelperView
+import presentation.mealGuessGame.MealGuessGameView
+import presentation.mealSearchByDate.MealSearchByDateView
+import presentation.mealSearchByName.MealSearchByNameView
+import presentation.suggestSweetWithoutEgg.SuggestSweetWithoutEggView
+import utils.ViewUtil
 
 
 val presentationModule = module {

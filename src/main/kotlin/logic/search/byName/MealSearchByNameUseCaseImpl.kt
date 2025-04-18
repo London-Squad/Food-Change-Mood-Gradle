@@ -1,6 +1,10 @@
 package logic.search.byName
 
 import logic.*
+import logic.search.IndexBuilder
+import logic.search.MealSearchUseCase
+import logic.search.SearchCache
+import logic.search.TextSearchAlgorithm
 import model.Meal
 
 class MealSearchByNameUseCaseImpl(

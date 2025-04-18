@@ -1,6 +1,6 @@
 package logic.search.byName
 
-import logic.SearchCache
+import logic.search.SearchCache
 import model.Meal
 
 class InMemorySearchCache : SearchCache {

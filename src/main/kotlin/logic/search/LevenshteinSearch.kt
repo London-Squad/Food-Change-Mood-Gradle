@@ -1,7 +1,5 @@
 package logic.search
 
-import logic.TextSearchAlgorithm
-
 class LevenshteinSearch(private val maxDistance: Int = 2) : TextSearchAlgorithm {
     override fun search(keyword: String, actualValue: String): Boolean =
         levenshteinDistance(keyword.lowercase(), actualValue.lowercase()) <= maxDistance
