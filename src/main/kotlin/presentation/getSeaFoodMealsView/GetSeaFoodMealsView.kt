@@ -1,12 +1,14 @@
-package presentation
+package presentation.getSeaFoodMealsView
 
-import logic.GetSeaFoodMealsUseCase
+import logic.getSeaFoodMealsUseCase.GetSeaFoodMealsUseCase
 import model.Meal
+import presentation.BaseView
+import presentation.utils.ViewUtil
 
 class GetSeaFoodMealsView(
     private val getSeaFoodMealsUseCase: GetSeaFoodMealsUseCase,
     private val viewUtil: ViewUtil
-): BaseView{
+): BaseView {
     override fun start() {
         val chunkedMeals = getSeaFoodMealsUseCase
             .getSeaFoodMealsSortedByProtein()
@@ -30,9 +32,9 @@ class GetSeaFoodMealsView(
                 "next" -> mealsChunkIndex++
                 "back" -> mealsChunkIndex--
                 "0" -> break
-                in (1+mealsChunkIndex*MAX_NUMBER_OF_MEALS_TO_BE_PRINTED_AT_ONCE..mealsChunk.size+mealsChunkIndex*MAX_NUMBER_OF_MEALS_TO_BE_PRINTED_AT_ONCE).map { it.toString() } -> {
+                in (1+mealsChunkIndex* MAX_NUMBER_OF_MEALS_TO_BE_PRINTED_AT_ONCE..mealsChunk.size+mealsChunkIndex* MAX_NUMBER_OF_MEALS_TO_BE_PRINTED_AT_ONCE).map { it.toString() } -> {
                     printMealAndWaitForEnter(
-                        mealsChunk[userInput.toInt() - 1 - mealsChunkIndex*MAX_NUMBER_OF_MEALS_TO_BE_PRINTED_AT_ONCE]
+                        mealsChunk[userInput.toInt() - 1 - mealsChunkIndex* MAX_NUMBER_OF_MEALS_TO_BE_PRINTED_AT_ONCE]
                     )
                     break
                 }
@@ -65,7 +67,7 @@ class GetSeaFoodMealsView(
         println("---------------------------------------------")
 
         meals.forEachIndexed { mealIndex, meal ->
-            println("${mealIndex + 1 + baseIndex*MAX_NUMBER_OF_MEALS_TO_BE_PRINTED_AT_ONCE}. ${meal.name} | protein = ${meal.nutrition.protein}")
+            println("${mealIndex + 1 + baseIndex* MAX_NUMBER_OF_MEALS_TO_BE_PRINTED_AT_ONCE}. ${meal.name} | protein = ${meal.nutrition.protein}")
         }
         println("---------------------------------------------")
     }

@@ -1,5 +1,6 @@
-package logic
+package logic.getSeaFoodMealsUseCase
 
+import logic.MealsDataSource
 import model.Meal
 
 class GetSeaFoodMealsUseCase(

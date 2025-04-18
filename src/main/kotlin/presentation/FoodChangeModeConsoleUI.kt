@@ -1,6 +1,7 @@
 package presentation
 
 import presentation.easyMeal.EasyMealView
+import presentation.getSeaFoodMealsView.GetSeaFoodMealsView
 import presentation.foodCulture.CountryFoodCultureView
 import presentation.healthyFastFoodMeals.GetHealthyFastFoodMealsView
 import presentation.gymHelper.GymHelperView
@@ -27,7 +28,7 @@ class FoodChangeModeConsoleUI(
     private val countryFoodCultureView: CountryFoodCultureView,
     private val ingredientGameView: IngredientGameView,
     private val gymHelperView: GymHelperView,
-    private val getSeaFoodMealsView: GetSeaFoodMealsView
+    private val getSeaFoodMealsView: GetSeaFoodMealsView,
     private val getMealsContainPotatoView: GetMealsContainPotatoView,
     private val getHighCalorieMealsView: GetHighCalorieMealsView,
     private val getIraqiMealsUseCase: IraqiMealsView,

@@ -6,6 +6,7 @@ import org.koin.dsl.module
 import presentation.*
 
 import presentation.easyMeal.EasyMealView
+import presentation.getSeaFoodMealsView.GetSeaFoodMealsView
 import presentation.foodCulture.CountryFoodCultureView
 import presentation.healthyFastFoodMeals.GetHealthyFastFoodMealsView
 import presentation.gymHelper.GymHelperView
