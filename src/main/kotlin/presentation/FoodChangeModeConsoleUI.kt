@@ -16,7 +16,7 @@ class FoodChangeModeConsoleUI(
     private val countryFoodCultureView: CountryFoodCultureView,
     private val ingredientGameView: IngredientGameView,
     private val gymHelperView: GymHelperView,
-    private val getMealsContainPotatoView: GetMealsContainPotatoView
+    private val getMealsContainPotatoView: GetMealsContainPotatoView,
     private val getHighCalorieMealsView: GetHighCalorieMealsView
 ) : BaseView {
 
@@ -31,7 +31,6 @@ class FoodChangeModeConsoleUI(
         when (input) {
             1 -> getHealthyFastFoodMealsView.start()
             2 -> mealSearchByNameView.start()
-            2 -> suggestSweetWithoutEggView.start()
             3 -> iraqiMealsView.start()
             4 -> easyMealView.start()
             5 -> mealGuessGameView.start()
@@ -41,8 +40,8 @@ class FoodChangeModeConsoleUI(
             9 -> gymHelperView.start()
             10 -> countryFoodCultureView.start()
             11 -> ingredientGameView.start()
-            13 -> getHighCalorieMealsView.start()
             12 -> getMealsContainPotatoView.start()
+            13 -> getHighCalorieMealsView.start()
             15 -> italianFoodForLargeGroupView.start()
             0 -> return
             else -> println("Invalid Input")

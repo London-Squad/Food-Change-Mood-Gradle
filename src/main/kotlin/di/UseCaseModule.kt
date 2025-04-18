@@ -3,15 +3,18 @@ package di
 import data.csvData.CsvMealsDataSourceOneTimeLoad
 import logic.*
 import logic.search.LevenshteinSearch
+import logic.search.byDate.IdIndexBuilder
+import logic.search.byDate.MealDateInvertedIndexBuilder
 import logic.search.byDate.MealSearchByDateUseCaseImpl
+import logic.search.byName.InMemorySearchCache
 import logic.search.byName.MealNameInvertedIndexBuilder
+import logic.search.byName.MealSearchByNameUseCaseImpl
 import model.Meal
 import org.koin.core.qualifier.named
 import logic.useCase.EasyMealsSuggestionUseCase
 import logic.useCase.ExploreCountryFoodCultureUseCase
 import org.koin.dsl.module
 import java.time.LocalDate
-import kotlin.math.sin
 
 val useCaseModule = module {
     single<MealsDataSource> { CsvMealsDataSourceOneTimeLoad(get(), get(), -1) }
