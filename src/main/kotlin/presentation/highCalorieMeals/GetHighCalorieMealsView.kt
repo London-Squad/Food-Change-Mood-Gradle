@@ -1,17 +1,17 @@
-package presentation.iraqiMeals
+package presentation.highCalorieMeals
 
-import logic.getIraqiMeals.GetIraqiMealsUseCase
+import logic.getHighCalorieMeals.GetHighCalorieMealsUseCase
 import model.Meal
 import presentation.BaseView
 import presentation.utils.ViewUtil
 
-class GetIraqiMealsView(
-    private val getIraqiMealsUseCase: GetIraqiMealsUseCase,
+class GetHighCalorieMealsView(
+    private val getHighCalorieMealsUseCase: GetHighCalorieMealsUseCase,
     private val viewUtil: ViewUtil
 ) : BaseView {
 
     override fun start() {
-        val chunkedIraqiMeals = getIraqiMealsUseCase.getIraqiMeals()
+        val chunkedHighCalorieMeals = getHighCalorieMealsUseCase.getHighCalorieMeals()
             .chunked(MAX_NUMBER_OF_MEALS_TO_BE_PRINTED_AT_ONCE)
 
         var userInput: String?
@@ -19,53 +19,55 @@ class GetIraqiMealsView(
         var mealsChunk: List<Meal>
 
         do {
-            mealsChunk = chunkedIraqiMeals[mealsChunkIndex]
+            if (chunkedHighCalorieMeals.isEmpty()) {
+                println("No meals with more than 700 calories found.")
+                break
+            }
+
+            mealsChunk = chunkedHighCalorieMeals[mealsChunkIndex]
 
             printMealsNames(mealsChunk)
-            printOptions(mealsChunkIndex, chunkedIraqiMeals.size)
+            printOptions(mealsChunkIndex, chunkedHighCalorieMeals.size)
 
             userInput = readln()
 
             when (userInput) {
-                "next" -> mealsChunkIndex++
-                "back" -> mealsChunkIndex--
+                "next" -> if (mealsChunkIndex < chunkedHighCalorieMeals.size - 1) mealsChunkIndex++
+                "back" -> if (mealsChunkIndex > 0) mealsChunkIndex--
                 "0" -> break
                 in (1..mealsChunk.size).map { it.toString() } -> {
-                    printMealAndWaitForEnter(
-                        mealsChunk[userInput.toInt() - 1]
-                    )
+                    printMealAndWaitForEnter(mealsChunk[userInput.toInt() - 1])
                     break
                 }
 
                 else -> println("Invalid input, try again")
             }
 
-        } while (mealsChunkIndex < chunkedIraqiMeals.size && mealsChunkIndex >= 0)
+        } while (mealsChunkIndex < chunkedHighCalorieMeals.size && mealsChunkIndex >= 0)
     }
 
-    private fun printOptions(mealsChunkIndex: Int, mealsChunksize: Int) {
+    private fun printOptions(mealsChunkIndex: Int, mealsChunkSize: Int) {
         println()
-        if ((mealsChunkIndex + 1) < mealsChunksize) {
+        if ((mealsChunkIndex + 1) < mealsChunkSize) {
             println("If you want more meals, write 'next'")
         }
         if (mealsChunkIndex > 0) {
             println("If you want the previous meals, write 'back'")
         }
-        println("If you want the details of one of the meal, enter its number")
+        println("If you want the details of one of the meals, enter its number")
         println("If you want to go back to the main menu, enter 0")
         println()
         print("your input: ")
     }
 
     private fun printMealsNames(meals: List<Meal>) {
-
         println()
         println("---------------------------------------------")
-        println("                 Iraqi Meals                 ")
+        println("        High Calorie Meals (>700 kcal)       ")
         println("---------------------------------------------")
 
         meals.forEachIndexed { mealIndex, meal ->
-            println("${mealIndex + 1}. ${meal.name}")
+            println("${mealIndex + 1}. ${meal.name} (${meal.nutrition.calories} kcal)")
         }
         println("---------------------------------------------")
     }
@@ -79,5 +81,4 @@ class GetIraqiMealsView(
     private companion object {
         const val MAX_NUMBER_OF_MEALS_TO_BE_PRINTED_AT_ONCE = 10
     }
-
 }

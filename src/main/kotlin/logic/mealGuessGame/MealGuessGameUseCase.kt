@@ -28,7 +28,7 @@ class MealGuessGameUseCase(
     private fun List<Meal>.getRandomMeals(condition: (Meal) -> Boolean, count: Int): List<Meal> {
         return this.filter(condition).run {
             if (size < count) this
-            else shuffled().slice(0..<count)
+            else shuffled().take(count)
         }
     }
 

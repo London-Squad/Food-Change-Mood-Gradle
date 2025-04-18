@@ -16,7 +16,9 @@ import org.koin.core.qualifier.named
 import logic.easyMealsSuggestion.EasyMealsSuggestionUseCase
 import logic.exploreCountryFoodCulture.ExploreCountryFoodCultureUseCase
 import logic.getHealthyFastFoodMeals.GetHealthyFastFoodMealsUseCase
+import logic.getHighCalorieMeals.GetHighCalorieMealsUseCase
 import logic.getItalianFoodForLargeGroup.GetItalianFoodForLargeGroupUseCase
+import logic.getMealsContainPotato.GetMealsContainPotatoUseCase
 import logic.gymHelper.GymHelperUseCase
 import logic.ingredientGame.IngredientGameUseCase
 import logic.mealGuessGame.MealGuessGameUseCase
@@ -26,7 +28,7 @@ import org.koin.dsl.module
 import java.time.LocalDate
 
 val useCaseModule = module {
-    single<MealsDataSource> { CsvMealsDataSourceOneTimeLoad(get(), get(), 50000) }
+    single<MealsDataSource> { CsvMealsDataSourceOneTimeLoad(get(), get(), 5000) }
 
     // Index Builders
     single<IndexBuilder<String, Set<Int>>>(named("NAME")) { MealNameInvertedIndexBuilder(get<MealsDataSource>()) }
@@ -66,4 +68,6 @@ val useCaseModule = module {
     single { SuggestSweetWithoutEggUseCase(get()) }
     single { GetItalianFoodForLargeGroupUseCase(get()) }
     single { GymHelperUseCase(get()) }
+    single { GetHighCalorieMealsUseCase(get()) }
+    single { GetMealsContainPotatoUseCase(get()) }
 }

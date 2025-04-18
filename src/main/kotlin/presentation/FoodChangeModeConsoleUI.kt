@@ -3,14 +3,16 @@ package presentation
 import presentation.easyMeal.EasyMealView
 import presentation.foodCulture.CountryFoodCultureView
 import presentation.healthyFastFoodMeals.GetHealthyFastFoodMealsView
-import presentation.iraqiMeals.GetIraqiMealsView
 import presentation.gymHelper.GymHelperView
+import presentation.highCalorieMeals.GetHighCalorieMealsView
 import presentation.ingredientGame.IngredientGameView
+import presentation.iraqiMeals.IraqiMealsView
 import presentation.italianFoodForLargeGroup.ItalianFoodForLargeGroupView
 import presentation.ketoSuggestionHelper.KetoSuggestionHelperView
 import presentation.mealGuessGame.MealGuessGameView
 import presentation.mealSearchByDate.MealSearchByDateView
 import presentation.mealSearchByName.MealSearchByNameView
+import presentation.mealsContainPotato.GetMealsContainPotatoView
 import presentation.suggestSweetWithoutEgg.SuggestSweetWithoutEggView
 
 class FoodChangeModeConsoleUI(
@@ -20,13 +22,16 @@ class FoodChangeModeConsoleUI(
     private val mealSearchByNameView: MealSearchByNameView,
     private val mealSearchByDateView: MealSearchByDateView,
     private val easyMealView: EasyMealView,
-    private val iraqiMealsView: GetIraqiMealsView,
     private val italianFoodForLargeGroupView: ItalianFoodForLargeGroupView,
     private val ketoSuggestionHelperView: KetoSuggestionHelperView,
     private val countryFoodCultureView: CountryFoodCultureView,
     private val ingredientGameView: IngredientGameView,
     private val gymHelperView: GymHelperView,
-) : BaseView {
+    private val getMealsContainPotatoView: GetMealsContainPotatoView,
+    private val getHighCalorieMealsView: GetHighCalorieMealsView,
+    private val getIraqiMealsUseCase: IraqiMealsView,
+
+    ) : BaseView {
 
     override fun start() {
         showWelcome()
@@ -39,7 +44,7 @@ class FoodChangeModeConsoleUI(
         when (input) {
             1 -> getHealthyFastFoodMealsView.start()
             2 -> mealSearchByNameView.start()
-            3 -> iraqiMealsView.start()
+            3 -> getIraqiMealsUseCase.start()
             4 -> easyMealView.start()
             5 -> mealGuessGameView.start()
             6 -> suggestSweetWithoutEggView.start()
@@ -48,6 +53,8 @@ class FoodChangeModeConsoleUI(
             9 -> gymHelperView.start()
             10 -> countryFoodCultureView.start()
             11 -> ingredientGameView.start()
+            12 -> getMealsContainPotatoView.start()
+            13 -> getHighCalorieMealsView.start()
             15 -> italianFoodForLargeGroupView.start()
             0 -> return
             else -> println("Invalid Input")
@@ -60,7 +67,7 @@ class FoodChangeModeConsoleUI(
     }
 
     private fun showOptions() {
-        println("\n\n=== Please enter one of the following numbers ===\n")
+        println("\n\n=== please enter one of the following numbers ===")
         println("1- Get a List of Healthy Fast Food Meals")
         println("2- Search Meals by Name")
         println("3- Get a List of Iraqi Meals")
@@ -72,6 +79,8 @@ class FoodChangeModeConsoleUI(
         println("9- Get a List of Gym Meals")
         println("10- Explore other country culture")
         println("11- Ingredient Game")
+        println("12- I Love Potato")
+        println("13- Get High Calorie Meals (>700 kcal)")
         println("15- Get a List of Italian food that is suitable for large group of friends")
         println("0- Exit")
         println("Here: ")
