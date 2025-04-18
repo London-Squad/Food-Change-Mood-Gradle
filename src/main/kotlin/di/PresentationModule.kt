@@ -10,15 +10,15 @@ import presentation.foodCulture.CountryFoodCultureView
 
 val presentationModule = module {
     factory { ViewUtil() }
-    factory { IraqiMealsView(get(), get()) }
+    factory { GetIraqiMealsView(get(), get()) }
     factory { SuggestSweetWithoutEggView(get(), get()) }
     factory { MealGuessGameView(get()) }
     factory { EasyMealView(get()) }
     factory { ItalianFoodForLargeGroupView(get(), get()) }
     factory { CountryFoodCultureView(get()) }
     factory { IngredientGameView(get()) }
-    factory {GetHealthyFastFoodMealsView(get())}
-    factory { KetoSuggetionHelperView(get(), get()) }
+    factory { GetHealthyFastFoodMealsView(get()) }
+    factory { KetoSuggestionHelperView(get(), get()) }
 
     factoryOf(::FoodChangeModeConsoleUI)
 }
