@@ -3,6 +3,7 @@ package presentation
 import presentation.easyMeal.EasyMealView
 
 class FoodChangeModeConsoleUI(
+    private val suggestSweetWithoutEggView: SuggestSweetWithoutEggView,
     private val getIraqiMealsView: GetIraqiMealsView,
     private val easyMealView: EasyMealView,
     private val guessMealGameView: GuessMealGameView,
@@ -19,6 +20,7 @@ class FoodChangeModeConsoleUI(
         showOptions()
         val input = getUserInput()
         when (input) {
+            2 -> suggestSweetWithoutEggView.start()
             3 -> getIraqiMealsView.start()
             4 -> startEasyMealView()
             5 -> guessMealGameView.start()
@@ -36,7 +38,8 @@ class FoodChangeModeConsoleUI(
     private fun showOptions() {
         //TODO: add option for new features
 
-        println("\n\n=== please enter one of the following numbers ===\n")
+        println("\n\n=== please enter one of the following numbers ===")
+        println("2- Suggest Sweets Without Eggs")
         println("3- Get a List of Iraqi Meals")
         println("4- Get Easy Food Suggestion")
         println("5- Meal Guess Game")
@@ -44,6 +47,7 @@ class FoodChangeModeConsoleUI(
         println("0- Exit")
         println("here: ")
     }
+
 
     private fun getUserInput(): Int? {
         return readlnOrNull()?.toIntOrNull()
