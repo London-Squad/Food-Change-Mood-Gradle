@@ -2,19 +2,19 @@ package logic
 
 import model.Meal
 
-class ILovePotatoUseCase(
+class GetMealsContainPotatoUseCase(
     private val mealsDataSource: MealsDataSource
 ) {
 
     fun getRandomMeals(): List<Meal> {
         return mealsDataSource.getAllMeals()
-            .getRandomMeals(::isMealContainPotato, 10)
+            .getRandomMeals(::isMealContainPotato, NUMBER_OF_MEALS_TO_PRESENT)
     }
 
     private fun List<Meal>.getRandomMeals(condition: (Meal) -> Boolean, count: Int): List<Meal> {
         return this.filter(condition).run {
             if (size < count) this
-            else shuffled().slice(0..<count)
+            else shuffled().take(count)
         }
     }
 
@@ -24,5 +24,6 @@ class ILovePotatoUseCase(
     private companion object {
         const val POTATOES_TAG = "potatoes"
         const val POTATO_KEYWORD = "potato"
+        const val NUMBER_OF_MEALS_TO_PRESENT = 10
     }
 }

@@ -8,7 +8,7 @@ val presentationModule = module {
     single { ViewUtil() }
     single { GetIraqiMealsView(get(), get()) }
     single { MealGuessGameView(get()) }
-    single { ILovePotatoView(get(), get()) }
+    single { GetMealsContainPotatoView(get(), get()) }
 
     single {
         FoodChangeModeConsoleUI(

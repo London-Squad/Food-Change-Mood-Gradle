@@ -3,7 +3,7 @@ package presentation
 class FoodChangeModeConsoleUI(
     private val getIraqiMealsView: GetIraqiMealsView,
     private val mealGuessGameView: MealGuessGameView,
-    private val iLovePotatoView: ILovePotatoView
+    private val getMealsContainPotatoView: GetMealsContainPotatoView
 
 ) : BaseView {
 
@@ -18,7 +18,7 @@ class FoodChangeModeConsoleUI(
         when (input) {
             3 -> getIraqiMealsView.start()
             5 -> mealGuessGameView.start()
-            12 -> iLovePotatoView.start()
+            12 -> getMealsContainPotatoView.start()
             0 -> return
             else -> println("Invalid Input")
         }

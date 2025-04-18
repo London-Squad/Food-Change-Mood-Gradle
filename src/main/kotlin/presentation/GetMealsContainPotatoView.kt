@@ -1,22 +1,23 @@
 package presentation
 
-import logic.ILovePotatoUseCase
+import logic.GetMealsContainPotatoUseCase
 import model.Meal
 
-class ILovePotatoView(
-    private val iLovePotatoUseCase: ILovePotatoUseCase,
+class GetMealsContainPotatoView(
+    private val getMealsContainPotatoUseCase: GetMealsContainPotatoUseCase,
     private val viewUtil: ViewUtil
 ) : BaseView {
 
     override fun start() {
         printHeader()
-        val randomPotatoMeals = iLovePotatoUseCase.getRandomMeals()
+        val randomPotatoMeals = getMealsContainPotatoUseCase.getRandomMeals()
 
         if (randomPotatoMeals.isEmpty()) {
             println("There is no meals made from potato.")
             return
         }
 
+        println("List of meals that contain potatoes:\n")
         printMealsNames(randomPotatoMeals)
         println("If you want the details of one of the meal, enter its number")
         println("If you want to go back to the main menu, enter 0")
