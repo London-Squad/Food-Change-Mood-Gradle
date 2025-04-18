@@ -4,7 +4,6 @@ import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 import presentation.*
 
-import presentation.*
 import presentation.easyMeal.EasyMealView
 
 
@@ -15,7 +14,7 @@ val presentationModule = module {
     factory { MealGuessGameView(get()) }
     factory { EasyMealView(get()) }
     factory { IngredientGameView(get()) }
-    factory {GetHealtyFastFoodMealsView(get(),get())}
+    factory {GetHealthyFastFoodMealsView(get())}
 
 
     factoryOf(::FoodChangeModeConsoleUI)

@@ -4,7 +4,7 @@ import presentation.easyMeal.EasyMealView
 class FoodChangeModeConsoleUI(
     private val getIraqiMealsView: GetIraqiMealsView,
     private val mealGuessGameView: MealGuessGameView,
-    private val getHealtyFastFoodMealsView: GetHealtyFastFoodMealsView,
+    private val getHealthyFastFoodMealsView: GetHealthyFastFoodMealsView,
     private val suggestSweetWithoutEggView: SuggestSweetWithoutEggView,
     private val easyMealView: EasyMealView,
     private val ingredientGameView: IngredientGameView,
@@ -19,7 +19,7 @@ class FoodChangeModeConsoleUI(
         showOptions()
         val input = getUserInput()
         when (input) {
-            1->getHealtyFastFoodMealsView.start()
+            1->getHealthyFastFoodMealsView.start()
             2 -> suggestSweetWithoutEggView.start()
             3 -> getIraqiMealsView.start()
             4 -> startEasyMealView()

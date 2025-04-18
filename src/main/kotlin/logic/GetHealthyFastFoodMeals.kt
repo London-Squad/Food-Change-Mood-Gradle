@@ -17,47 +17,39 @@ class GetHealthyFastFoodMealsUseCase(private val mealRepository: MealsDataSource
                     it.nutrition.carbohydrates != null
         }
 
-        val maxTotalFat = mealsWithValidNutritionAndTime
-            .mapNotNull { it.nutrition.totalFat }
+        val averageTotalFat = mealsWithValidNutritionAndTime
+            .map { it.nutrition.totalFat!!.toDouble() }
             .average()
             .toFloat()
 
-        val maxSaturatedFat = mealsWithValidNutritionAndTime
-            .mapNotNull { it.nutrition.saturatedFat }
+        val averageSaturatedFat = mealsWithValidNutritionAndTime
+            .map { it.nutrition.saturatedFat!!.toDouble() }
             .average()
             .toFloat()
 
-        val maxCarbohydrates = mealsWithValidNutritionAndTime
-            .mapNotNull { it.nutrition.carbohydrates }
+        val averageCarbohydrates = mealsWithValidNutritionAndTime
+            .map { it.nutrition.carbohydrates!!.toDouble() }
             .average()
             .toFloat()
 
         return mealsWithValidNutritionAndTime.filter { meal ->
             isVeryLowFatCarbMeal(
                 meal,
-                maxTotalFat,
-                maxSaturatedFat,
-                maxCarbohydrates
+                averageTotalFat,
+                averageSaturatedFat,
+                averageCarbohydrates
             )
         }
     }
 
-    private fun List<Meal>.calculateAverage(property: (Meal) -> Float?): Float {
-        val values = this.mapNotNull(property)
-        return if (values.isNotEmpty()) values.average().toFloat() else 0f
-    }
-
     private fun isVeryLowFatCarbMeal(
         meal: Meal,
-        maxTotalFat: Float,
-        maxSaturatedFat: Float,
-        maxCarbohydrates: Float
+        averageTotalFat: Float,
+        averageSaturatedFat: Float,
+        averageCarbohydrates: Float
     ): Boolean {
-        return meal.nutrition.totalFat != null &&
-                meal.nutrition.saturatedFat != null &&
-                meal.nutrition.carbohydrates != null &&
-                meal.nutrition.totalFat <= maxTotalFat &&
-                meal.nutrition.saturatedFat <= maxSaturatedFat &&
-                meal.nutrition.carbohydrates <= maxCarbohydrates
+        return meal.nutrition.totalFat!! <= averageTotalFat &&
+                meal.nutrition.saturatedFat!! <= averageSaturatedFat &&
+                meal.nutrition.carbohydrates!! <= averageCarbohydrates
     }
 }
