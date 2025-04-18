@@ -4,8 +4,6 @@ import org.koin.core.qualifier.named
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 import presentation.*
-import presentation.*
-import presentation.*
 
 import presentation.easyMeal.EasyMealView
 import presentation.foodCulture.CountryFoodCultureView
@@ -26,7 +24,8 @@ val presentationModule = module {
     factory { GymHelperView(get(), get()) }
     factory { GetHealthyFastFoodMealsView(get()) }
     factory { KetoSuggestionHelperView(get(), get()) }
-    single { GetMealsContainPotatoView(get(), get()) }
+    factory { GetMealsContainPotatoView(get(), get()) }
+    factory { GetHighCalorieMealsView(get(), get()) }
 
     factoryOf(::FoodChangeModeConsoleUI)
 }

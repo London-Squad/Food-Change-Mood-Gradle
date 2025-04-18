@@ -16,8 +16,8 @@ class FoodChangeModeConsoleUI(
     private val countryFoodCultureView: CountryFoodCultureView,
     private val ingredientGameView: IngredientGameView,
     private val gymHelperView: GymHelperView,
-    private val getMealsContainPotatoView: GetMealsContainPotatoView
-
+    private val getMealsContainPotatoView: GetMealsContainPotatoView,
+    private val getHighCalorieMealsView: GetHighCalorieMealsView
 ) : BaseView {
 
     override fun start() {
@@ -41,6 +41,7 @@ class FoodChangeModeConsoleUI(
             10 -> countryFoodCultureView.start()
             11 -> ingredientGameView.start()
             12 -> getMealsContainPotatoView.start()
+            13 -> getHighCalorieMealsView.start()
             15 -> italianFoodForLargeGroupView.start()
             0 -> return
             else -> println("Invalid Input")
@@ -53,7 +54,7 @@ class FoodChangeModeConsoleUI(
     }
 
     private fun showOptions() {
-        println("\n\n=== Please enter one of the following numbers ===\n")
+        println("\n\n=== please enter one of the following numbers ===")
         println("1- Get a List of Healthy Fast Food Meals")
         println("2- Search Meals by Name")
         println("3- Get a List of Iraqi Meals")
@@ -66,6 +67,7 @@ class FoodChangeModeConsoleUI(
         println("10- Explore other country culture")
         println("11- Ingredient Game")
         println("12- I Love Potato")
+        println("13- Get High Calorie Meals (>700 kcal)")
         println("15- Get a List of Italian food that is suitable for large group of friends")
         println("0- Exit")
         println("Here: ")

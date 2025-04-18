@@ -15,7 +15,6 @@ import logic.useCase.EasyMealsSuggestionUseCase
 import logic.useCase.ExploreCountryFoodCultureUseCase
 import org.koin.dsl.module
 import java.time.LocalDate
-import kotlin.math.sin
 
 val useCaseModule = module {
     single<MealsDataSource> { CsvMealsDataSourceOneTimeLoad(get(), get(), -1) }
@@ -58,5 +57,6 @@ val useCaseModule = module {
     single { SuggestSweetWithoutEggUseCase(get()) }
     single { GetItalianFoodForLargeGroupUseCase(get()) }
     single { GymHelperUseCase(get()) }
+    single { GetHighCalorieMealsUseCase(get()) }
     single { GetMealsContainPotatoUseCase(get()) }
 }
