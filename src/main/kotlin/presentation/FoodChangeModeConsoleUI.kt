@@ -45,7 +45,7 @@ class FoodChangeModeConsoleUI(
     }
 
 
-    private fun getUserInput(): Int?{
+    private fun getUserInput(): Int? {
         return readlnOrNull()?.toIntOrNull()
     }
 

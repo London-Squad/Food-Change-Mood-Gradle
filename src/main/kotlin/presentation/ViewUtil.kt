@@ -17,7 +17,7 @@ class ViewUtil {
         println()
         println("Ingredients")
         meal.ingredients.forEachIndexed { ingredientIndex, ingredient ->
-            println("    ${ingredientIndex+1}. $ingredient")
+            println("    ${ingredientIndex + 1}. $ingredient")
         }
         if (meal.minutes != null) {
             println()
@@ -35,27 +35,27 @@ class ViewUtil {
         }
         println("Nutrition: ")
 
-        println("    calories: ${meal.nutrition.calories?: "unknown"}")
-        println("    totalFat: ${meal.nutrition.totalFat?: "unknown"}")
-        println("    sugar: ${meal.nutrition.sugar?: "unknown"}")
-        println("    sodium: ${meal.nutrition.sodium?: "unknown"}")
-        println("    protein: ${meal.nutrition.protein?: "unknown"}")
-        println("    saturatedFat: ${meal.nutrition.saturatedFat?: "unknown"}")
-        println("    carbohydrates: ${meal.nutrition.carbohydrates?: "unknown"}")
+        println("    calories: ${meal.nutrition.calories ?: "unknown"}")
+        println("    totalFat: ${meal.nutrition.totalFat ?: "unknown"}")
+        println("    sugar: ${meal.nutrition.sugar ?: "unknown"}")
+        println("    sodium: ${meal.nutrition.sodium ?: "unknown"}")
+        println("    protein: ${meal.nutrition.protein ?: "unknown"}")
+        println("    saturatedFat: ${meal.nutrition.saturatedFat ?: "unknown"}")
+        println("    carbohydrates: ${meal.nutrition.carbohydrates ?: "unknown"}")
 
         println()
         println("Steps to prepare")
         meal.steps.forEachIndexed { stepIndex, step ->
-            printTextWithinWidth("${stepIndex+1}. $step", indent = 6)
+            printTextWithinWidth("${stepIndex + 1}. $step", indent = 6)
         }
 
         println("---------------------------------------------")
     }
 
-    private fun printTextWithinWidth(text: String, indent: Int = 0) {
+    fun printTextWithinWidth(text: String, indent: Int = 0) {
         text.chunked(VIEW_WIDTH).forEach {
             println(
-                List(indent){""}.joinToString(" ") + it
+                List(indent) { "" }.joinToString(" ") + it
             )
         }
     }

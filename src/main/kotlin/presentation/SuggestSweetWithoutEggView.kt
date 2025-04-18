@@ -8,19 +8,21 @@ class SuggestSweetWithoutEggView(
 ) : BaseView {
 
     override fun start() {
-        printHeader()
 
         suggestSweetWithoutEggUseCase.clearSuggestedList()
-        getSweetWithoutEggs()
+
+        printHeader()
+        suggestSweetWithoutEggs()
     }
 
     private fun printHeader() {
         println("------------------------------------------")
         println("           Sweet Without Egg              ")
         println("------------------------------------------")
+        println("you can like the meal to see full detail, or dislike it to get another meal.")
     }
 
-    private fun getSweetWithoutEggs() {
+    private fun suggestSweetWithoutEggs() {
 
         val sweet = suggestSweetWithoutEggUseCase.suggestSweet()
 
@@ -30,25 +32,27 @@ class SuggestSweetWithoutEggView(
         }
 
         println("\nTry this sweet: ${sweet.name}")
-        println("Description: ${sweet.description}")
+        viewUtil.printTextWithinWidth("Description: ${sweet.description}")
 
         println("Do you like it? (y = like, n = dislike, x = exit): ")
-        do{
-            when (readlnOrNull()?.lowercase()) {
-                "y" -> {
-                    viewUtil.printMeal(sweet)
-                    return
-                }
-                "n" -> {
-                    getSweetWithoutEggs()
-                    return
-                }
-                "x" -> {
-                    println("Returning to main menu...")
-                    return
-                }
-                else -> println("Invalid input. Try again.")
-            }
-        }while (true)
+
+        when (getValidInputFromUser()) {
+            "y" -> viewUtil.printMeal(sweet)
+            "n" -> suggestSweetWithoutEggs()
+            "x" -> println("Returning to main menu...")
+        }
+
     }
+
+    private fun getValidInputFromUser(): String {
+        print("your choice: ")
+        val guessInput = readln().trim()
+        return if (guessInput in listOf("y", "n", "x"))
+            guessInput
+        else {
+            println("invalid input")
+            getValidInputFromUser()
+        }
+    }
+
 }

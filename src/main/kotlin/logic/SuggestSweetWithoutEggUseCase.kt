@@ -7,18 +7,15 @@ class SuggestSweetWithoutEggUseCase(mealsDataSource: MealsDataSource) {
     private val suggested = mutableSetOf<Int>()
 
     fun suggestSweet(): Meal? {
-        try{
-            if (eggFreeSweets.isEmpty()) return null
+        if (eggFreeSweets.isEmpty()) return null
 
-            val next = eggFreeSweets.shuffled().first { it.id !in suggested }
-            next.let { it.id.let { id -> suggested.add(id) } }
-            return next
-        }catch (e: Exception) {
-            return null
-        }
+        val suggestion = eggFreeSweets.shuffled().firstOrNull { it.id !in suggested }
+            ?.apply { suggested.add(id) }
+
+        return suggestion
     }
 
-    fun clearSuggestedList(){
+    fun clearSuggestedList() {
         suggested.clear()
     }
 
@@ -26,7 +23,8 @@ class SuggestSweetWithoutEggUseCase(mealsDataSource: MealsDataSource) {
         return meals.filter { meal ->
             val nameLower = meal.name.lowercase()
             val ingredientsLower = meal.ingredients.joinToString(",")
-            val isSweet = listOf("cake", "cookie", "dessert", "sweet", "brownie", "pie", "pudding").any { it in nameLower }
+            val isSweet =
+                listOf("cake", "cookie", "dessert", "sweet", "brownie", "pie", "pudding").any { it in nameLower }
             val containsEgg = ingredientsLower.contains("egg", true)
             isSweet && !containsEgg
         }
