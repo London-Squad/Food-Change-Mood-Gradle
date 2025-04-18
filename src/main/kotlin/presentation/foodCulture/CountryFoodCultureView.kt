@@ -10,7 +10,7 @@ class CountryFoodCultureView(
 
     override fun start() {
         printHeader()
-        getCountryFromUserAndPrintFoodList()
+        displayCountryFoodList()
     }
 
     private fun printHeader() {
@@ -19,15 +19,18 @@ class CountryFoodCultureView(
         println("------------------------------------------")
     }
 
-    private fun getCountryFromUserAndPrintFoodList() {
-        getCountryFromUser()
-            ?.let {
-                if (ExploreCountryFoodCultureUseCase.countries.any { country -> country.equals(it, ignoreCase = true) })
-                    it
-                else
-                    "No Such Country Name"
-            }
-            ?.let(useCase::exploreCountryFoodCulture)
+    private fun validateCountryInput(): String? {
+        return getCountryFromUser()?.let {
+            if (ExploreCountryFoodCultureUseCase.countries.any { country -> country.equals(it, ignoreCase = true) })
+                it
+            else
+                "No Such Country Name"
+        }
+    }
+
+    private fun displayCountryFoodList() {
+        validateCountryInput()
+            ?.let(useCase::getMealsOfCountry)
             ?.run(::MealListView)
             ?.also(MealListView::start)
             ?: println("We don't have data about that country\n")

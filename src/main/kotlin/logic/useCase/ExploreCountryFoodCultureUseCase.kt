@@ -7,7 +7,7 @@ import model.Meal
 class ExploreCountryFoodCultureUseCase(
     private val dataSource: MealsDataSource
 ) {
-    fun exploreCountryFoodCulture(country: String): List<Meal> {
+    fun getMealsOfCountry(country: String): List<Meal> {
         return dataSource.getAllMeals()
             .getRandomMeals(20) { isMealRelatedToCountry(it, country) }
     }
