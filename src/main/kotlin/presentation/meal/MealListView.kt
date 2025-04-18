@@ -8,7 +8,10 @@ class MealListView(
 ) : BaseView {
 
     override fun start() {
-        if (isEmptyList()) return
+        if (mealList.isEmpty()) {
+            println("there is no Meals to Display")
+            return
+        }
 
         while (true) {
             try {
@@ -23,11 +26,6 @@ class MealListView(
                 println()
             }
         }
-    }
-
-    private fun isEmptyList(): Boolean {
-        println("there is no Meals to Display")
-        return mealList.isEmpty()
     }
 
     private fun printAllMeals() {

@@ -21,8 +21,14 @@ class CountryFoodCultureView(
 
     private fun getCountryFromUserAndPrintFoodList() {
         getCountryFromUser()
+            ?.let {
+                if (ExploreCountryFoodCultureUseCase.countries.any { country -> country.equals(it, ignoreCase = true) })
+                    it
+                else
+                    "No Such Country Name"
+            }
             ?.let(useCase::exploreCountryFoodCulture)
-            ?.run (::MealListView)
+            ?.run(::MealListView)
             ?.also(MealListView::start)
             ?: println("We don't have data about that country\n")
     }
