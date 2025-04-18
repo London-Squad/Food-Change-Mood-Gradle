@@ -3,7 +3,7 @@ package presentation
 class FoodChangeModeConsoleUI(
     private val getIraqiMealsView: GetIraqiMealsView,
     private val mealGuessGameView: MealGuessGameView,
-    private val sweetSuggester: SweetSuggester
+    private val sweetWithoutEggSuggesterView: SweetWithoutEggSuggesterView
 ) : BaseView {
 
     override fun start() {
@@ -15,7 +15,7 @@ class FoodChangeModeConsoleUI(
         showOptions()
         val input = getUserInput()
         when (input) {
-            2 -> runSweetsWithoutEggsFeature()
+            2 -> sweetWithoutEggSuggesterView.start()
             3 -> getIraqiMealsView.start()
             5 -> mealGuessGameView.start()
             0 -> return
@@ -39,36 +39,6 @@ class FoodChangeModeConsoleUI(
         println("here: ")
     }
 
-
-    private fun runSweetsWithoutEggsFeature() {
-        println("Sweets Without Eggs")
-
-        var sweet = sweetSuggester.suggestSweet()
-        while (sweet != null) {
-            println("\nTry this sweet: ${sweet.name}")
-            println("Description: ${sweet.description}")
-
-            println("Do you like it? (y = like, n = dislike, x = exit): ")
-            when (readlnOrNull()?.lowercase()) {
-                "y" -> {
-                    sweetSuggester.likeSweet(sweet)
-                    break
-                }
-                "n" -> {
-                    sweet = sweetSuggester.dislikeSweet()
-                }
-                "x" -> {
-                    println("Returning to main menu...")
-                    return
-                }
-                else -> println("Invalid input. Try again.")
-            }
-        }
-
-        if (sweet == null) {
-            println("No more sweets to suggest!")
-        }
-    }
 
     private fun getUserInput(): Int?{
         return readlnOrNull()?.toIntOrNull()
