@@ -7,16 +7,11 @@ import presentation.easyMeal.EasyMealView
 
 
 val presentationModule = module {
-    single { ViewUtil() }
-    single { SuggestSweetWithoutEggView(get(), get()) }
-    single { GetIraqiMealsView(get(), get()) }
-    single { MealGuessGameView(get()) }
-    single { EasyMealView(get()) }
+    factory { ViewUtil() }
+    factory { SuggestSweetWithoutEggView(get(), get()) }
+    factory { GetIraqiMealsView(get(), get()) }
+    factory { MealGuessGameView(get()) }
+    factory { EasyMealView(get()) }
 
-    single { FoodChangeModeConsoleUI(
-        get(),
-        get(),
-        get(),
-        get()
-        ) }
+    factoryOf(::FoodChangeModeConsoleUI)
 }
