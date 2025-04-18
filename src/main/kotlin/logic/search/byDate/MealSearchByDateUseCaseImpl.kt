@@ -4,8 +4,8 @@ import logic.search.IndexBuilder
 import logic.search.MealSearchUseCase
 import logic.MealsDataSource
 import model.Meal
-import utils.InvalidDateFormatException
-import utils.NoMealsFoundException
+import logic.util.InvalidDateFormatException
+import logic.util.NoMealsFoundException
 import java.time.LocalDate
 import java.time.format.DateTimeParseException
 

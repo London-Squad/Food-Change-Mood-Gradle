@@ -17,7 +17,7 @@ import presentation.mealGuessGame.MealGuessGameView
 import presentation.mealSearchByDate.MealSearchByDateView
 import presentation.mealSearchByName.MealSearchByNameView
 import presentation.suggestSweetWithoutEgg.SuggestSweetWithoutEggView
-import utils.ViewUtil
+import presentation.utils.ViewUtil
 
 
 val presentationModule = module {

@@ -3,7 +3,7 @@ package presentation.gymHelper
 import logic.gymHelper.GymHelperUseCase
 import model.Meal
 import presentation.BaseView
-import utils.ViewUtil
+import presentation.utils.ViewUtil
 
 class GymHelperView(
     private val gymHelperUseCase: GymHelperUseCase,

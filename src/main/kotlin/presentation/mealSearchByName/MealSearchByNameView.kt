@@ -3,7 +3,7 @@ package presentation.mealSearchByName
 import logic.search.MealSearchUseCase
 import model.Meal
 import presentation.BaseView
-import utils.ViewUtil
+import presentation.utils.ViewUtil
 
 class MealSearchByNameView(
     private val mealSearchUseCase: MealSearchUseCase<List<Meal>>,

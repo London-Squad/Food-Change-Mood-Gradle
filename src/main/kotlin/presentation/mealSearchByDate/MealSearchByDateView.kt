@@ -4,9 +4,9 @@ import logic.search.MealSearchUseCase
 import logic.search.byDate.MealSearchByDateUseCaseImpl
 import model.Meal
 import presentation.BaseView
-import utils.ViewUtil
-import utils.InvalidDateFormatException
-import utils.NoMealsFoundException
+import presentation.utils.ViewUtil
+import logic.util.InvalidDateFormatException
+import logic.util.NoMealsFoundException
 
 class MealSearchByDateView(
     private val mealSearchUseCase: MealSearchUseCase<List<Pair<Int, String>>>,

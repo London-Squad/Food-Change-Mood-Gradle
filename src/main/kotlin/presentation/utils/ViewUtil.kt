@@ -1,4 +1,4 @@
-package utils
+package presentation.utils
 
 import model.Meal
 

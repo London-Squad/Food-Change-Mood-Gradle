@@ -2,7 +2,7 @@ package presentation.suggestSweetWithoutEgg
 
 import logic.suggestSweetWithoutEgg.SuggestSweetWithoutEggUseCase
 import presentation.BaseView
-import utils.ViewUtil
+import presentation.utils.ViewUtil
 
 class SuggestSweetWithoutEggView(
     private val suggestSweetWithoutEggUseCase: SuggestSweetWithoutEggUseCase,

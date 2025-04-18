@@ -3,7 +3,7 @@ package presentation.italianFoodForLargeGroup
 import logic.getItalianFoodForLargeGroup.GetItalianFoodForLargeGroupUseCase
 import model.Meal
 import presentation.BaseView
-import utils.ViewUtil
+import presentation.utils.ViewUtil
 
 class ItalianFoodForLargeGroupView(
     private val getItalianFoodForLargeGroupUseCase: GetItalianFoodForLargeGroupUseCase,
