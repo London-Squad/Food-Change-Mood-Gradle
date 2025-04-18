@@ -3,7 +3,7 @@ package presentation
 import logic.GetIraqiMealsUseCase
 import model.Meal
 
-class GetIraqiMealsView(
+class IraqiMealsView(
     private val getIraqiMealsUseCase: GetIraqiMealsUseCase,
     private val viewUtil: ViewUtil
 ) : BaseView {
@@ -12,9 +12,9 @@ class GetIraqiMealsView(
         val chunkedIraqiMeals = getIraqiMealsUseCase.getIraqiMeals()
             .chunked(MAX_NUMBER_OF_MEALS_TO_BE_PRINTED_AT_ONCE)
 
-        var userInput : String?
+        var userInput: String?
         var mealsChunkIndex = 0
-        var mealsChunk : List<Meal>
+        var mealsChunk: List<Meal>
 
         do {
             mealsChunk = chunkedIraqiMeals[mealsChunkIndex]
@@ -30,10 +30,11 @@ class GetIraqiMealsView(
                 "0" -> break
                 in (1..mealsChunk.size).map { it.toString() } -> {
                     printMealAndWaitForEnter(
-                        mealsChunk[userInput.toInt()-1]
+                        mealsChunk[userInput.toInt() - 1]
                     )
                     break
                 }
+
                 else -> println("Invalid input, try again")
             }
 
@@ -61,8 +62,8 @@ class GetIraqiMealsView(
         println("                 Iraqi Meals                 ")
         println("---------------------------------------------")
 
-        meals.forEachIndexed{ mealIndex, meal ->
-            println("${mealIndex+1}. ${meal.name}")
+        meals.forEachIndexed { mealIndex, meal ->
+            println("${mealIndex + 1}. ${meal.name}")
         }
         println("---------------------------------------------")
     }
