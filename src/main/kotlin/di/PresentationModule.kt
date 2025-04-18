@@ -1,5 +1,6 @@
 package di
 
+import logic.GetMealsContainPotatoUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 import presentation.*
@@ -12,6 +13,7 @@ val presentationModule = module {
     factory { GetIraqiMealsView(get(), get()) }
     factory { GuessMealGameView(get()) }
     factory { EasyMealView(get()) }
+    single { GetMealsContainPotatoView(get(), get()) }
 
     factoryOf(::FoodChangeModeConsoleUI)
 }
