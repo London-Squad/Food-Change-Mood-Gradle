@@ -4,7 +4,7 @@ import presentation.easyMeal.EasyMealView
 class FoodChangeModeConsoleUI(
     private val getIraqiMealsView: GetIraqiMealsView,
     private val mealGuessGameView: MealGuessGameView,
-    private val getHealtyFastFoodMealsView: GetHealtyFastFoodMealsView
+    private val getHealtyFastFoodMealsView: GetHealtyFastFoodMealsView,
     private val suggestSweetWithoutEggView: SuggestSweetWithoutEggView,
     private val easyMealView: EasyMealView,
     private val ingredientGameView: IngredientGameView,
