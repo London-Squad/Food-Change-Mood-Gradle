@@ -14,6 +14,7 @@ val presentationModule = module {
     factory { GetIraqiMealsView(get(), get()) }
     factory { GuessMealGameView(get()) }
     factory { EasyMealView(get()) }
+    factory { GetMealsContainPotatoView(get(), get()) }
 
     factoryOf(::FoodChangeModeConsoleUI)
 }
