@@ -1,5 +1,7 @@
 package presentation
 
+import presentation.easyMeal.EasyMealView
+
 class FoodChangeModeConsoleUI(
     private val suggestSweetWithoutEggView: SuggestSweetWithoutEggView,
     private val getIraqiMealsView: GetIraqiMealsView,

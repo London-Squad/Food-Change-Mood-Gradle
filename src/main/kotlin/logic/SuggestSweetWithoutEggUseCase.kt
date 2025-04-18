@@ -8,6 +8,8 @@ class SuggestSweetWithoutEggUseCase(mealsDataSource: MealsDataSource) {
 
     fun suggestSweet(): Meal? {
         try{
+            if (eggFreeSweets.isEmpty()) return null
+
             val next = eggFreeSweets.shuffled().first { it.id !in suggested }
             next.let { it.id.let { id -> suggested.add(id) } }
             return next
