@@ -12,6 +12,10 @@ class ExploreCountryFoodCultureUseCase(
             .getRandomMeals(20) { isMealRelatedToCountry(it, country) }
     }
 
+    fun isCountry(input: String): Boolean {
+        return (countries.any { country -> country.equals(input, ignoreCase = true) })
+    }
+
     private fun isMealRelatedToCountry(meal: Meal, country: String): Boolean {
         return isExistInName(meal.name, country)
                 || isExistInDescription(meal.description, country)

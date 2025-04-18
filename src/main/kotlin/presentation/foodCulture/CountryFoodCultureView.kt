@@ -19,25 +19,25 @@ class CountryFoodCultureView(
         println("------------------------------------------")
     }
 
-    private fun validateCountryInput(): String? {
-        return getCountryFromUser()?.let {
-            if (ExploreCountryFoodCultureUseCase.countries.any { country -> country.equals(it, ignoreCase = true) })
-                it
-            else
-                "No Such Country Name"
-        }
-    }
-
     private fun displayCountryFoodList() {
-        validateCountryInput()
+        getCountryFromUser()
             ?.let(useCase::getMealsOfCountry)
             ?.run(::MealListView)
             ?.also(MealListView::start)
-            ?: println("We don't have data about that country\n")
     }
 
     private fun getCountryFromUser(): String? {
-        print("enter country name: ")
-        return readlnOrNull()
+        print("Enter country name (or 0 to return to main menu) : ")
+        val userInput = readln()
+        if (userInput == "0") {
+            return null
+        }
+        return if (useCase.isCountry(userInput)) {
+            userInput
+        } else {
+            println("Enter Valid country name: ")
+            getCountryFromUser()
+        }
     }
+
 }
