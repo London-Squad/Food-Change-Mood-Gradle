@@ -1,4 +1,4 @@
-package presentation.getIraqiMeals
+package presentation.iraqiMeals
 
 import logic.getIraqiMeals.GetIraqiMealsUseCase
 import model.Meal

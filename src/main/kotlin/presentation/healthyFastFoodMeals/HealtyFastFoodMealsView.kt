@@ -1,4 +1,4 @@
-package presentation.getHealthyFastFoodMeals
+package presentation.healthyFastFoodMeals
 
 import logic.getHealthyFastFoodMeals.GetHealthyFastFoodMealsUseCase
 import presentation.BaseView
