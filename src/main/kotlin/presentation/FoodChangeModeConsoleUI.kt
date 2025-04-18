@@ -1,50 +1,68 @@
 package presentation
+import presentation.easyMeal.EasyMealView
+import presentation.foodCulture.CountryFoodCultureView
 
 import logic.GymHelperUseCase
 
 class FoodChangeModeConsoleUI(
-    //TODO: add feature useCase to class constructor
-    private val getGymHelperUseCase: GymHelperUseCase
-) {
+    private val iraqiMealsView: IraqiMealsView,
+    private val suggestSweetWithoutEggView: SuggestSweetWithoutEggView,
+    private val mealGuessGameView: MealGuessGameView,
+    private val easyMealView: EasyMealView,
+    private val italianFoodForLargeGroupView: ItalianFoodForLargeGroupView,
+    private val ketoSuggetionHelperView:KetoSuggetionHelperView,
+    private val countryFoodCultureView: CountryFoodCultureView,
+    private val ingredientGameView: IngredientGameView,
+    private val getGymHelperUseCase: GymHelperUseCase,
+) : BaseView {
 
-    fun start(){
+    override fun start() {
         showWelcome()
         presentFeatures()
     }
 
-    private fun presentFeatures(){
-        //TODO: create a function for the new useCase and add case for selecting new feature in 'when' statement (like the first case)
-
+    private fun presentFeatures() {
         showOptions()
         val input = getUserInput()
-        when(input){
+        when (input) {
             1 -> lunchHealthyFoodList()
+            2 -> suggestSweetWithoutEggView.start()
+            3 -> iraqiMealsView.start()
+            4 -> easyMealView.start()
+            5 -> mealGuessGameView.start()
+            7->ketoSuggetionHelperView.start()
             9 -> lunchGymHelper()
+            15 -> italianFoodForLargeGroupView.start()
+            10 -> countryFoodCultureView.start()
+            11 -> ingredientGameView.start()
             0 -> return
             else -> println("Invalid Input")
         }
         presentFeatures()
     }
 
-    private fun showWelcome(){
+    private fun showWelcome() {
         println("Welcome to Food Change Mode app")
     }
 
-    private fun showOptions(){
-        //TODO: add option for new features
+    private fun showOptions() {
 
         println("\n\n=== please enter one of the following numbers ===")
         println("1- Get a List of Healthy Fast Food Meals")
+        println("2- Suggest Sweets Without Eggs")
+        println("3- Get a List of Iraqi Meals")
+        println("4- Get Easy Food Suggestion")
+        println("5- Meal Guess Game")
+        println("7- Get one Keto by Keto Helper")
         println("9- Get a List of Gym Meals")
+        println("10- Explore other country culture")
+        println("11- Ingredient Game")
+        println("15- Get a List of Italian food that is suitable for large group of friends")
         println("0- Exit")
         println("here: ")
     }
 
-    private fun lunchHealthyFoodList(){
-        //TODO: update this when implementing the useCase
-    }
-
-    private fun getUserInput(): Int?{
+    private fun getUserInput(): Int? {
         return readlnOrNull()?.toIntOrNull()
     }
     private fun lunchGymHelper(){
