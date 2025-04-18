@@ -6,6 +6,7 @@ import org.koin.dsl.module
 import presentation.*
 
 import presentation.easyMeal.EasyMealView
+import presentation.getSeaFoodMealsView.GetSeaFoodMealsView
 import presentation.foodCulture.CountryFoodCultureView
 import presentation.healthyFastFoodMeals.GetHealthyFastFoodMealsView
 import presentation.gymHelper.GymHelperView
@@ -37,6 +38,7 @@ val presentationModule = module {
     factory { GymHelperView(get(), get()) }
     factory { GetHealthyFastFoodMealsView(get()) }
     factory { KetoSuggestionHelperView(get(), get()) }
+    factory { GetSeaFoodMealsView(get(), get()) }
     factory { GetMealsContainPotatoView(get(), get()) }
     factory { GetHighCalorieMealsView(get(), get()) }
 

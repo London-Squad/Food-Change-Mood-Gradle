@@ -22,6 +22,9 @@ class CountryFoodCultureView(
     private fun displayCountryFoodList() {
         getCountryFromUser()
             ?.let(useCase::getMealsOfCountry)
+            ?.let{
+                if (it.isEmpty()) {println("no meals found :'("); null} else it
+            }
             ?.run(::MealListView)
             ?.also(MealListView::start)
     }

@@ -11,6 +11,8 @@ class MealGuessGameView(
         printHeader()
         printRules()
 
+        if (!mealGuessGameUseCase.isTwoOrMoreMealsAvailable()) {println("not enough meals available :'("); return}
+
         do {
 
             startGuessGame()

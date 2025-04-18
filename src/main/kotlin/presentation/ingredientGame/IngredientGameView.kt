@@ -8,6 +8,7 @@ class IngredientGameView(
 ) : BaseView {
 
     override fun start() {
+        if (!ingredientGameUseCase.isGamePlayable()) {println("can't play the game :'("); return}
         prepareGame()
         startNewRound()
     }

@@ -1,6 +1,5 @@
 package di
 
-import data.csvData.CsvMealsDataSourceOneTimeLoad
 import logic.*
 import logic.ketoMealHelper.KetoFriendlyValidator
 import logic.ketoMealHelper.KetoMealHelper
@@ -19,6 +18,7 @@ import logic.getHealthyFastFoodMeals.GetHealthyFastFoodMealsUseCase
 import logic.getHighCalorieMeals.GetHighCalorieMealsUseCase
 import logic.getItalianFoodForLargeGroup.GetItalianFoodForLargeGroupUseCase
 import logic.getMealsContainPotato.GetMealsContainPotatoUseCase
+import logic.getSeaFoodMealsUseCase.GetSeaFoodMealsUseCase
 import logic.gymHelper.GymHelperUseCase
 import logic.ingredientGame.IngredientGameUseCase
 import logic.mealGuessGame.MealGuessGameUseCase
@@ -28,7 +28,6 @@ import org.koin.dsl.module
 import java.time.LocalDate
 
 val useCaseModule = module {
-    single<MealsDataSource> { CsvMealsDataSourceOneTimeLoad(get(), get(), 5000) }
 
     // Index Builders
     single<IndexBuilder<String, Set<Int>>>(named("NAME")) { MealNameInvertedIndexBuilder(get<MealsDataSource>()) }
@@ -70,4 +69,5 @@ val useCaseModule = module {
     single { GymHelperUseCase(get()) }
     single { GetHighCalorieMealsUseCase(get()) }
     single { GetMealsContainPotatoUseCase(get()) }
+    single { GetSeaFoodMealsUseCase(get()) }
 }

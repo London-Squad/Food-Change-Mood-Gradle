@@ -1,30 +1,30 @@
-package presentation.iraqiMeals
+package presentation.getSeaFoodMealsView
 
-import logic.getIraqiMeals.GetIraqiMealsUseCase
+import logic.getSeaFoodMealsUseCase.GetSeaFoodMealsUseCase
 import model.Meal
 import presentation.BaseView
 import presentation.utils.ViewUtil
 
-class IraqiMealsView(
-    private val getIraqiMealsUseCase: GetIraqiMealsUseCase,
+class GetSeaFoodMealsView(
+    private val getSeaFoodMealsUseCase: GetSeaFoodMealsUseCase,
     private val viewUtil: ViewUtil
-) : BaseView {
-
+): BaseView {
     override fun start() {
-        val chunkedIraqiMeals = getIraqiMealsUseCase.getIraqiMeals()
+        val chunkedMeals = getSeaFoodMealsUseCase
+            .getSeaFoodMealsSortedByProtein()
             .chunked(MAX_NUMBER_OF_MEALS_TO_BE_PRINTED_AT_ONCE)
 
-        if (chunkedIraqiMeals.isEmpty()) {println("no meals found :'("); return}
+        if (chunkedMeals.isEmpty()) {println("no meals found :'("); return}
 
         var userInput: String?
         var mealsChunkIndex = 0
         var mealsChunk: List<Meal>
 
         do {
-            mealsChunk = chunkedIraqiMeals[mealsChunkIndex]
+            mealsChunk = chunkedMeals[mealsChunkIndex]
 
-            printMealsNames(mealsChunk)
-            printOptions(mealsChunkIndex, chunkedIraqiMeals.size)
+            printMealsNames(mealsChunk, mealsChunkIndex)
+            printOptions(mealsChunkIndex, chunkedMeals.size)
 
             userInput = readln()
 
@@ -32,9 +32,9 @@ class IraqiMealsView(
                 "next" -> mealsChunkIndex++
                 "back" -> mealsChunkIndex--
                 "0" -> break
-                in (1..mealsChunk.size).map { it.toString() } -> {
+                in (1+mealsChunkIndex* MAX_NUMBER_OF_MEALS_TO_BE_PRINTED_AT_ONCE..mealsChunk.size+mealsChunkIndex* MAX_NUMBER_OF_MEALS_TO_BE_PRINTED_AT_ONCE).map { it.toString() } -> {
                     printMealAndWaitForEnter(
-                        mealsChunk[userInput.toInt() - 1]
+                        mealsChunk[userInput.toInt() - 1 - mealsChunkIndex* MAX_NUMBER_OF_MEALS_TO_BE_PRINTED_AT_ONCE]
                     )
                     break
                 }
@@ -42,7 +42,7 @@ class IraqiMealsView(
                 else -> println("Invalid input, try again")
             }
 
-        } while (mealsChunkIndex < chunkedIraqiMeals.size && mealsChunkIndex >= 0)
+        } while (mealsChunkIndex < chunkedMeals.size && mealsChunkIndex >= 0)
     }
 
     private fun printOptions(mealsChunkIndex: Int, mealsChunksize: Int) {
@@ -59,15 +59,15 @@ class IraqiMealsView(
         print("your input: ")
     }
 
-    private fun printMealsNames(meals: List<Meal>) {
+    private fun printMealsNames(meals: List<Meal>, baseIndex: Int = 0) {
 
         println()
         println("---------------------------------------------")
-        println("                 Iraqi Meals                 ")
+        println("               Sea Food Meals                ")
         println("---------------------------------------------")
 
         meals.forEachIndexed { mealIndex, meal ->
-            println("${mealIndex + 1}. ${meal.name}")
+            println("${mealIndex + 1 + baseIndex* MAX_NUMBER_OF_MEALS_TO_BE_PRINTED_AT_ONCE}. ${meal.name} | protein = ${meal.nutrition.protein}")
         }
         println("---------------------------------------------")
     }
@@ -81,5 +81,4 @@ class IraqiMealsView(
     private companion object {
         const val MAX_NUMBER_OF_MEALS_TO_BE_PRINTED_AT_ONCE = 10
     }
-
 }

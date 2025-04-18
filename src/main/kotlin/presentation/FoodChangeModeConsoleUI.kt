@@ -1,6 +1,7 @@
 package presentation
 
 import presentation.easyMeal.EasyMealView
+import presentation.getSeaFoodMealsView.GetSeaFoodMealsView
 import presentation.foodCulture.CountryFoodCultureView
 import presentation.healthyFastFoodMeals.GetHealthyFastFoodMealsView
 import presentation.gymHelper.GymHelperView
@@ -27,6 +28,7 @@ class FoodChangeModeConsoleUI(
     private val countryFoodCultureView: CountryFoodCultureView,
     private val ingredientGameView: IngredientGameView,
     private val gymHelperView: GymHelperView,
+    private val getSeaFoodMealsView: GetSeaFoodMealsView,
     private val getMealsContainPotatoView: GetMealsContainPotatoView,
     private val getHighCalorieMealsView: GetHighCalorieMealsView,
     private val getIraqiMealsUseCase: IraqiMealsView,
@@ -55,6 +57,7 @@ class FoodChangeModeConsoleUI(
             11 -> ingredientGameView.start()
             12 -> getMealsContainPotatoView.start()
             13 -> getHighCalorieMealsView.start()
+            14 -> getSeaFoodMealsView.start()
             15 -> italianFoodForLargeGroupView.start()
             0 -> return
             else -> println("Invalid Input")
@@ -81,9 +84,10 @@ class FoodChangeModeConsoleUI(
         println("11- Ingredient Game")
         println("12- I Love Potato")
         println("13- Get High Calorie Meals (>700 kcal)")
+        println("14- Get a List Of Sea Food Sorted By Protein")
         println("15- Get a List of Italian food that is suitable for large group of friends")
         println("0- Exit")
-        println("Here: ")
+        print("Here: ")
     }
 
     private fun getUserInput(): Int? {
