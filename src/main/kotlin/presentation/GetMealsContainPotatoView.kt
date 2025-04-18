@@ -22,22 +22,10 @@ class GetMealsContainPotatoView(
         println("If you want the details of one of the meal, enter its number")
         println("If you want to go back to the main menu, enter 0")
         println()
-        print("your input: ")
-        do {
 
-            when (val userInput = readlnOrNull()) {
+        getValidOptionFromUser(randomPotatoMeals.size).takeIf { it !=0 }
+            ?.also{ printMealAndWaitForEnter(randomPotatoMeals[it - 1])}
 
-                "0" -> return
-                in (1..randomPotatoMeals.size).map { it.toString() } -> {
-                    printMealAndWaitForEnter(
-                        randomPotatoMeals[userInput!!.toInt() - 1]
-                    )
-                    break
-                }
-
-                else -> println("Invalid input, try again")
-            }
-        } while (true)
     }
 
     private fun printHeader() {
@@ -60,4 +48,14 @@ class GetMealsContainPotatoView(
         readlnOrNull()
     }
 
+    private fun getValidOptionFromUser(max: Int): Int {
+        print("your choice: ")
+        val userInput = readln().trim()
+        return if (userInput.toIntOrNull() in 0..max)
+            userInput.toInt()
+        else {
+            println("invalid input")
+            getValidOptionFromUser(max)
+        }
+    }
 }
