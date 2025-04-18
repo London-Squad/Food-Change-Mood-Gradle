@@ -7,12 +7,16 @@ import model.Meal
 class IdIndexBuilder(
     private val mealsDataSource: MealsDataSource
 ) : IndexBuilder<Int, Int> {
-    override val index: Map<Int, Int>
+    private val index: Map<Int, Int>
 
     init {
         index = build(mealsDataSource.getAllMeals())
     }
 
-    override fun build(meals: List<Meal>): Map<Int, Int> =
+    private fun build(meals: List<Meal>): Map<Int, Int> =
         meals.withIndex().associate { (idx, meal) -> meal.id to idx }
+
+    override fun getIndex(): Map<Int, Int> {
+        return index
+    }
 }

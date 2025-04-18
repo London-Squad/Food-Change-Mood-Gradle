@@ -14,7 +14,7 @@ class MealSearchByNameUseCaseImpl(
         cache.get(keyword) ?: run {
             val candidateIndices = keyword.lowercase()
                 .split(" ")
-                .flatMap { indexBuilder.index[it].orEmpty() } // Use indexBuilder.index
+                .flatMap { indexBuilder.getIndex()[it].orEmpty() } // Use indexBuilder.index
                 .toSet()
 
             val results = if (candidateIndices.isEmpty()) {

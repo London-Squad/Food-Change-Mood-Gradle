@@ -8,13 +8,18 @@ import java.time.LocalDate
 class MealDateInvertedIndexBuilder(
     private val mealsDataSource: MealsDataSource
 ) : IndexBuilder<LocalDate, List<Int>> {
-    override val index: Map<LocalDate, List<Int>>
+
+    private val index: Map<LocalDate, List<Int>>
 
     init {
         index = build(mealsDataSource.getAllMeals())
     }
 
-    override fun build(meals: List<Meal>): Map<LocalDate, List<Int>> =
+    override fun getIndex(): Map<LocalDate, List<Int>> {
+        return index
+    }
+
+    private fun build(meals: List<Meal>): Map<LocalDate, List<Int>> =
         meals.withIndex()
             .filter { (_, meal) -> meal.dateSubmitted != null }
             .groupBy(

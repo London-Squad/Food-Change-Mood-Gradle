@@ -7,13 +7,17 @@ import model.Meal
 class MealNameInvertedIndexBuilder(
     private val mealsDataSource: MealsDataSource
 ) : IndexBuilder<String, Set<Int>> {
-    override val index: Map<String, Set<Int>>
+    private val index: Map<String, Set<Int>>
 
     init {
         index = build(mealsDataSource.getAllMeals())
     }
 
-    override fun build(meals: List<Meal>): Map<String, Set<Int>> =
+    override fun getIndex(): Map<String, Set<Int>> {
+        return index
+    }
+
+    private fun build(meals: List<Meal>): Map<String, Set<Int>> =
         meals.withIndex()
             .flatMap { (idx, meal) ->
                 meal.name.lowercase()
