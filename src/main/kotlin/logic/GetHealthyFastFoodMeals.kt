@@ -34,8 +34,10 @@ private fun isVeryLowFatCarbMeal(
     maxSaturatedFat: Float,
     maxCarbohydrates: Float
 ): Boolean {
-  return  (meal.nutrition.totalFat == null || meal.nutrition.totalFat <= maxTotalFat) &&
-            (meal.nutrition.saturatedFat == null || meal.nutrition.saturatedFat <= maxSaturatedFat) &&
-            (meal.nutrition.carbohydrates == null || meal.nutrition.carbohydrates <= maxCarbohydrates)
-
+    return meal.nutrition.totalFat != null &&
+            meal.nutrition.saturatedFat != null &&
+            meal.nutrition.carbohydrates != null &&
+            meal.nutrition.totalFat <= maxTotalFat &&
+            meal.nutrition.saturatedFat <= maxSaturatedFat &&
+            meal.nutrition.carbohydrates <= maxCarbohydrates
 }
