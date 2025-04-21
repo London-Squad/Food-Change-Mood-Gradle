@@ -3,11 +3,13 @@ package presentation.highCalorieMeals
 import logic.getHighCalorieMeals.GetHighCalorieMealsUseCase
 import model.Meal
 import presentation.BaseView
+import presentation.utils.UserInputReader
 import presentation.utils.ViewUtil
 
 class GetHighCalorieMealsView(
     private val getHighCalorieMealsUseCase: GetHighCalorieMealsUseCase,
-    private val viewUtil: ViewUtil
+    private val viewUtil: ViewUtil,
+    private val userInputReader: UserInputReader
 ) : BaseView {
 
     override fun start() {
@@ -29,7 +31,7 @@ class GetHighCalorieMealsView(
             printMealsNames(mealsChunk)
             printOptions(mealsChunkIndex, chunkedHighCalorieMeals.size)
 
-            userInput = readln()
+            userInput = userInputReader.getUserInput()
 
             when (userInput) {
                 "next" -> if (mealsChunkIndex < chunkedHighCalorieMeals.size - 1) mealsChunkIndex++
@@ -75,7 +77,7 @@ class GetHighCalorieMealsView(
     private fun printMealAndWaitForEnter(meal: Meal) {
         viewUtil.printMeal(meal)
         println("press Enter to go back to main menu")
-        readlnOrNull()
+        userInputReader.getUserInput()
     }
 
     private companion object {

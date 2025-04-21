@@ -3,16 +3,17 @@ package presentation.mealSearchByName
 import logic.search.MealSearchUseCase
 import model.Meal
 import presentation.BaseView
+import presentation.utils.UserInputReader
 import presentation.utils.ViewUtil
 
 class MealSearchByNameView(
     private val mealSearchUseCase: MealSearchUseCase<List<Meal>>,
-    private val viewUtil: ViewUtil
+    private val viewUtil: ViewUtil,
+    private val userInputReader: UserInputReader
 ) : BaseView {
 
     override fun start() {
-        println("Enter a keyword to search for meals (or '0' to return to main menu):")
-        val keyword = readlnOrNull() ?: ""
+        val keyword = userInputReader.getUserInput("Enter a keyword to search for meals (or '0' to return to main menu): ")
         if (keyword == "0") return
 
         val searchResults = mealSearchUseCase.searchMeals(keyword)
@@ -32,7 +33,7 @@ class MealSearchByNameView(
             printMealsNames(mealsChunk, keyword)
             printOptions(mealsChunkIndex, chunkedMeals.size)
 
-            userInput = readln()
+            userInput = userInputReader.getUserInput()
 
             when (userInput) {
                 "next" -> mealsChunkIndex++
@@ -76,7 +77,7 @@ class MealSearchByNameView(
     private fun printMealAndWaitForEnter(meal: Meal) {
         viewUtil.printMeal(meal)
         println("Press Enter to go back to main menu")
-        readlnOrNull()
+        userInputReader.getUserInput()
     }
 
     private companion object {

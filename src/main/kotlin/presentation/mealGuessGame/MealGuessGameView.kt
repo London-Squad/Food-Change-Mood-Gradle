@@ -2,9 +2,11 @@ package presentation.mealGuessGame
 
 import logic.mealGuessGame.MealGuessGameUseCase
 import presentation.BaseView
+import presentation.utils.UserInputReader
 
 class MealGuessGameView(
-    private val mealGuessGameUseCase: MealGuessGameUseCase
+    private val mealGuessGameUseCase: MealGuessGameUseCase,
+    private val userInputReader: UserInputReader
 ) : BaseView {
 
     override fun start() {
@@ -18,7 +20,7 @@ class MealGuessGameView(
             startGuessGame()
             print("\nEnter anything to continue or 0 to to exit: ")
 
-        } while (readlnOrNull() != "0")
+        } while (userInputReader.getUserInput() != "0")
     }
 
     private fun startGuessGame() {
@@ -57,7 +59,7 @@ class MealGuessGameView(
     private fun getValidGuess(attempt: Int): Int {
 
         print("Guess no.$attempt: ")
-        val guessInput = readlnOrNull()?.toIntOrNull()
+        val guessInput = userInputReader.getUserInput().toIntOrNull()
         if (guessInput == null) {
             println("invalid input")
             return getValidGuess(attempt)

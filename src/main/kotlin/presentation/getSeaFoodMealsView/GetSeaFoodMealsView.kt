@@ -3,11 +3,13 @@ package presentation.getSeaFoodMealsView
 import logic.getSeaFoodMealsUseCase.GetSeaFoodMealsUseCase
 import model.Meal
 import presentation.BaseView
+import presentation.utils.UserInputReader
 import presentation.utils.ViewUtil
 
 class GetSeaFoodMealsView(
     private val getSeaFoodMealsUseCase: GetSeaFoodMealsUseCase,
-    private val viewUtil: ViewUtil
+    private val viewUtil: ViewUtil,
+    private val userInputReader: UserInputReader
 ): BaseView {
     override fun start() {
         val chunkedMeals = getSeaFoodMealsUseCase
@@ -26,7 +28,7 @@ class GetSeaFoodMealsView(
             printMealsNames(mealsChunk, mealsChunkIndex)
             printOptions(mealsChunkIndex, chunkedMeals.size)
 
-            userInput = readln()
+            userInput = userInputReader.getUserInput()
 
             when (userInput) {
                 "next" -> mealsChunkIndex++
@@ -75,7 +77,7 @@ class GetSeaFoodMealsView(
     private fun printMealAndWaitForEnter(meal: Meal) {
         viewUtil.printMeal(meal)
         println("press Enter to go back to main menu")
-        readlnOrNull()
+        userInputReader.getUserInput()
     }
 
     private companion object {

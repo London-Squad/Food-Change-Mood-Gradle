@@ -20,27 +20,31 @@ import presentation.mealSearchByDate.MealSearchByDateView
 import presentation.mealSearchByName.MealSearchByNameView
 import presentation.mealsContainPotato.GetMealsContainPotatoView
 import presentation.suggestSweetWithoutEgg.SuggestSweetWithoutEggView
+import presentation.utils.UserInputReader
+import presentation.utils.UserInputReaderImpl
 import presentation.utils.ViewUtil
 
 
 val presentationModule = module {
-    factory { MealSearchByNameView(get(named("byName")), get()) }
-    factory { MealSearchByDateView(get(named("byDate")), get()) }
+    factory { MealSearchByNameView(get(named("byName")), get(), get()) }
+    factory { MealSearchByDateView(get(named("byDate")), get(), get()) }
 
     factory { ViewUtil() }
-    factory { IraqiMealsView(get(), get()) }
-    factory { SuggestSweetWithoutEggView(get(), get()) }
-    factory { MealGuessGameView(get()) }
-    factory { EasyMealView(get()) }
-    factory { ItalianFoodForLargeGroupView(get(), get()) }
-    factory { CountryFoodCultureView(get()) }
-    factory { IngredientGameView(get()) }
-    factory { GymHelperView(get(), get()) }
+    factory { IraqiMealsView(get(), get(), get()) }
+    factory { SuggestSweetWithoutEggView(get(), get(), get()) }
+    factory { MealGuessGameView(get(), get()) }
+    factory { EasyMealView(get(), get()) }
+    factory { ItalianFoodForLargeGroupView(get(), get(), get()) }
+    factory { CountryFoodCultureView(get(), get()) }
+    factory { IngredientGameView(get(), get()) }
+    factory { GymHelperView(get(), get(), get()) }
     factory { GetHealthyFastFoodMealsView(get()) }
     factory { KetoSuggestionHelperView(get(), get()) }
-    factory { GetSeaFoodMealsView(get(), get()) }
-    factory { GetMealsContainPotatoView(get(), get()) }
-    factory { GetHighCalorieMealsView(get(), get()) }
+    factory { GetSeaFoodMealsView(get(), get(), get()) }
+    factory { GetMealsContainPotatoView(get(), get(), get()) }
+    factory { GetHighCalorieMealsView(get(), get(), get()) }
+    factory <UserInputReader>{ UserInputReaderImpl() }
+
 
     factoryOf(::FoodChangeModeConsoleUI)
 }

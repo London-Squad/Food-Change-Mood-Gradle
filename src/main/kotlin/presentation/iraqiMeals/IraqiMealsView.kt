@@ -3,11 +3,14 @@ package presentation.iraqiMeals
 import logic.getIraqiMeals.GetIraqiMealsUseCase
 import model.Meal
 import presentation.BaseView
+import presentation.utils.UserInputReader
 import presentation.utils.ViewUtil
 
 class IraqiMealsView(
     private val getIraqiMealsUseCase: GetIraqiMealsUseCase,
-    private val viewUtil: ViewUtil
+    private val viewUtil: ViewUtil,
+    private val userInputReader: UserInputReader
+
 ) : BaseView {
 
     override fun start() {
@@ -26,7 +29,7 @@ class IraqiMealsView(
             printMealsNames(mealsChunk)
             printOptions(mealsChunkIndex, chunkedIraqiMeals.size)
 
-            userInput = readln()
+            userInput = userInputReader.getUserInput()
 
             when (userInput) {
                 "next" -> mealsChunkIndex++
@@ -74,8 +77,7 @@ class IraqiMealsView(
 
     private fun printMealAndWaitForEnter(meal: Meal) {
         viewUtil.printMeal(meal)
-        println("press Enter to go back to main menu")
-        readlnOrNull()
+        userInputReader.getUserInput("press Enter to go back to main menu")
     }
 
     private companion object {

@@ -2,11 +2,14 @@ package presentation.suggestSweetWithoutEgg
 
 import logic.suggestSweetWithoutEgg.SuggestSweetWithoutEggUseCase
 import presentation.BaseView
+import presentation.utils.UserInputReader
 import presentation.utils.ViewUtil
 
 class SuggestSweetWithoutEggView(
     private val suggestSweetWithoutEggUseCase: SuggestSweetWithoutEggUseCase,
-    private val viewUtil: ViewUtil
+    private val viewUtil: ViewUtil,
+    private val userInputReader: UserInputReader
+
 ) : BaseView {
 
     override fun start() {
@@ -46,15 +49,10 @@ class SuggestSweetWithoutEggView(
 
     }
 
-    private fun getValidInputFromUser(): String {
-        print("your choice: ")
-        val guessInput = readln().trim()
-        return if (guessInput in listOf("y", "n", "x"))
-            guessInput
-        else {
-            println("invalid input")
-            getValidInputFromUser()
-        }
-    }
-
+    private fun getValidInputFromUser(): String =
+        userInputReader.getValidUserInput(
+            {it in listOf("y", "n", "x")},
+            "your choice: ",
+            "invalid input"
+        )
 }

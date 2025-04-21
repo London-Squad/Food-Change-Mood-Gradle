@@ -3,19 +3,21 @@ package presentation.gymHelper
 import logic.gymHelper.GymHelperUseCase
 import model.Meal
 import presentation.BaseView
+import presentation.utils.UserInputReader
 import presentation.utils.ViewUtil
 
 class GymHelperView(
     private val gymHelperUseCase: GymHelperUseCase,
-    private val viewUtil: ViewUtil
+    private val viewUtil: ViewUtil,
+    private val userInputReader: UserInputReader
 ) : BaseView {
 
     override fun start() {
-        val calories = getValidFloatInput("Enter desired calories:")
-        val protein = getValidFloatInput("Enter desired protein:")
+        val calories = getValidFloatInput("Enter desired calories: ")
+        val protein = getValidFloatInput("Enter desired protein: ")
         println("Enter approximate percentage (e.g., 10 for ±10%, default 10):")
-        val approximate = readlnOrNull()
-            ?.toDoubleOrNull()
+        val approximate = userInputReader.getUserInput()
+            .toDoubleOrNull()
             ?.let { if (it < 0) -it else it }
             ?.div(100)
             ?: 0.1
@@ -24,7 +26,7 @@ class GymHelperView(
         if (matchingMeals.isEmpty()) {
             println("Sorry, no meals match your criteria.")
             println("Press Enter to return to main menu.")
-            readlnOrNull()
+            userInputReader.getUserInput()
             return
         }
 
@@ -37,7 +39,7 @@ class GymHelperView(
             printMealsNames(mealsChunk)
             printOptions(chunkIndex, chunkedMeals.size)
 
-            userInput = readln()
+            userInput = userInputReader.getUserInput()
 
             when (userInput) {
                 "next" -> chunkIndex++
@@ -80,19 +82,21 @@ class GymHelperView(
 
     private fun printMealAndWaitForEnter(meal: Meal) {
         viewUtil.printMeal(meal)
-        println("Press Enter to go back to main menu")
-        readlnOrNull()
+        userInputReader.getUserInput("Press Enter to go back to main menu")
     }
 
-    private fun getValidFloatInput(prompt: String): Float {
-        while (true) {
-            print("$prompt ")
-            val input = readlnOrNull()
-            val number = input?.toFloatOrNull()
-            if (number != null && number >= 0) return number
-            println("❌ Invalid input. Please enter a valid number.")
-        }
+    private fun getValidFloatInput(message: String): Float =
+        userInputReader.getValidUserInput(
+            ::isValidFloatInput,
+            message,
+            "❌ Invalid input. Please enter a valid number."
+        ).toFloat()
+
+    private fun isValidFloatInput(userInput: String): Boolean{
+        val number = userInput.toFloatOrNull()
+        return number != null && number > 0
     }
+
 
     private companion object {
         const val MAX_NUMBER_OF_MEALS_TO_BE_PRINTED_AT_ONCE = 10

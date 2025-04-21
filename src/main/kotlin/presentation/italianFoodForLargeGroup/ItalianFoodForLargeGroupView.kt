@@ -3,12 +3,13 @@ package presentation.italianFoodForLargeGroup
 import logic.getItalianFoodForLargeGroup.GetItalianFoodForLargeGroupUseCase
 import model.Meal
 import presentation.BaseView
+import presentation.utils.UserInputReader
 import presentation.utils.ViewUtil
 
 class ItalianFoodForLargeGroupView(
     private val getItalianFoodForLargeGroupUseCase: GetItalianFoodForLargeGroupUseCase,
-    private val viewUtil: ViewUtil
-
+    private val viewUtil: ViewUtil,
+    private val userInputReader: UserInputReader
 ) : BaseView {
     override fun start() {
         val chunkedItalianMeals = getItalianFoodForLargeGroupUseCase.getItalianMealsForLargeGroup()
@@ -26,7 +27,7 @@ class ItalianFoodForLargeGroupView(
             printMealsNames(mealsChunk)
             printOptions(mealsChunkIndex, chunkedItalianMeals.size)
 
-            userInput = readln()
+            userInput = userInputReader.getUserInput()
 
             when (userInput) {
                 "next" -> mealsChunkIndex++
@@ -76,7 +77,7 @@ class ItalianFoodForLargeGroupView(
     private fun printMealAndWaitForEnter(meal: Meal) {
         viewUtil.printMeal(meal)
         println("press Enter to go back to main menu")
-        readlnOrNull()
+        userInputReader.getUserInput()
     }
 
     private companion object {

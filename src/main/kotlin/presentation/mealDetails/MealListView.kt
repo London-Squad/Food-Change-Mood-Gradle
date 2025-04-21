@@ -2,9 +2,11 @@ package presentation.mealDetails
 
 import model.Meal
 import presentation.BaseView
+import presentation.utils.UserInputReader
 
 class MealListView(
-    private val mealList: List<Meal>
+    private val mealList: List<Meal>,
+    private val userInputReader: UserInputReader
 ) : BaseView {
 
     override fun start() {
@@ -18,8 +20,7 @@ class MealListView(
                 printAllMeals()
                 val mealIndexFromUser = getValidOptionFromUser(mealList.size)
                 mealList[mealIndexFromUser].apply { printMealDetails(this) }
-                print("press any key to continue:")
-                readln()
+                userInputReader.getUserInput("press any key to continue: ")
                 return
             } catch (ex: Exception) {
                 println(ex.message)
@@ -36,16 +37,12 @@ class MealListView(
         println("${index + 1}- ${meal.name}")
     }
 
-    private fun getValidOptionFromUser(max: Int): Int {
-        print("your choice: ")
-        val userInput = readln().trim()
-        return if (userInput.toIntOrNull() in 0..max)
-            userInput.toInt()
-        else {
-            println("invalid input")
-            getValidOptionFromUser(max)
-        }
-    }
+    private fun getValidOptionFromUser(max: Int): Int =
+        userInputReader.getValidUserInput(
+            { userInput -> userInput.toIntOrNull() in 0..max },
+            "Your Choice: ",
+            "invalid input"
+        ).toInt()
 
     private fun printMealDetails(selectedMeal: Meal) {
         MealDetailsView(selectedMeal).apply { start() }
