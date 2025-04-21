@@ -39,7 +39,7 @@ val presentationModule = module {
     factory { IngredientGameView(get(), get()) }
     factory { GymHelperView(get(), get(), get()) }
     factory { GetHealthyFastFoodMealsView(get()) }
-    factory { KetoSuggestionHelperView(get(), get()) }
+    factory { KetoSuggestionHelperView(get(), get(), get()) }
     factory { GetSeaFoodMealsView(get(), get(), get()) }
     factory { GetMealsContainPotatoView(get(), get(), get()) }
     factory { GetHighCalorieMealsView(get(), get(), get()) }

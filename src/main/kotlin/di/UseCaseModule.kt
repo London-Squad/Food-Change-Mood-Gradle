@@ -1,8 +1,7 @@
 package di
 
 import logic.*
-import logic.ketoMealHelper.KetoFriendlyValidator
-import logic.ketoMealHelper.KetoMealHelper
+import logic.ketoMealHelper.GetKetoMealUseCase
 import logic.getIraqiMeals.GetIraqiMealsUseCase
 import logic.search.byDate.IdIndexBuilder
 import logic.search.byDate.MealDateInvertedIndexBuilder
@@ -58,8 +57,7 @@ val useCaseModule = module {
 
     single { GetIraqiMealsUseCase(get()) }
     single { MealGuessGameUseCase(get()) }
-    single { KetoFriendlyValidator() }
-    single { KetoMealHelper(get(), get()) }
+    single { GetKetoMealUseCase(get()) }
     single { GetHealthyFastFoodMealsUseCase(get()) }
     single { IngredientGameUseCase(get()) }
     single { EasyMealsSuggestionUseCase(get()) }
