@@ -43,4 +43,5 @@ object MockMeals {
     )
 
     val allMeals = listOf(healthyMeal, longPrepMeal, incompleteMeal)
+    val invalidHealthyFood = listOf(longPrepMeal, incompleteMeal)
 }

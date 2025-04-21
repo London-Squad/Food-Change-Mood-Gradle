@@ -2,15 +2,15 @@ package presentation.suggestSweetWithoutEgg
 
 import logic.suggestSweetWithoutEgg.SuggestSweetWithoutEggUseCase
 import presentation.BaseView
-import presentation.utils.UserInputReader
-import presentation.utils.ViewUtil
+import presentation.utils.*
 
 class SuggestSweetWithoutEggView(
     private val suggestSweetWithoutEggUseCase: SuggestSweetWithoutEggUseCase,
-    private val viewUtil: ViewUtil,
-    private val userInputReader: UserInputReader
-
+    private val userInputReader: UserInputReader,
+    private val cliPrinter: CLIPrinter,
+    private val uiMealPrinter: UIMealPrinter
 ) : BaseView {
+    private fun printLn(message: String = "") = cliPrinter.cliPrintLn(message)
 
     override fun start() {
 
@@ -21,10 +21,8 @@ class SuggestSweetWithoutEggView(
     }
 
     private fun printHeader() {
-        println("------------------------------------------")
-        println("           Sweet Without Egg              ")
-        println("------------------------------------------")
-        println("you can like the meal to see full detail, or dislike it to get another meal.")
+        uiMealPrinter.printHeader("Sweet Without Egg")
+        uiMealPrinter.printTextWithinWidth("you can like the meal to see full detail, or dislike it to get another meal.")
     }
 
     private fun printSweetSuggestion() {
@@ -32,19 +30,19 @@ class SuggestSweetWithoutEggView(
         val sweet = suggestSweetWithoutEggUseCase.suggestSweet()
 
         if (sweet == null) {
-            println("\nNo more sweets to suggest!")
+            printLn("\nNo more sweets to suggest!")
             return
         }
 
-        println("\nTry this sweet: ${sweet.name}")
-        viewUtil.printTextWithinWidth("Description: ${sweet.description}")
+        printLn("\nTry this sweet: ${sweet.name}")
+        uiMealPrinter.printTextWithinWidth("Description: ${sweet.description}")
 
-        println("Do you like it? (y = like, n = dislike, x = exit): ")
+        printLn("Do you like it? (y = like, n = dislike, x = exit): ")
 
         when (getValidInputFromUser()) {
-            "y" -> viewUtil.printMeal(sweet)
+            "y" -> uiMealPrinter.printMealDetails(sweet)
             "n" -> printSweetSuggestion()
-            "x" -> println("Returning to main menu...")
+            "x" -> printLn("Returning to main menu...")
         }
 
     }

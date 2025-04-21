@@ -4,34 +4,38 @@ import logic.search.MealSearchUseCase
 import logic.search.byDate.MealSearchByDateUseCaseImpl
 import model.Meal
 import presentation.BaseView
-import presentation.utils.ViewUtil
 import logic.util.InvalidDateFormatException
 import logic.util.NoMealsFoundException
+import presentation.utils.CLIPrinter
+import presentation.utils.UIMealPrinter
 import presentation.utils.UserInputReader
 
 class MealSearchByDateView(
     private val mealSearchUseCase: MealSearchUseCase<List<Pair<Int, String>>>,
-    private val viewUtil: ViewUtil,
-    private val userInputReader: UserInputReader
+    private val userInputReader: UserInputReader,
+    private val cliPrinter: CLIPrinter,
+    private val uiMealPrinter: UIMealPrinter
 ) : BaseView {
 
+    private fun printLn(message: String = "") = cliPrinter.cliPrintLn(message)
+
     override fun start() {
-        println("Enter a date to search for meals (yyyy-MM-dd, e.g., 2023-04-16) or '0' to return to main menu:")
+        uiMealPrinter.printTextWithinWidth("Enter a date to search for meals (yyyy-MM-dd, e.g., 2023-04-16) or '0' to return to main menu:")
         val dateInput = userInputReader.getUserInput()
         if (dateInput == "0") return
 
         val searchResults = try {
             mealSearchUseCase.searchMeals(dateInput)
         } catch (e: InvalidDateFormatException) {
-            println("Error: ${e.message}")
+            printLn("Error: ${e.message}")
             return
         } catch (e: NoMealsFoundException) {
-            println("Error: ${e.message}")
+            printLn("Error: ${e.message}")
             return
         }
 
         if (searchResults.isEmpty()) {
-            println("No meals found for date '$dateInput'.")
+            printLn("No meals found for date '$dateInput'.")
             return
         }
 
@@ -58,13 +62,13 @@ class MealSearchByDateView(
                         val meal = try {
                             (mealSearchUseCase as MealSearchByDateUseCaseImpl).getMealDetails(mealId)
                         } catch (e: NoMealsFoundException) {
-                            println("Error: ${e.message}")
+                            printLn("Error: ${e.message}")
                             continue
                         }
                         printMealAndWaitForEnter(meal)
                         break
                     } catch (e: NumberFormatException) {
-                        println("Invalid input, please enter a valid meal ID or one of the options.")
+                        printLn("Invalid input, please enter a valid meal ID or one of the options.")
                     }
                 }
             }
@@ -72,33 +76,30 @@ class MealSearchByDateView(
     }
 
     private fun printOptions(mealsChunkIndex: Int, mealsChunkSize: Int) {
-        println()
+        printLn()
         if ((mealsChunkIndex + 1) < mealsChunkSize) {
-            println("If you want more meals, write 'next'")
+            printLn("If you want more meals, write 'next'")
         }
         if (mealsChunkIndex > 0) {
-            println("If you want the previous meals, write 'back'")
+            printLn("If you want the previous meals, write 'back'")
         }
-        println("If you want the details of a meal, enter its ID")
-        println("If you want to go back to the main menu, enter 0")
-        println()
-        print("Your input: ")
+        printLn("If you want the details of a meal, enter its ID")
+        printLn("If you want to go back to the main menu, enter 0")
+        printLn()
+        cliPrinter.cliPrint("Your input: ")
     }
 
     private fun printMeals(meals: List<Pair<Int, String>>, date: String) {
-        println()
-        println("---------------------------------------------")
-        println("       Meals Added on '$date'                ")
-        println("---------------------------------------------")
+        uiMealPrinter.printHeader("Meals Added on '$date'")
 
         meals.forEach { (id, name) ->
-            println("ID: $id - $name")
+            printLn("ID: $id - $name")
         }
-        println("---------------------------------------------")
+        printLn(uiMealPrinter.getThinHorizontal())
     }
 
     private fun printMealAndWaitForEnter(meal: Meal) {
-        viewUtil.printMeal(meal)
+        uiMealPrinter.printMealDetails(meal)
         userInputReader.getUserInput("Press Enter to go back to main menu")
     }
 

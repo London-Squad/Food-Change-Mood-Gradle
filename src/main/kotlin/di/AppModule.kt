@@ -12,5 +12,4 @@ val appModule = module {
     single { FileReader(get()) }
     single { CsvMealsParser() }
     single<MealsDataSource> { CsvMealsDataSourceOneTimeLoad(get(), get(), -1) }
-
 }

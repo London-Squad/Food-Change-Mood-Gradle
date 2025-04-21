@@ -5,12 +5,9 @@ import io.mockk.every
 import io.mockk.mockk
 import logic.MealsDataSource
 import logic.getHealthyFastFoodMeals.GetHealthyFastFoodMealsUseCase
-import model.Meal
-import model.Nutrition
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import testData.MockMeals
-import java.time.LocalDate
 
 class GetHealthyFastFoodMealsUseCaseTest {
     private lateinit var gettingHealthFooduseCase: GetHealthyFastFoodMealsUseCase
@@ -24,7 +21,6 @@ class GetHealthyFastFoodMealsUseCaseTest {
 
     @Test
     fun `getHealthyFastFoodMeals should return meals with prep time less than 15 and complete nutrition`() {
-
         every { mealsDataSource.getAllMeals() } returns MockMeals.allMeals
 
         val result = gettingHealthFooduseCase.getHealthyFastFoodMeals()
@@ -32,5 +28,21 @@ class GetHealthyFastFoodMealsUseCaseTest {
         assertThat(result).containsExactly(
             MockMeals.healthyMeal
         )
+    }
+
+    fun `getHealthyFastFoodMeals should return empty array when there's no meals on mealsDataSource`() {
+        every { mealsDataSource.getAllMeals() } returns emptyList()
+
+        val result = gettingHealthFooduseCase.getHealthyFastFoodMeals()
+
+        assertThat(result).isEmpty()
+    }
+
+    fun `getHealthyFastFoodMeals should return empty array when no meal pass condtions of healthy food`() {
+        every { mealsDataSource.getAllMeals() } returns MockMeals.invalidHealthyFood
+
+        val result = gettingHealthFooduseCase.getHealthyFastFoodMeals()
+
+        assertThat(result).isEmpty()
     }
 }
