@@ -23,26 +23,22 @@ class CountryFoodCultureView(
     }
 
     private fun displayCountryFoodList() {
-        getCountryFromUser()
+        getValidCountryOrNull()
             ?.let(useCase::getMealsOfCountry)
-            ?.let{
-                if (it.isEmpty()) {println("no meals found :'("); null} else it
+            ?.let {
+                it.ifEmpty { println("no meals found :'("); null }
             }
-            ?.let{meals: List<Meal> -> MealListView(meals, userInputReader)}
+            ?.let { meals: List<Meal> -> MealListView(meals, userInputReader) }
             ?.also(MealListView::start)
     }
 
-    private fun getCountryFromUser(): String? {
-        val userInput = userInputReader.getUserInput("Enter country name (or 0 to return to main menu) : ")
-        if (userInput == "0") {
-            return null
-        }
-        return if (useCase.isCountry(userInput)) {
-            userInput
-        } else {
-            println("Enter Valid country name: ")
-            getCountryFromUser()
-        }
+    private fun getValidCountryOrNull(): String? {
+        val userInput = userInputReader.getValidUserInput(
+            { userInput -> (userInput == "0" || useCase.isCountry(userInput)) },
+            "Enter country name (or 0 to return to main menu):",
+            "Invalid country name"
+        )
+        return if (userInput == "0") null
+        else userInput
     }
-
 }
