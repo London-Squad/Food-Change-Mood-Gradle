@@ -82,8 +82,7 @@ class GymHelperView(
 
     private fun printMealAndWaitForEnter(meal: Meal) {
         viewUtil.printMeal(meal)
-        println("Press Enter to go back to main menu")
-        readlnOrNull()
+        userInputReader.getUserInput("Press Enter to go back to main menu")
     }
 
     private fun getValidFloatInput(message: String): Float =

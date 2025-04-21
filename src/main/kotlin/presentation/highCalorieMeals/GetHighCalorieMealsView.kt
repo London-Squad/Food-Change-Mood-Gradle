@@ -77,7 +77,7 @@ class GetHighCalorieMealsView(
     private fun printMealAndWaitForEnter(meal: Meal) {
         viewUtil.printMeal(meal)
         println("press Enter to go back to main menu")
-        readlnOrNull()
+        userInputReader.getUserInput()
     }
 
     private companion object {

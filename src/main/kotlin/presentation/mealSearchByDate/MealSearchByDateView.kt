@@ -17,7 +17,7 @@ class MealSearchByDateView(
 
     override fun start() {
         println("Enter a date to search for meals (yyyy-MM-dd, e.g., 2023-04-16) or '0' to return to main menu:")
-        val dateInput = readlnOrNull() ?: ""
+        val dateInput = userInputReader.getUserInput()
         if (dateInput == "0") return
 
         val searchResults = try {
@@ -99,8 +99,7 @@ class MealSearchByDateView(
 
     private fun printMealAndWaitForEnter(meal: Meal) {
         viewUtil.printMeal(meal)
-        println("Press Enter to go back to main menu")
-        readlnOrNull()
+        userInputReader.getUserInput("Press Enter to go back to main menu")
     }
 
     private companion object {

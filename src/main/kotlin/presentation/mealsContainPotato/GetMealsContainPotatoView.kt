@@ -48,8 +48,7 @@ class GetMealsContainPotatoView(
 
     private fun printMealAndWaitForEnter(meal: Meal) {
         viewUtil.printMeal(meal)
-        println("press Enter to go back to main menu")
-        readlnOrNull()
+        userInputReader.getUserInput("press Enter to go back to main menu")
     }
 
     private fun getValidOptionFromUser(max: Int): Int {
