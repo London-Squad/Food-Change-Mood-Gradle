@@ -1,6 +1,7 @@
 package presentation.suggestSweetWithoutEgg
 
 import logic.suggestSweetWithoutEgg.SuggestSweetWithoutEggUseCase
+import model.Meal
 import presentation.BaseView
 import presentation.utils.UserInputReader
 import presentation.utils.ViewUtil
@@ -27,30 +28,35 @@ class SuggestSweetWithoutEggView(
 
     private fun printSweetSuggestion() {
 
-        val sweet = suggestSweetWithoutEggUseCase.suggestSweet()
+        val sweetWithoutEgg = suggestSweetWithoutEggUseCase.suggestSweet()
 
-        if (sweet == null) {
-            println("\nNo more sweets to suggest!")
+        if (sweetWithoutEgg == null) {
+            println("\nNo more meals to suggest!")
             return
         }
 
-        println("\nTry this sweet: ${sweet.name}")
-        viewUtil.printTextWithinWidth("Description: ${sweet.description}")
-
-        println("Do you like it? (y = like, n = dislike, x = exit): ")
-
+        printMealDescription(sweetWithoutEgg)
+        println("\nDo you like it? (y = like, n = dislike, x = exit): ")
         when (getValidInputFromUser()) {
-            "y" -> viewUtil.printMeal(sweet)
+            "y" -> viewUtil.printMeal(sweetWithoutEgg)
             "n" -> printSweetSuggestion()
             "x" -> println("Returning to main menu...")
         }
+    }
 
+    private fun printMealDescription(meal: Meal) {
+        println("\nTry this meal: ${meal.name}")
+        viewUtil.printTextWithinWidth("Description: ${meal.description}")
     }
 
     private fun getValidInputFromUser(): String =
         userInputReader.getValidUserInput(
-            { it in listOf("y", "n", "x") },
+            { it in InputOptions },
             "your choice: ",
             "invalid input"
         )
+
+    private companion object {
+        val InputOptions = listOf("y", "n", "x")
+    }
 }
