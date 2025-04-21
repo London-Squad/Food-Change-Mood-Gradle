@@ -11,7 +11,7 @@ class ItalianFoodForLargeGroupView(
     override fun start() {
         uiMealsListPrinter.printMeals(
             getItalianFoodForLargeGroupUseCase.getItalianMealsForLargeGroup(),
-            "Italian Meals"
+            "Italian Meals For Large Groups"
         )
     }
 }

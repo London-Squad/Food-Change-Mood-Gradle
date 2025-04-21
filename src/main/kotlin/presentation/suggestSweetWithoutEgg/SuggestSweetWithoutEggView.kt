@@ -21,10 +21,8 @@ class SuggestSweetWithoutEggView(
     }
 
     private fun printHeader() {
-        printLn("------------------------------------------")
-        printLn("           Sweet Without Egg              ")
-        printLn("------------------------------------------")
-        printLn("you can like the meal to see full detail, or dislike it to get another meal.")
+        uiMealPrinter.printHeader("Sweet Without Egg")
+        uiMealPrinter.printTextWithinWidth("you can like the meal to see full detail, or dislike it to get another meal.")
     }
 
     private fun printSweetSuggestion() {

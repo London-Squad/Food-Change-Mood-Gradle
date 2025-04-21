@@ -20,7 +20,7 @@ class MealSearchByDateView(
     private fun printLn(message: String = "") = cliPrinter.cliPrintLn(message)
 
     override fun start() {
-        printLn("Enter a date to search for meals (yyyy-MM-dd, e.g., 2023-04-16) or '0' to return to main menu:")
+        uiMealPrinter.printTextWithinWidth("Enter a date to search for meals (yyyy-MM-dd, e.g., 2023-04-16) or '0' to return to main menu:")
         val dateInput = userInputReader.getUserInput()
         if (dateInput == "0") return
 
@@ -90,15 +90,12 @@ class MealSearchByDateView(
     }
 
     private fun printMeals(meals: List<Pair<Int, String>>, date: String) {
-        printLn()
-        printLn("---------------------------------------------")
-        printLn("       Meals Added on '$date'                ")
-        printLn("---------------------------------------------")
+        uiMealPrinter.printHeader("Meals Added on '$date'")
 
         meals.forEach { (id, name) ->
             printLn("ID: $id - $name")
         }
-        printLn("---------------------------------------------")
+        printLn(uiMealPrinter.getThinHorizontal())
     }
 
     private fun printMealAndWaitForEnter(meal: Meal) {

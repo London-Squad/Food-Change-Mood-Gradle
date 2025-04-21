@@ -3,12 +3,14 @@ package presentation.mealGuessGame
 import logic.mealGuessGame.MealGuessGameUseCase
 import presentation.BaseView
 import presentation.utils.CLIPrinter
+import presentation.utils.UIMealPrinter
 import presentation.utils.UserInputReader
 
 class MealGuessGameView(
     private val mealGuessGameUseCase: MealGuessGameUseCase,
     private val userInputReader: UserInputReader,
-    private val cliPrinter: CLIPrinter
+    private val cliPrinter: CLIPrinter,
+    private val uiMealPrinter: UIMealPrinter
 ) : BaseView {
     private fun printLn(message: String = "") = cliPrinter.cliPrintLn(message)
 
@@ -47,9 +49,7 @@ class MealGuessGameView(
     }
 
     private fun printHeader() {
-        printLn("------------------------------------------")
-        printLn("             Meal Guess Game              ")
-        printLn("------------------------------------------")
+        uiMealPrinter.printHeader("Meal Guess Game")
     }
 
     private fun printRules() {

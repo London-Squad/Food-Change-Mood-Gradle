@@ -3,12 +3,14 @@ package presentation.ingredientGame
 import logic.ingredientGame.IngredientGameUseCase
 import presentation.BaseView
 import presentation.utils.CLIPrinter
+import presentation.utils.UIMealPrinter
 import presentation.utils.UserInputReader
 
 class IngredientGameView(
     private val ingredientGameUseCase: IngredientGameUseCase,
     private val userInputReader: UserInputReader,
-    private val cliPrinter: CLIPrinter
+    private val cliPrinter: CLIPrinter,
+    private val uiMealPrinter: UIMealPrinter
 ) : BaseView {
 
     private fun printLn(message: String = "") = cliPrinter.cliPrintLn(message)
@@ -44,10 +46,9 @@ class IngredientGameView(
 
     private fun printLossMessage() {
         printLn("Incorrect Choice")
-        printLn("------------------------------------------")
-        printLn("                 Game Over                ")
+        uiMealPrinter.printHeader("Game Over")
         printLn("your points are: ${ingredientGameUseCase.getScore()}")
-        printLn("------------------------------------------")
+        printLn(uiMealPrinter.getThickHorizontal())
     }
 
     private fun printWinMessage() {
@@ -57,7 +58,7 @@ class IngredientGameView(
 
     private fun printCorrectChoiceMessage() {
         printLn("correct!")
-        printLn("-----------------------")
+        printLn(uiMealPrinter.getThinHorizontal())
     }
 
     private fun printRandomMealNameAndIngredientOptions() {
@@ -71,17 +72,15 @@ class IngredientGameView(
     }
 
     private fun printHeader() {
-        printLn("------------------------------------------")
-        printLn("             Ingredient Game              ")
-        printLn("------------------------------------------")
+        uiMealPrinter.printHeader("Ingredient Game")
     }
 
     private fun printRules() {
         printLn("Rules: ")
-        printLn("1. given a meal name and three ingredient, guess which ingredient is used for that meal.")
-        printLn("2. A correct guess gives you a 1000 points.")
-        printLn("3. An incorrect guess ends the game")
-        printLn("4. The game also ends after 15 correct answers\n")
+        uiMealPrinter.printTextWithinWidth("1. given a meal name and three ingredient, guess which ingredient is used for that meal.")
+        uiMealPrinter.printTextWithinWidth("2. A correct guess gives you a 1000 points.")
+        uiMealPrinter.printTextWithinWidth("3. An incorrect guess ends the game")
+        uiMealPrinter.printTextWithinWidth("4. The game also ends after 15 correct answers\n")
     }
 
     private fun getValidGuessFromUser(): Int =

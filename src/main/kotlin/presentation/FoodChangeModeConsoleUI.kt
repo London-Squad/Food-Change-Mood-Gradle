@@ -36,7 +36,9 @@ class FoodChangeModeConsoleUI(
     private val getIraqiMealsUseCase: IraqiMealsView,
     private val userInputReader: UserInputReader,
     private val cliPrinter: CLIPrinter
-    ) : BaseView {
+) : BaseView {
+
+    private fun printLn(message: String = "") = cliPrinter.cliPrintLn(message)
 
     override fun start() {
         showWelcome()
@@ -69,27 +71,27 @@ class FoodChangeModeConsoleUI(
     }
 
     private fun showWelcome() {
-        cliPrinter.cliPrintLn("Welcome to Food Change Mode app")
+        printLn("Welcome to Food Change Mode app")
     }
 
     private fun showOptions() {
-        cliPrinter.cliPrintLn("\n\n=== please enter one of the following numbers ===")
-        cliPrinter.cliPrintLn("1- Get a List of Healthy Fast Food Meals")
-        cliPrinter.cliPrintLn("2- Search Meals by Name")
-        cliPrinter.cliPrintLn("3- Get a List of Iraqi Meals")
-        cliPrinter.cliPrintLn("4- Get Easy Food Suggestion")
-        cliPrinter.cliPrintLn("5- Meal Guess Game")
-        cliPrinter.cliPrintLn("6- Suggest Sweets Without Eggs")
-        cliPrinter.cliPrintLn("7- Get one Keto by Keto Helper")
-        cliPrinter.cliPrintLn("8- Search Meals by Add Date")
-        cliPrinter.cliPrintLn("9- Get a List of Gym Meals")
-        cliPrinter.cliPrintLn("10- Explore other country culture")
-        cliPrinter.cliPrintLn("11- Ingredient Game")
-        cliPrinter.cliPrintLn("12- I Love Potato")
-        cliPrinter.cliPrintLn("13- Get High Calorie Meals (>700 kcal)")
-        cliPrinter.cliPrintLn("14- Get a List Of Sea Food Sorted By Protein")
-        cliPrinter.cliPrintLn("15- Get a List of Italian food that is suitable for large group of friends")
-        cliPrinter.cliPrintLn("0- Exit")
+        printLn("\n\n=== please enter one of the following numbers ===")
+        printLn("1- Get a List of Healthy Fast Food Meals")
+        printLn("2- Search Meals by Name")
+        printLn("3- Get a List of Iraqi Meals")
+        printLn("4- Get Easy Food Suggestion")
+        printLn("5- Meal Guess Game")
+        printLn("6- Suggest Sweets Without Eggs")
+        printLn("7- Get one Keto by Keto Helper")
+        printLn("8- Search Meals by Add Date")
+        printLn("9- Get a List of Gym Meals")
+        printLn("10- Explore other country culture")
+        printLn("11- Ingredient Game")
+        printLn("12- I Love Potato")
+        printLn("13- Get High Calorie Meals (>700 kcal)")
+        printLn("14- Get a List Of Sea Food Sorted By Protein")
+        printLn("15- Get a List of Italian food that is suitable for large group of friends")
+        printLn("0- Exit")
         cliPrinter.cliPrint("Here: ")
     }
 
