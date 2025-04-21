@@ -13,9 +13,7 @@ class SuggestSweetWithoutEggView(
 ) : BaseView {
 
     override fun start() {
-
-        suggestSweetWithoutEggUseCase.clearSuggestedList()
-
+        suggestSweetWithoutEggUseCase.initSuggestions()
         printHeader()
         printSweetSuggestion()
     }
@@ -51,7 +49,7 @@ class SuggestSweetWithoutEggView(
 
     private fun getValidInputFromUser(): String =
         userInputReader.getValidUserInput(
-            {it in listOf("y", "n", "x")},
+            { it in listOf("y", "n", "x") },
             "your choice: ",
             "invalid input"
         )

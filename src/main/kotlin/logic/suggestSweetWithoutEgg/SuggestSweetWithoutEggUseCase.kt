@@ -1,33 +1,26 @@
 package logic.suggestSweetWithoutEgg
 
+import logic.MealSuggester
 import logic.MealsDataSource
 import model.Meal
 
-class SuggestSweetWithoutEggUseCase(mealsDataSource: MealsDataSource) {
-    private val eggFreeSweets = getSweetsWithoutEggs(mealsDataSource.getAllMeals())
-    private val suggested = mutableSetOf<Int>()
+class SuggestSweetWithoutEggUseCase(mealsDataSource: MealsDataSource) : MealSuggester(mealsDataSource) {
+
+    fun initSuggestions() {
+        initSuggestedList()
+    }
 
     fun suggestSweet(): Meal? {
-        if (eggFreeSweets.isEmpty()) return null
-
-        val suggestion = eggFreeSweets.shuffled().firstOrNull { it.id !in suggested }
-            ?.apply { suggested.add(id) }
-
-        return suggestion
+        return suggestMeal()
     }
 
-    fun clearSuggestedList() {
-        suggested.clear()
-    }
+    override fun isValidSuggestion(meal: Meal): Boolean {
+        meal.apply {
+            val isEggFree =
+                (!(ingredients.contains("egg") || ingredients.contains("eggs")) || tags.contains("egg-free"))
+            val isSweet = tags.contains("sweet")
 
-    private fun getSweetsWithoutEggs(meals: List<Meal>): List<Meal> {
-        return meals.filter { meal ->
-            val nameLower = meal.name.lowercase()
-            val ingredientsLower = meal.ingredients.joinToString(",")
-            val isSweet =
-                listOf("cake", "cookie", "dessert", "sweet", "brownie", "pie", "pudding").any { it in nameLower }
-            val containsEgg = ingredientsLower.contains("egg", true)
-            isSweet && !containsEgg
+            return isSweet && isEggFree
         }
     }
 }
