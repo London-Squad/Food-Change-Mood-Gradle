@@ -20,30 +20,32 @@ import presentation.mealSearchByDate.MealSearchByDateView
 import presentation.mealSearchByName.MealSearchByNameView
 import presentation.mealsContainPotato.GetMealsContainPotatoView
 import presentation.suggestSweetWithoutEgg.SuggestSweetWithoutEggView
-import presentation.utils.UserInputReader
-import presentation.utils.UserInputReaderImpl
-import presentation.utils.ViewUtil
+import presentation.utils.*
 
 
 val presentationModule = module {
-    factory { MealSearchByNameView(get(named("byName")), get(), get()) }
-    factory { MealSearchByDateView(get(named("byDate")), get(), get()) }
+    factory { MealSearchByNameView(get(named("byName")), get(), get(), get()) }
+    factory { MealSearchByDateView(get(named("byDate")), get(), get(), get()) }
 
-    factory { ViewUtil() }
-    factory { IraqiMealsView(get(), get(), get()) }
-    factory { SuggestSweetWithoutEggView(get(), get(), get()) }
-    factory { MealGuessGameView(get(), get()) }
+    factory { IraqiMealsView(get(), get()) }
+    factory { SuggestSweetWithoutEggView(get(), get(), get(), get()) }
+    factory { MealGuessGameView(get(), get(), get(), get()) }
     factory { EasyMealView(get(), get()) }
-    factory { ItalianFoodForLargeGroupView(get(), get(), get()) }
-    factory { CountryFoodCultureView(get(), get()) }
-    factory { IngredientGameView(get(), get()) }
-    factory { GymHelperView(get(), get(), get()) }
-    factory { GetHealthyFastFoodMealsView(get()) }
-    factory { KetoSuggestionHelperView(get(), get()) }
-    factory { GetSeaFoodMealsView(get(), get(), get()) }
-    factory { GetMealsContainPotatoView(get(), get(), get()) }
+    factory { ItalianFoodForLargeGroupView(get(), get()) }
+    factory { CountryFoodCultureView(get(), get(), get(), get()) }
+    factory { IngredientGameView(get(), get(), get(), get()) }
+    factory { GymHelperView(get(), get(), get(), get()) }
+    factory { GetHealthyFastFoodMealsView(get(), get(), get()) }
+    factory { KetoSuggestionHelperView(get(), get(), get()) }
+    factory { GetSeaFoodMealsView(get(), get()) }
+    factory { GetMealsContainPotatoView(get(), get()) }
     factory { GetHighCalorieMealsView(get(), get(), get()) }
-    factory <UserInputReader>{ UserInputReaderImpl() }
+
+    factory <UserInputReader>{ UserInputReaderImpl(get()) }
+    factory { CLIPrinter() }
+    factory { UIMealPrinter(get()) }
+    factory { UIMealsListPrinter(get(), get(), get()) }
+
 
 
     factoryOf(::FoodChangeModeConsoleUI)

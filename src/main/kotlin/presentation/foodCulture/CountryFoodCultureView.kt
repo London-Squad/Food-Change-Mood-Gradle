@@ -1,35 +1,30 @@
 package presentation.foodCulture
 
 import logic.exploreCountryFoodCulture.ExploreCountryFoodCultureUseCase
-import model.Meal
 import presentation.BaseView
-import presentation.mealDetails.MealListView
+import presentation.utils.CLIPrinter
+import presentation.utils.UIMealsListPrinter
 import presentation.utils.UserInputReader
 
 class CountryFoodCultureView(
     private val useCase: ExploreCountryFoodCultureUseCase,
-    private val userInputReader: UserInputReader
-) : BaseView {
+    private val userInputReader: UserInputReader,
+    private val uiMealsListPrinter: UIMealsListPrinter,
+    private val cliPrinter: CLIPrinter
+    ) : BaseView {
 
     override fun start() {
-        printHeader()
         displayCountryFoodList()
     }
 
-    private fun printHeader() {
-        println("------------------------------------------")
-        println("       Explore Country Food Culture       ")
-        println("------------------------------------------")
-    }
-
     private fun displayCountryFoodList() {
-        getValidCountryOrNull()
-            ?.let(useCase::getMealsOfCountry)
+        val country = getValidCountryOrNull()
+
+        country?.let(useCase::getMealsOfCountry)
             ?.let {
-                it.ifEmpty { println("no meals found :'("); null }
+                it.ifEmpty { cliPrinter.cliPrintLn("no meals found :'("); null }
             }
-            ?.let { meals: List<Meal> -> MealListView(meals, userInputReader) }
-            ?.also(MealListView::start)
+            ?.also { meals -> uiMealsListPrinter.printMeals(meals, "Explore Country Food Culture: ${country.uppercase()}") }
     }
 
     private fun getValidCountryOrNull(): String? {

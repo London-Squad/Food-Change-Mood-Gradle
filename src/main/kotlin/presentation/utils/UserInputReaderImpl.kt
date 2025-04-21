@@ -1,20 +1,21 @@
 package presentation.utils
 
-class UserInputReaderImpl: UserInputReader {
+class UserInputReaderImpl(
+    private val cliPrinter: CLIPrinter
+): UserInputReader {
     override fun getUserInput(message: String): String {
-        print(message)
+        cliPrinter.cliPrint(message)
         return readln()
     }
 
     override fun getValidUserInput(
-        validatingLambda: (String)->Boolean,
+        isValidInput: (String)->Boolean,
         message: String,
         invalidInputMessage: String
     ): String {
-        print(message)
-        val userInput = readln().trim()
-        if (validatingLambda(userInput)) return userInput
-        println(invalidInputMessage)
-        return getValidUserInput(validatingLambda, message, invalidInputMessage)
+        val userInput = getUserInput(message).trim()
+        if (isValidInput(userInput)) return userInput
+        cliPrinter.cliPrintLn(invalidInputMessage)
+        return getValidUserInput(isValidInput, message, invalidInputMessage)
     }
 }
