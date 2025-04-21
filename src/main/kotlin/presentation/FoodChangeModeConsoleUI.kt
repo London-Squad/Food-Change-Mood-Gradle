@@ -5,7 +5,7 @@ import presentation.getSeaFoodMealsView.GetSeaFoodMealsView
 import presentation.foodCulture.CountryFoodCultureView
 import presentation.healthyFastFoodMeals.GetHealthyFastFoodMealsView
 import presentation.gymHelper.GymHelperView
-import presentation.highCalorieMeals.GetHighCalorieMealsView
+import presentation.highCalorieMeals.HighCalorieMealsView
 import presentation.ingredientGame.IngredientGameView
 import presentation.iraqiMeals.IraqiMealsView
 import presentation.italianFoodForLargeGroup.ItalianFoodForLargeGroupView
@@ -14,12 +14,12 @@ import presentation.mealGuessGame.MealGuessGameView
 import presentation.mealSearchByDate.MealSearchByDateView
 import presentation.mealSearchByName.MealSearchByNameView
 import presentation.mealsContainPotato.GetMealsContainPotatoView
-import presentation.suggestSweetWithoutEgg.SuggestSweetWithoutEggView
+import presentation.suggestSweetWithoutEgg.SweetWithoutEggView
 import presentation.utils.CLIPrinter
 import presentation.utils.UserInputReader
 
 class FoodChangeModeConsoleUI(
-    private val suggestSweetWithoutEggView: SuggestSweetWithoutEggView,
+    private val sweetWithoutEggView: SweetWithoutEggView,
     private val mealGuessGameView: MealGuessGameView,
     private val getHealthyFastFoodMealsView: GetHealthyFastFoodMealsView,
     private val mealSearchByNameView: MealSearchByNameView,
@@ -32,7 +32,7 @@ class FoodChangeModeConsoleUI(
     private val gymHelperView: GymHelperView,
     private val getSeaFoodMealsView: GetSeaFoodMealsView,
     private val getMealsContainPotatoView: GetMealsContainPotatoView,
-    private val getHighCalorieMealsView: GetHighCalorieMealsView,
+    private val highCalorieMealsView: HighCalorieMealsView,
     private val getIraqiMealsUseCase: IraqiMealsView,
     private val userInputReader: UserInputReader,
     private val cliPrinter: CLIPrinter
@@ -54,14 +54,14 @@ class FoodChangeModeConsoleUI(
             3 -> getIraqiMealsUseCase.start()
             4 -> easyMealView.start()
             5 -> mealGuessGameView.start()
-            6 -> suggestSweetWithoutEggView.start()
+            6 -> sweetWithoutEggView.start()
             7 -> ketoSuggestionHelperView.start()
             8 -> mealSearchByDateView.start()
             9 -> gymHelperView.start()
             10 -> countryFoodCultureView.start()
             11 -> ingredientGameView.start()
             12 -> getMealsContainPotatoView.start()
-            13 -> getHighCalorieMealsView.start()
+            13 -> highCalorieMealsView.start()
             14 -> getSeaFoodMealsView.start()
             15 -> italianFoodForLargeGroupView.start()
             0 -> return

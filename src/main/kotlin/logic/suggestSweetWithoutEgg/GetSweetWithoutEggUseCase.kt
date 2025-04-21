@@ -4,7 +4,7 @@ import logic.MealSuggester
 import logic.MealsDataSource
 import model.Meal
 
-class SuggestSweetWithoutEggUseCase(mealsDataSource: MealsDataSource) : MealSuggester(mealsDataSource) {
+class GetSweetWithoutEggUseCase(mealsDataSource: MealsDataSource) : MealSuggester(mealsDataSource) {
 
     fun initSuggestions() {
         initSuggestedList()
@@ -15,6 +15,10 @@ class SuggestSweetWithoutEggUseCase(mealsDataSource: MealsDataSource) : MealSugg
     }
 
     override fun isValidSuggestion(meal: Meal): Boolean {
+        return isSweetWithoutEgg(meal)
+    }
+
+    private fun isSweetWithoutEgg(meal: Meal): Boolean {
         meal.apply {
             val isEggFree =
                 (!(ingredients.contains("egg") || ingredients.contains("eggs")) || tags.contains("egg-free"))

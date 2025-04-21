@@ -22,7 +22,7 @@ import logic.gymHelper.GymHelperUseCase
 import logic.ingredientGame.IngredientGameUseCase
 import logic.mealGuessGame.MealGuessGameUseCase
 import logic.search.*
-import logic.suggestSweetWithoutEgg.SuggestSweetWithoutEggUseCase
+import logic.suggestSweetWithoutEgg.GetSweetWithoutEggUseCase
 import org.koin.dsl.module
 import java.time.LocalDate
 
@@ -62,7 +62,7 @@ val useCaseModule = module {
     single { IngredientGameUseCase(get()) }
     single { EasyMealsSuggestionUseCase(get()) }
     single { ExploreCountryFoodCultureUseCase(get()) }
-    single { SuggestSweetWithoutEggUseCase(get()) }
+    single { GetSweetWithoutEggUseCase(get()) }
     single { GetItalianFoodForLargeGroupUseCase(get()) }
     single { GymHelperUseCase(get()) }
     single { GetHighCalorieMealsUseCase(get()) }

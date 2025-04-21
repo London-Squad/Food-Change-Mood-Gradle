@@ -1,12 +1,12 @@
 package presentation.suggestSweetWithoutEgg
 
-import logic.suggestSweetWithoutEgg.SuggestSweetWithoutEggUseCase
+import logic.suggestSweetWithoutEgg.GetSweetWithoutEggUseCase
 import model.Meal
 import presentation.BaseView
 import presentation.utils.*
 
-class SuggestSweetWithoutEggView(
-    private val suggestSweetWithoutEggUseCase: SuggestSweetWithoutEggUseCase,
+class SweetWithoutEggView(
+    private val getSweetWithoutEggUseCase: GetSweetWithoutEggUseCase,
     private val userInputReader: UserInputReader,
     private val cliPrinter: CLIPrinter,
     private val uiMealPrinter: UIMealPrinter
@@ -14,7 +14,7 @@ class SuggestSweetWithoutEggView(
     private fun printLn(message: String = "") = cliPrinter.cliPrintLn(message)
 
     override fun start() {
-        suggestSweetWithoutEggUseCase.initSuggestions()
+        getSweetWithoutEggUseCase.initSuggestions()
         printHeader()
         printSweetSuggestion()
     }
@@ -26,14 +26,12 @@ class SuggestSweetWithoutEggView(
 
     private fun printSweetSuggestion() {
 
-        val sweetWithoutEgg = suggestSweetWithoutEggUseCase.suggestSweet()
+        val sweetWithoutEgg = getSweetWithoutEggUseCase.suggestSweet()
 
         if (sweetWithoutEgg == null) {
             printLn("\nNo more meals to suggest!")
             return
         }
-
-        printLn("Do you like it? (y = like, n = dislike, x = exit): ")
 
         printMealDescription(sweetWithoutEgg)
         printLn("\nDo you like it? (y = like, n = dislike, x = exit): ")
@@ -42,20 +40,21 @@ class SuggestSweetWithoutEggView(
             "n" -> printSweetSuggestion()
             "x" -> printLn("Returning to main menu...")
         }
+    }
 
     private fun printMealDescription(meal: Meal) {
-        printLn("\nTry this sweet: ${meal.name}")
+        printLn("\nTry this meal: ${meal.name}")
         uiMealPrinter.printTextWithinWidth("Description: ${meal.description}")
     }
 
     private fun getValidInputFromUser(): String =
         userInputReader.getValidUserInput(
-            { it in InputOptions },
+            { it in INPUT_OPTIONS },
             "your choice: ",
             "invalid input"
         )
 
     private companion object {
-        val InputOptions = listOf("y", "n", "x")
+        val INPUT_OPTIONS = listOf("y", "n", "x")
     }
 }

@@ -1,14 +1,14 @@
-package presentation.ketoSuggestionHelper
+package presentation.highCalorieMeals
 
-import logic.ketoMealHelper.GetKetoMealUseCase
+import logic.getHighCalorieMeals.GetHighCalorieMealsUseCase
 import model.Meal
 import presentation.BaseView
 import presentation.utils.CLIPrinter
 import presentation.utils.UIMealPrinter
 import presentation.utils.UserInputReader
 
-class KetoSuggestionHelperView(
-    private val getKetoMealUseCase: GetKetoMealUseCase,
+class HighCalorieMealsView(
+    private val getHighCalorieMealsUseCase: GetHighCalorieMealsUseCase,
     private val userInputReader: UserInputReader,
     private val cliPrinter: CLIPrinter,
     private val uiMealPrinter: UIMealPrinter
@@ -16,30 +16,30 @@ class KetoSuggestionHelperView(
     private fun printLn(message: String = "") = cliPrinter.cliPrintLn(message)
 
     override fun start() {
-        getKetoMealUseCase.initSuggestions()
+        getHighCalorieMealsUseCase.initSuggestions()
         printHeader()
-        printKetoMealSuggestion()
+        printHighCalorieMealSuggestion()
     }
 
     private fun printHeader() {
-        uiMealPrinter.printHeader("🥑 Keto Meal Suggestion")
+        uiMealPrinter.printHeader("High Calorie Meals ( > 700 kcal )")
         uiMealPrinter.printTextWithinWidth("you can like the meal to see full detail, or dislike it to get another meal.")
     }
 
-    private fun printKetoMealSuggestion() {
+    private fun printHighCalorieMealSuggestion() {
 
-        val ketoMeal = getKetoMealUseCase.suggestKetoMeal()
+        val highCalorieMeal = getHighCalorieMealsUseCase.suggestHighCalorieMeal()
 
-        if (ketoMeal == null) {
+        if (highCalorieMeal == null) {
             printLn("\nNo more meals to suggest!")
             return
         }
 
-        printMealDescription(ketoMeal)
+        printMealDescription(highCalorieMeal)
         printLn("\nDo you like it? (y = like, n = dislike, x = exit): ")
         when (getValidInputFromUser()) {
-            "y" -> uiMealPrinter.printMealDetails(ketoMeal)
-            "n" -> printKetoMealSuggestion()
+            "y" -> uiMealPrinter.printMealDetails(highCalorieMeal)
+            "n" -> printHighCalorieMealSuggestion()
             "x" -> printLn("Returning to main menu...")
         }
     }
