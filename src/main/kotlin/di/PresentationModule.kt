@@ -31,7 +31,7 @@ val presentationModule = module {
     factory { SuggestSweetWithoutEggView(get(), get(), get(), get()) }
     factory { MealGuessGameView(get(), get(), get()) }
     factory { EasyMealView(get(), get()) }
-    factory { ItalianFoodForLargeGroupView(get(), get(), get()) }
+    factory { ItalianFoodForLargeGroupView(get(), get()) }
     factory { CountryFoodCultureView(get(), get(), get(), get()) }
     factory { IngredientGameView(get(), get(), get()) }
     factory { GymHelperView(get(), get(), get(), get()) }
