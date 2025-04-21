@@ -12,8 +12,11 @@ repositories {
 dependencies {
     implementation(project.dependencies.platform("io.insert-koin:koin-bom:4.0.3"))
     implementation("io.insert-koin:koin-core")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.13.0-M2")
-    testImplementation("io.mockk:mockk:1.14.0")
+
+    testImplementation("org.jetbrains.kotlin:kotlin-test")
+    testImplementation("com.google.truth:truth:1.4.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.0")
+    testImplementation("io.mockk:mockk:1.13.16")
 
 }
 
