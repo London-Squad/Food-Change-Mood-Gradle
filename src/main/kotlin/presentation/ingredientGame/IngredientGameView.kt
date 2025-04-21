@@ -2,16 +2,20 @@ package presentation.ingredientGame
 
 import logic.ingredientGame.IngredientGameUseCase
 import presentation.BaseView
+import presentation.utils.CLIPrinter
 import presentation.utils.UserInputReader
 
 class IngredientGameView(
     private val ingredientGameUseCase: IngredientGameUseCase,
-    private val userInputReader: UserInputReader
+    private val userInputReader: UserInputReader,
+    private val cliPrinter: CLIPrinter
 ) : BaseView {
+
+    private fun printLn(message: String = "") = cliPrinter.cliPrintLn(message)
 
     override fun start() {
         if (!ingredientGameUseCase.isGamePlayable()) {
-            println("can't play the game :'("); return
+            printLn("can't play the game :'("); return
         }
         prepareGame()
         startNewRound()
@@ -39,45 +43,45 @@ class IngredientGameView(
     }
 
     private fun printLossMessage() {
-        println("Incorrect Choice")
-        println("------------------------------------------")
-        println("                 Game Over                ")
-        println("your points are: ${ingredientGameUseCase.getScore()}")
-        println("------------------------------------------")
+        printLn("Incorrect Choice")
+        printLn("------------------------------------------")
+        printLn("                 Game Over                ")
+        printLn("your points are: ${ingredientGameUseCase.getScore()}")
+        printLn("------------------------------------------")
     }
 
     private fun printWinMessage() {
-        println("You Win!")
-        println("your points are: ${ingredientGameUseCase.getScore()}")
+        printLn("You Win!")
+        printLn("your points are: ${ingredientGameUseCase.getScore()}")
     }
 
     private fun printCorrectChoiceMessage() {
-        println("correct!")
-        println("-----------------------")
+        printLn("correct!")
+        printLn("-----------------------")
     }
 
     private fun printRandomMealNameAndIngredientOptions() {
         ingredientGameUseCase.getRandomMealNameAndIngredientOptions()
             .apply {
-                println("\nMeal Name: ${first}\n")
+                printLn("\nMeal Name: ${first}\n")
                 second.forEachIndexed { index, ingredient ->
-                    println("${index + 1}. $ingredient")
+                    printLn("${index + 1}. $ingredient")
                 }
             }
     }
 
     private fun printHeader() {
-        println("------------------------------------------")
-        println("             Ingredient Game              ")
-        println("------------------------------------------")
+        printLn("------------------------------------------")
+        printLn("             Ingredient Game              ")
+        printLn("------------------------------------------")
     }
 
     private fun printRules() {
-        println("Rules: ")
-        println("1. given a meal name and three ingredient, guess which ingredient is used for that meal.")
-        println("2. A correct guess gives you a 1000 points.")
-        println("3. An incorrect guess ends the game")
-        println("4. The game also ends after 15 correct answers\n")
+        printLn("Rules: ")
+        printLn("1. given a meal name and three ingredient, guess which ingredient is used for that meal.")
+        printLn("2. A correct guess gives you a 1000 points.")
+        printLn("3. An incorrect guess ends the game")
+        printLn("4. The game also ends after 15 correct answers\n")
     }
 
     private fun getValidGuessFromUser(): Int =
