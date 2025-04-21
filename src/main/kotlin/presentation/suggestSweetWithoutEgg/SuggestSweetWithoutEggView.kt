@@ -3,15 +3,15 @@ package presentation.suggestSweetWithoutEgg
 import logic.suggestSweetWithoutEgg.SuggestSweetWithoutEggUseCase
 import model.Meal
 import presentation.BaseView
-import presentation.utils.UserInputReader
-import presentation.utils.ViewUtil
+import presentation.utils.*
 
 class SuggestSweetWithoutEggView(
     private val suggestSweetWithoutEggUseCase: SuggestSweetWithoutEggUseCase,
-    private val viewUtil: ViewUtil,
-    private val userInputReader: UserInputReader
-
+    private val userInputReader: UserInputReader,
+    private val cliPrinter: CLIPrinter,
+    private val uiMealPrinter: UIMealPrinter
 ) : BaseView {
+    private fun printLn(message: String = "") = cliPrinter.cliPrintLn(message)
 
     override fun start() {
         suggestSweetWithoutEggUseCase.initSuggestions()
@@ -20,10 +20,8 @@ class SuggestSweetWithoutEggView(
     }
 
     private fun printHeader() {
-        println("------------------------------------------")
-        println("           Sweet Without Egg              ")
-        println("------------------------------------------")
-        println("you can like the meal to see full detail, or dislike it to get another meal.")
+        uiMealPrinter.printHeader("Sweet Without Egg")
+        uiMealPrinter.printTextWithinWidth("you can like the meal to see full detail, or dislike it to get another meal.")
     }
 
     private fun printSweetSuggestion() {
@@ -31,22 +29,23 @@ class SuggestSweetWithoutEggView(
         val sweetWithoutEgg = suggestSweetWithoutEggUseCase.suggestSweet()
 
         if (sweetWithoutEgg == null) {
-            println("\nNo more meals to suggest!")
+            printLn("\nNo more meals to suggest!")
             return
         }
 
+        printLn("Do you like it? (y = like, n = dislike, x = exit): ")
+
         printMealDescription(sweetWithoutEgg)
-        println("\nDo you like it? (y = like, n = dislike, x = exit): ")
+        printLn("\nDo you like it? (y = like, n = dislike, x = exit): ")
         when (getValidInputFromUser()) {
-            "y" -> viewUtil.printMeal(sweetWithoutEgg)
+            "y" -> uiMealPrinter.printMealDetails(sweetWithoutEgg)
             "n" -> printSweetSuggestion()
-            "x" -> println("Returning to main menu...")
+            "x" -> printLn("Returning to main menu...")
         }
-    }
 
     private fun printMealDescription(meal: Meal) {
-        println("\nTry this meal: ${meal.name}")
-        viewUtil.printTextWithinWidth("Description: ${meal.description}")
+        printLn("\nTry this sweet: ${meal.name}")
+        uiMealPrinter.printTextWithinWidth("Description: ${meal.description}")
     }
 
     private fun getValidInputFromUser(): String =
