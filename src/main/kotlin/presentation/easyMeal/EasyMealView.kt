@@ -2,27 +2,17 @@ package presentation.easyMeal
 
 import logic.easyMealsSuggestion.EasyMealsSuggestionUseCase
 import presentation.BaseView
-import presentation.mealDetails.MealListView
-import presentation.utils.UserInputReader
+import presentation.utils.UIMealsListPrinter
 
 class EasyMealView(
-    useCase: EasyMealsSuggestionUseCase,
-    private val userInputReader: UserInputReader
+    private val easyMealsSuggestionUseCase: EasyMealsSuggestionUseCase,
+    private val uiMealsListPrinter: UIMealsListPrinter
 ) : BaseView {
-    private val easyMealList = useCase.getRandomMeals()
 
     override fun start() {
-        printHeader()
-        printMeals()
-    }
-
-    private fun printHeader() {
-        println("------------------------------------------")
-        println("               Easy Meals                 ")
-        println("------------------------------------------")
-    }
-
-    private fun printMeals() {
-        MealListView(easyMealList, userInputReader).apply { start() }
+        uiMealsListPrinter.printMeals(
+            easyMealsSuggestionUseCase.getRandomMeals(),
+            "Easy Meals"
+        )
     }
 }

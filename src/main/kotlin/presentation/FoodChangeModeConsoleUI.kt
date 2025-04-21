@@ -15,6 +15,7 @@ import presentation.mealSearchByDate.MealSearchByDateView
 import presentation.mealSearchByName.MealSearchByNameView
 import presentation.mealsContainPotato.GetMealsContainPotatoView
 import presentation.suggestSweetWithoutEgg.SuggestSweetWithoutEggView
+import presentation.utils.CLIPrinter
 import presentation.utils.UserInputReader
 
 class FoodChangeModeConsoleUI(
@@ -33,8 +34,11 @@ class FoodChangeModeConsoleUI(
     private val getMealsContainPotatoView: GetMealsContainPotatoView,
     private val getHighCalorieMealsView: GetHighCalorieMealsView,
     private val getIraqiMealsUseCase: IraqiMealsView,
-    private val userInputReader: UserInputReader
-    ) : BaseView {
+    private val userInputReader: UserInputReader,
+    private val cliPrinter: CLIPrinter
+) : BaseView {
+
+    private fun printLn(message: String = "") = cliPrinter.cliPrintLn(message)
 
     override fun start() {
         showWelcome()
@@ -61,34 +65,34 @@ class FoodChangeModeConsoleUI(
             14 -> getSeaFoodMealsView.start()
             15 -> italianFoodForLargeGroupView.start()
             0 -> return
-            else -> println("Invalid Input")
+            else -> cliPrinter.cliPrintLn("Invalid Input")
         }
         presentFeatures()
     }
 
     private fun showWelcome() {
-        println("Welcome to Food Change Mode app")
+        printLn("Welcome to Food Change Mode app")
     }
 
     private fun showOptions() {
-        println("\n\n=== please enter one of the following numbers ===")
-        println("1- Get a List of Healthy Fast Food Meals")
-        println("2- Search Meals by Name")
-        println("3- Get a List of Iraqi Meals")
-        println("4- Get Easy Food Suggestion")
-        println("5- Meal Guess Game")
-        println("6- Suggest Sweets Without Eggs")
-        println("8- Search Meals by Add Date")
-        println("7- Get one Keto by Keto Helper")
-        println("9- Get a List of Gym Meals")
-        println("10- Explore other country culture")
-        println("11- Ingredient Game")
-        println("12- I Love Potato")
-        println("13- Get High Calorie Meals (>700 kcal)")
-        println("14- Get a List Of Sea Food Sorted By Protein")
-        println("15- Get a List of Italian food that is suitable for large group of friends")
-        println("0- Exit")
-        print("Here: ")
+        printLn("\n\n=== please enter one of the following numbers ===")
+        printLn("1- Get a List of Healthy Fast Food Meals")
+        printLn("2- Search Meals by Name")
+        printLn("3- Get a List of Iraqi Meals")
+        printLn("4- Get Easy Food Suggestion")
+        printLn("5- Meal Guess Game")
+        printLn("6- Suggest Sweets Without Eggs")
+        printLn("7- Get one Keto by Keto Helper")
+        printLn("8- Search Meals by Add Date")
+        printLn("9- Get a List of Gym Meals")
+        printLn("10- Explore other country culture")
+        printLn("11- Ingredient Game")
+        printLn("12- I Love Potato")
+        printLn("13- Get High Calorie Meals (>700 kcal)")
+        printLn("14- Get a List Of Sea Food Sorted By Protein")
+        printLn("15- Get a List of Italian food that is suitable for large group of friends")
+        printLn("0- Exit")
+        cliPrinter.cliPrint("Here: ")
     }
 
     private fun getUserInput(): Int? {
