@@ -1,7 +1,6 @@
 package logic.search.byName
 
 import logic.*
-import logic.search.IndexBuilder
 import logic.search.MealSearchUseCase
 import logic.search.SearchCache
 import logic.search.TextSearchAlgorithm
@@ -11,7 +10,7 @@ class MealSearchByNameUseCaseImpl(
     private val mealsDataSource: MealsDataSource,
     private val searchAlgorithm: TextSearchAlgorithm,
     private val cache: SearchCache,
-    private val indexBuilder: IndexBuilder<String, Set<Int>>
+    private val indexBuilder: MealNameInvertedIndexBuilder,
 ) : MealSearchUseCase<List<Meal>> {
 
     override fun searchMeals(keyword: String): List<Meal> =
