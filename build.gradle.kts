@@ -10,10 +10,13 @@ repositories {
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
     implementation(project.dependencies.platform("io.insert-koin:koin-bom:4.0.3"))
     implementation("io.insert-koin:koin-core")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.13.0-M2")
+    testImplementation("io.mockk:mockk:1.14.0")
+
 }
+
 
 tasks.test {
     useJUnitPlatform()
