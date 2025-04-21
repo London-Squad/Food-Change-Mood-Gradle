@@ -3,11 +3,13 @@ package presentation.mealsContainPotato
 import logic.getMealsContainPotato.GetMealsContainPotatoUseCase
 import model.Meal
 import presentation.BaseView
+import presentation.utils.UserInputReader
 import presentation.utils.ViewUtil
 
 class GetMealsContainPotatoView(
     private val getMealsContainPotatoUseCase: GetMealsContainPotatoUseCase,
-    private val viewUtil: ViewUtil
+    private val viewUtil: ViewUtil,
+    private val userInputReader: UserInputReader
 ) : BaseView {
 
     override fun start() {
@@ -52,7 +54,7 @@ class GetMealsContainPotatoView(
 
     private fun getValidOptionFromUser(max: Int): Int {
         print("your choice: ")
-        val userInput = readln().trim()
+        val userInput = userInputReader.getUserInput().trim()
         return if (userInput.toIntOrNull() in 0..max)
             userInput.toInt()
         else {

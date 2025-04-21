@@ -2,13 +2,17 @@ package presentation.ingredientGame
 
 import logic.ingredientGame.IngredientGameUseCase
 import presentation.BaseView
+import presentation.utils.UserInputReader
 
 class IngredientGameView(
-    private val ingredientGameUseCase: IngredientGameUseCase
+    private val ingredientGameUseCase: IngredientGameUseCase,
+    private val userInputReader: UserInputReader
 ) : BaseView {
 
     override fun start() {
-        if (!ingredientGameUseCase.isGamePlayable()) {println("can't play the game :'("); return}
+        if (!ingredientGameUseCase.isGamePlayable()) {
+            println("can't play the game :'("); return
+        }
         prepareGame()
         startNewRound()
     }
@@ -53,15 +57,13 @@ class IngredientGameView(
     }
 
     private fun printRandomMealNameAndIngredientOptions() {
-        ingredientGameUseCase.apply {
-            getRandomMealNameAndIngredientOptions()
-                .apply {
-                    println("\nMeal Name: ${first}\n")
-                    second.forEachIndexed { index, ingredient ->
-                        println("${index + 1}. $ingredient")
-                    }
+        ingredientGameUseCase.getRandomMealNameAndIngredientOptions()
+            .apply {
+                println("\nMeal Name: ${first}\n")
+                second.forEachIndexed { index, ingredient ->
+                    println("${index + 1}. $ingredient")
                 }
-        }
+            }
     }
 
     private fun printHeader() {
@@ -78,14 +80,10 @@ class IngredientGameView(
         println("4. The game also ends after 15 correct answers\n")
     }
 
-    private fun getValidGuessFromUser(): Int {
-        print("your choice: ")
-        val guessInput = readln().trim()
-        return if (guessInput in listOf("1", "2", "3"))
-            guessInput.toInt()
-        else {
-            println("invalid input")
-            getValidGuessFromUser()
-        }
-    }
+    private fun getValidGuessFromUser(): Int =
+        userInputReader.getValidUserInput(
+            {it in listOf("1", "2", "3")},
+            message = "Your Choice: ",
+            invalidInputMessage = "Invalid Choice, Please input a 1, 2, or 3."
+        ).toInt()
 }

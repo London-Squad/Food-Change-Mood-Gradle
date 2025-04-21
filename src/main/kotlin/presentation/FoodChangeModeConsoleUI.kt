@@ -15,6 +15,7 @@ import presentation.mealSearchByDate.MealSearchByDateView
 import presentation.mealSearchByName.MealSearchByNameView
 import presentation.mealsContainPotato.GetMealsContainPotatoView
 import presentation.suggestSweetWithoutEgg.SuggestSweetWithoutEggView
+import presentation.utils.UserInputReader
 
 class FoodChangeModeConsoleUI(
     private val suggestSweetWithoutEggView: SuggestSweetWithoutEggView,
@@ -32,7 +33,7 @@ class FoodChangeModeConsoleUI(
     private val getMealsContainPotatoView: GetMealsContainPotatoView,
     private val getHighCalorieMealsView: GetHighCalorieMealsView,
     private val getIraqiMealsUseCase: IraqiMealsView,
-
+    private val userInputReader: UserInputReader
     ) : BaseView {
 
     override fun start() {
@@ -91,6 +92,6 @@ class FoodChangeModeConsoleUI(
     }
 
     private fun getUserInput(): Int? {
-        return readlnOrNull()?.toIntOrNull()
+        return userInputReader.getUserInput().toIntOrNull()
     }
 }

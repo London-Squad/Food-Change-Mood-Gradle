@@ -7,10 +7,12 @@ import presentation.BaseView
 import presentation.utils.ViewUtil
 import logic.util.InvalidDateFormatException
 import logic.util.NoMealsFoundException
+import presentation.utils.UserInputReader
 
 class MealSearchByDateView(
     private val mealSearchUseCase: MealSearchUseCase<List<Pair<Int, String>>>,
-    private val viewUtil: ViewUtil
+    private val viewUtil: ViewUtil,
+    private val userInputReader: UserInputReader
 ) : BaseView {
 
     override fun start() {
@@ -44,7 +46,7 @@ class MealSearchByDateView(
             printMeals(mealsChunk, dateInput)
             printOptions(mealsChunkIndex, chunkedMeals.size)
 
-            userInput = readln()
+            userInput = userInputReader.getUserInput()
 
             when (userInput) {
                 "next" -> mealsChunkIndex++

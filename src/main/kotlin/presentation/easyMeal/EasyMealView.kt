@@ -3,9 +3,11 @@ package presentation.easyMeal
 import logic.easyMealsSuggestion.EasyMealsSuggestionUseCase
 import presentation.BaseView
 import presentation.mealDetails.MealListView
+import presentation.utils.UserInputReader
 
 class EasyMealView(
-    useCase: EasyMealsSuggestionUseCase
+    useCase: EasyMealsSuggestionUseCase,
+    private val userInputReader: UserInputReader
 ) : BaseView {
     private val easyMealList = useCase.getRandomMeals()
 
@@ -21,6 +23,6 @@ class EasyMealView(
     }
 
     private fun printMeals() {
-        MealListView(easyMealList).apply { start() }
+        MealListView(easyMealList, userInputReader).apply { start() }
     }
 }

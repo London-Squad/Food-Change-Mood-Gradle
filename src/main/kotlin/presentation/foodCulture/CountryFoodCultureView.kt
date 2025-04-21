@@ -1,11 +1,14 @@
 package presentation.foodCulture
 
 import logic.exploreCountryFoodCulture.ExploreCountryFoodCultureUseCase
+import model.Meal
 import presentation.BaseView
 import presentation.mealDetails.MealListView
+import presentation.utils.UserInputReader
 
 class CountryFoodCultureView(
-    private val useCase: ExploreCountryFoodCultureUseCase
+    private val useCase: ExploreCountryFoodCultureUseCase,
+    private val userInputReader: UserInputReader
 ) : BaseView {
 
     override fun start() {
@@ -25,13 +28,12 @@ class CountryFoodCultureView(
             ?.let{
                 if (it.isEmpty()) {println("no meals found :'("); null} else it
             }
-            ?.run(::MealListView)
+            ?.let{meals: List<Meal> -> MealListView(meals, userInputReader)}
             ?.also(MealListView::start)
     }
 
     private fun getCountryFromUser(): String? {
-        print("Enter country name (or 0 to return to main menu) : ")
-        val userInput = readln()
+        val userInput = userInputReader.getUserInput("Enter country name (or 0 to return to main menu) : ")
         if (userInput == "0") {
             return null
         }
