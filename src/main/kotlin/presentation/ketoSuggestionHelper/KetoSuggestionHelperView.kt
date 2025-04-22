@@ -18,6 +18,6 @@ class KetoSuggestionHelperView(
     override fun start() {
         getKetoMealUseCase.initSuggestedList()
         printHeader("🥑 Keto Meal Suggestion")
-        printSuggestion()
+        printNewSuggestion()
     }
 }

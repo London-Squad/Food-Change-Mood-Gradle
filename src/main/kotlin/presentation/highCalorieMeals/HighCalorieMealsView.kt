@@ -16,6 +16,6 @@ class HighCalorieMealsView(
     override fun start() {
         getHighCalorieMealsUseCase.initSuggestedList()
         printHeader("High Calorie Meals ( > 700 kcal )")
-        printSuggestion()
+        printNewSuggestion()
     }
 }

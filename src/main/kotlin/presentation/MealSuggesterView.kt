@@ -7,7 +7,7 @@ import presentation.utils.UIMealPrinter
 import presentation.utils.UserInputReader
 
 abstract class MealSuggesterView(
-    private val mealSuggester: MealSuggester,
+    private val mealSuggesterUseCase: MealSuggester,
     private val userInputReader: UserInputReader,
     private val cliPrinter: CLIPrinter,
     private val uiMealPrinter: UIMealPrinter
@@ -15,9 +15,9 @@ abstract class MealSuggesterView(
 
     private fun printLn(message: String = "") = cliPrinter.cliPrintLn(message)
 
-    tailrec protected fun printSuggestion() {
+    tailrec protected fun printNewSuggestion() {
 
-        val suggestedMeal = mealSuggester.suggestMeal()
+        val suggestedMeal = mealSuggesterUseCase.suggestMeal()
 
         if (suggestedMeal == null) {
             printLn("\nNo more meals to suggest!")
@@ -32,7 +32,7 @@ abstract class MealSuggesterView(
         printLn("\nDo you like it? (y = like, n = dislike, x = exit): ")
         when (getValidInputFromUser()) {
             "y" -> uiMealPrinter.printMealDetails(meal)
-            "n" -> printSuggestion()
+            "n" -> printNewSuggestion()
             "x" -> printLn("Returning to main menu...")
         }
     }
@@ -49,8 +49,8 @@ abstract class MealSuggesterView(
             "invalid input"
         )
 
-    fun printHeader(header: String) {
-        uiMealPrinter.printHeader(header)
+    protected fun printHeader(title: String) {
+        uiMealPrinter.printHeader(title)
         uiMealPrinter.printTextWithinWidth("you can like the meal to see full detail, or dislike it to get another meal.")
     }
 
