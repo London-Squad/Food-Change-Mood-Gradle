@@ -1,16 +1,17 @@
 package test.logic.getHealthyFastFoodTest
 
+import MealHelperTest.createNutrition
 import model.Meal
 import model.Nutrition
 import java.time.LocalDate
 
 fun createMeal(
-    id: Int,
+    id: Int = 0,
     name: String = "Test Meal",
-    minutes: Int = 10,
+    minutes: Int= 0,
     dateSubmitted: LocalDate? = null,
     tags: List<String> = listOf(""),
-    nutrition: Nutrition = Nutrition(null, null, null, null, null, null, null),
+    nutrition: Nutrition = createNutrition(null, null, null, null, null, null, null),
     steps: List<String> = listOf(),
     description: String = "",
     ingredients: List<String> = listOf()

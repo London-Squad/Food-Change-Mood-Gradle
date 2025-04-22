@@ -1,10 +1,10 @@
-package testData
+package logic.getHealthyFastFoodTest.testData
 
 import model.Meal
 import model.Nutrition
 import java.time.LocalDate
 
-object MockMeals {
+object fackDataMeals {
 
     val healthyMeal = Meal(
         id = 27752,
@@ -30,6 +30,18 @@ object MockMeals {
         ingredients = listOf()
     )
 
+    val mealwithHighNutrition = Meal(
+        id = 357551,
+        name = "Souce meal ",
+        minutes = 20,
+        dateSubmitted = LocalDate.parse("2020-01-01"),
+        tags = listOf(),
+        nutrition = Nutrition(500.9f, 50.0f, 50.0f, 30.0f, 1.0f, 14.0f, 5.0f),
+        steps = listOf(),
+        description = "",
+        ingredients = listOf()
+    )
+
     val incompleteMeal = Meal(
         id = 12345,
         name = "incomplete meal",
@@ -43,5 +55,5 @@ object MockMeals {
     )
 
     val allMeals = listOf(healthyMeal, longPrepMeal, incompleteMeal)
-    val invalidHealthyFood = listOf(longPrepMeal, incompleteMeal)
+    val invalidHealthyFood = listOf(longPrepMeal, mealwithHighNutrition,incompleteMeal)
 }
