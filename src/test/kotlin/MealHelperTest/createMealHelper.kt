@@ -6,9 +6,9 @@ import model.Nutrition
 import java.time.LocalDate
 
 fun createMeal(
-    id: Int,
+    id: Int = 0,
     name: String = "Test Meal",
-    minutes: Int,
+    minutes: Int= 0,
     dateSubmitted: LocalDate? = null,
     tags: List<String> = listOf(""),
     nutrition: Nutrition = createNutrition(null, null, null, null, null, null, null),
