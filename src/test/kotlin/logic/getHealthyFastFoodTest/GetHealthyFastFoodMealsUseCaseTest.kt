@@ -1,4 +1,4 @@
-package test.logic.getHealthyFastFoodTest
+package logic.getHealthyFastFoodTest
 
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
@@ -29,7 +29,7 @@ class GetHealthyFastFoodMealsUseCaseTest {
             MockMeals.healthyMeal
         )
     }
-
+    @Test
     fun `getHealthyFastFoodMeals should return empty array when there's no meals on mealsDataSource`() {
         every { mealsDataSource.getAllMeals() } returns emptyList()
 
@@ -37,7 +37,7 @@ class GetHealthyFastFoodMealsUseCaseTest {
 
         assertThat(result).isEmpty()
     }
-
+    @Test
     fun `getHealthyFastFoodMeals should return empty array when no meal pass condtions of healthy food`() {
         every { mealsDataSource.getAllMeals() } returns MockMeals.invalidHealthyFood
 
