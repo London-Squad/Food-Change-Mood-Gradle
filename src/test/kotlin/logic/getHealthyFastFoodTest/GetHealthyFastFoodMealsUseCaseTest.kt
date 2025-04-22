@@ -7,7 +7,7 @@ import logic.MealsDataSource
 import logic.getHealthyFastFoodMeals.GetHealthyFastFoodMealsUseCase
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import logic.getHealthyFastFoodTest.testData.FackDataMeals
+import logic.getHealthyFastFoodTest.testData.fackDataMeals
 
 class GetHealthyFastFoodMealsUseCaseTest {
     private lateinit var gettingHealthFooduseCase: GetHealthyFastFoodMealsUseCase
@@ -21,12 +21,12 @@ class GetHealthyFastFoodMealsUseCaseTest {
 
     @Test
     fun `getHealthyFastFoodMeals should return meals with prep time less than 15 and complete nutrition`() {
-        every { mealsDataSource.getAllMeals() } returns FackDataMeals.allMeals
+        every { mealsDataSource.getAllMeals() } returns fackDataMeals.allMeals
 
         val result = gettingHealthFooduseCase.getHealthyFastFoodMeals()
 
         assertThat(result).containsExactly(
-            FackDataMeals.healthyMeal
+            fackDataMeals.healthyMeal
         )
     }
     @Test
@@ -39,7 +39,7 @@ class GetHealthyFastFoodMealsUseCaseTest {
     }
     @Test
     fun `getHealthyFastFoodMeals should return empty array when no meal pass condtions of healthy food`() {
-        every { mealsDataSource.getAllMeals() } returns FackDataMeals.invalidHealthyFood
+        every { mealsDataSource.getAllMeals() } returns fackDataMeals.invalidHealthyFood
 
         val result = gettingHealthFooduseCase.getHealthyFastFoodMeals()
 
