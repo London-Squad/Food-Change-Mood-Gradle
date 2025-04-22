@@ -15,7 +15,15 @@ abstract class MealSuggesterView(
 
     private fun printLn(message: String = "") = cliPrinter.cliPrintLn(message)
 
-    tailrec protected fun printNewSuggestion() {
+    protected abstract var title: String
+
+    override fun start() {
+        mealSuggesterUseCase.initSuggestedList()
+        printTitleAndInstructions(title)
+        printNewSuggestion()
+    }
+
+    tailrec private fun printNewSuggestion() {
 
         val suggestedMeal = mealSuggesterUseCase.suggestMeal()
 
@@ -49,7 +57,7 @@ abstract class MealSuggesterView(
             "invalid input"
         )
 
-    protected fun printTitleAndInstructions(title: String) {
+    private fun printTitleAndInstructions(title: String) {
         uiMealPrinter.printHeader(title)
         uiMealPrinter.printTextWithinWidth("you can like the meal to see full detail, or dislike it to get another meal.")
     }

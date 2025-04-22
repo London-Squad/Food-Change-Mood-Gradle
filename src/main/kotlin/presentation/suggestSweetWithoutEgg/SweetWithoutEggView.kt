@@ -1,19 +1,18 @@
 package presentation.suggestSweetWithoutEgg
 
 import logic.suggestSweetWithoutEgg.GetSweetWithoutEggUseCase
+
 import presentation.MealSuggesterView
-import presentation.utils.*
+import presentation.utils.CLIPrinter
+import presentation.utils.UIMealPrinter
+import presentation.utils.UserInputReader
 
 class SweetWithoutEggView(
-    private val getSweetWithoutEggUseCase: GetSweetWithoutEggUseCase,
+    getSweetWithoutEggUseCase: GetSweetWithoutEggUseCase,
     userInputReader: UserInputReader,
     cliPrinter: CLIPrinter,
     uiMealPrinter: UIMealPrinter
 ) : MealSuggesterView(getSweetWithoutEggUseCase, userInputReader, cliPrinter, uiMealPrinter) {
 
-    override fun start() {
-        getSweetWithoutEggUseCase.initSuggestedList()
-        printTitleAndInstructions("Sweet Without Egg")
-        printNewSuggestion()
-    }
+    override var title: String = "Sweet Without Egg"
 }
