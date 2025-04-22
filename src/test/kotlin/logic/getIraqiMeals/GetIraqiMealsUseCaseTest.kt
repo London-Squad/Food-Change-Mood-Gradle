@@ -18,38 +18,48 @@ class GetIraqiMealsUseCaseTest {
     }
 
     @Test
-    fun `getIraqiMeals should return iraqi meals when the meals has iraqi tag`() {
-        every { mealsDataSource.getAllMeals() } returns MockIraqiMeals.allMeals
+    fun `getIraqiMeals should return meals that has Iraqi tag when these meals are preset in the database`() {
+        every { mealsDataSource.getAllMeals() } returns FakeIraqiMeals.allMeals
 
         val result = getIraqiMealsUseCase.getIraqiMeals()
 
-        assertThat(result).contains(MockIraqiMeals.iraqiMealWithTag)
+        assertThat(result).contains(FakeIraqiMeals.iraqiMealWithTag)
     }
 
     @Test
-    fun `getIraqiMeals should return iraqi meals when the meals has iraq keyword in the description`() {
-        every { mealsDataSource.getAllMeals() } returns MockIraqiMeals.allMeals
+    fun `getIraqiMeals should return meals that has iraq keyword in the description when these meals are preset in the database`() {
+        every { mealsDataSource.getAllMeals() } returns FakeIraqiMeals.allMeals
 
         val result = getIraqiMealsUseCase.getIraqiMeals()
 
-        assertThat(result).contains(MockIraqiMeals.iraqiMealWithDesc)
+        assertThat(result).contains(FakeIraqiMeals.iraqiMealWithDesc)
     }
 
     @Test
-    fun `getIraqiMeals should return iraqi meals when the meals has iraq keyword in the description and iraqi tag`() {
-        every { mealsDataSource.getAllMeals() } returns MockIraqiMeals.allMeals
+    fun `getIraqiMeals should return meals that have the iraq keyword in the description and have the iraqi tag when these meals are present in the database`() {
+        every { mealsDataSource.getAllMeals() } returns FakeIraqiMeals.allMeals
 
         val result = getIraqiMealsUseCase.getIraqiMeals()
 
-        assertThat(result).contains(MockIraqiMeals.iraqiMealsWithTagAndDesc)
+        assertThat(result).contains(FakeIraqiMeals.iraqiMealsWithTagAndDesc)
     }
 
     @Test
-    fun `getIraqiMeals should return an empty list when the meals has no iraq keyword in the description or the iraqi tag`() {
-        every { mealsDataSource.getAllMeals() } returns MockIraqiMeals.mealsWithoutIraqi
+    fun `getIraqiMeals should return an empty list when no meals with the iraq keyword in the description or the iraqi tag are present in the database`() {
+        every { mealsDataSource.getAllMeals() } returns FakeIraqiMeals.mealsWithoutIraqi
 
         val result = getIraqiMealsUseCase.getIraqiMeals()
 
         assertThat(result).isEmpty()
     }
+
+    @Test
+    fun `getIraqiMeals should return an empty list when there is no meals present in the database`() {
+        every { mealsDataSource.getAllMeals() } returns emptyList()
+
+        val result = getIraqiMealsUseCase.getIraqiMeals()
+
+        assertThat(result).isEmpty()
+    }
+
 }
