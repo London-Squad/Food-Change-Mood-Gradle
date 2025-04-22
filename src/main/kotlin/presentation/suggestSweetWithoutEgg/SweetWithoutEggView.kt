@@ -1,14 +1,12 @@
-package presentation.ketoSuggestionHelper
+package presentation.suggestSweetWithoutEgg
 
-import logic.ketoMealHelper.GetKetoMealUseCase
+import logic.suggestSweetWithoutEgg.GetSweetWithoutEggUseCase
 import model.Meal
 import presentation.BaseView
-import presentation.utils.CLIPrinter
-import presentation.utils.UIMealPrinter
-import presentation.utils.UserInputReader
+import presentation.utils.*
 
-class KetoSuggestionHelperView(
-    private val getKetoMealUseCase: GetKetoMealUseCase,
+class SweetWithoutEggView(
+    private val getSweetWithoutEggUseCase: GetSweetWithoutEggUseCase,
     private val userInputReader: UserInputReader,
     private val cliPrinter: CLIPrinter,
     private val uiMealPrinter: UIMealPrinter
@@ -16,34 +14,34 @@ class KetoSuggestionHelperView(
     private fun printLn(message: String = "") = cliPrinter.cliPrintLn(message)
 
     override fun start() {
-        getKetoMealUseCase.initSuggestedList()
+        getSweetWithoutEggUseCase.initSuggestedList()
         printHeader()
-        printKetoMealSuggestion()
+        printSweetSuggestion()
     }
 
     private fun printHeader() {
-        uiMealPrinter.printHeader("🥑 Keto Meal Suggestion")
+        uiMealPrinter.printHeader("Sweet Without Egg")
         uiMealPrinter.printTextWithinWidth("you can like the meal to see full detail, or dislike it to get another meal.")
     }
 
-    tailrec private fun printKetoMealSuggestion() {
+    tailrec private fun printSweetSuggestion() {
 
-        val ketoMeal = getKetoMealUseCase.suggestMeal()
+        val sweetWithoutEgg = getSweetWithoutEggUseCase.suggestMeal()
 
-        if (ketoMeal == null) {
+        if (sweetWithoutEgg == null) {
             printLn("\nNo more meals to suggest!")
             return
         }
 
-        printMealDescription(ketoMeal)
-        selectNextUI(ketoMeal)
+        printMealDescription(sweetWithoutEgg)
+        selectNextUI(sweetWithoutEgg)
     }
 
     private fun selectNextUI(meal: Meal){
         printLn("\nDo you like it? (y = like, n = dislike, x = exit): ")
         when (getValidInputFromUser()) {
             "y" -> uiMealPrinter.printMealDetails(meal)
-            "n" -> printKetoMealSuggestion()
+            "n" -> printSweetSuggestion()
             "x" -> printLn("Returning to main menu...")
         }
     }
