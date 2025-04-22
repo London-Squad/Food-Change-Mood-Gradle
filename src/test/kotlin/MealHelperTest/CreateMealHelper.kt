@@ -7,7 +7,7 @@ import java.time.LocalDate
 fun createMeal(
     id: Int,
     name: String = "Test Meal",
-    minutes: Int,
+    minutes: Int = 10,
     dateSubmitted: LocalDate? = null,
     tags: List<String> = listOf(""),
     nutrition: Nutrition = Nutrition(null, null, null, null, null, null, null),
