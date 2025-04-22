@@ -7,7 +7,7 @@ import logic.MealsDataSource
 import logic.getHealthyFastFoodMeals.GetHealthyFastFoodMealsUseCase
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import testData.MockMeals
+import logic.getHealthyFastFoodTest.testData.MockMeals
 
 class GetHealthyFastFoodMealsUseCaseTest {
     private lateinit var gettingHealthFooduseCase: GetHealthyFastFoodMealsUseCase

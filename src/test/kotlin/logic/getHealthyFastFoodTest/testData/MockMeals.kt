@@ -1,4 +1,4 @@
-package testData
+package logic.getHealthyFastFoodTest.testData
 
 import model.Meal
 import model.Nutrition
