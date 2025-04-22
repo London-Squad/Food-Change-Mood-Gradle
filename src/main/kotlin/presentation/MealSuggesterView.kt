@@ -49,7 +49,7 @@ abstract class MealSuggesterView(
             "invalid input"
         )
 
-    protected fun printHeader(title: String) {
+    protected fun printTitleAndInstructions(title: String) {
         uiMealPrinter.printHeader(title)
         uiMealPrinter.printTextWithinWidth("you can like the meal to see full detail, or dislike it to get another meal.")
     }

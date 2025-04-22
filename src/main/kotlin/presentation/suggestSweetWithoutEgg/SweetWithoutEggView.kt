@@ -13,7 +13,7 @@ class SweetWithoutEggView(
 
     override fun start() {
         getSweetWithoutEggUseCase.initSuggestedList()
-        printHeader("Sweet Without Egg")
+        printTitleAndInstructions("Sweet Without Egg")
         printNewSuggestion()
     }
 }
