@@ -15,7 +15,7 @@ abstract class MealSuggesterView(
 
     private fun printLn(message: String = "") = cliPrinter.cliPrintLn(message)
 
-    protected abstract var title: String
+    protected abstract val title: String
 
     override fun start() {
         mealSuggesterUseCase.initSuggestedList()
