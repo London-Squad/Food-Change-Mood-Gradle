@@ -24,9 +24,9 @@ class MealSearchByNameUseCaseImpl(
                 mealsDataSource.getAllMeals().filter { meal ->
                     val keywordWords = keyword.lowercase().split(" ")
                     keywordWords.all { kw ->
-                        meal.name?.lowercase()?.split(" ")?.any { mw ->
+                        meal.name.lowercase().split(" ").any { mw ->
                             searchAlgorithm.search(kw, mw)
-                        } ?: false
+                        }
                     }
                 }
             } else {
@@ -34,9 +34,9 @@ class MealSearchByNameUseCaseImpl(
                     mealsDataSource.getAllMeals().getOrNull(idx)?.takeIf { meal ->
                         val keywordWords = keyword.lowercase().split(" ")
                         keywordWords.all { kw ->
-                            meal.name?.lowercase()?.split(" ")?.any { mw ->
+                            meal.name.lowercase().split(" ").any { mw ->
                                 searchAlgorithm.search(kw, mw)
-                            } ?: false
+                            }
                         }
                     }
                 }
