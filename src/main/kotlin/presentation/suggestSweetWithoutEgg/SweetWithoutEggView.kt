@@ -14,7 +14,7 @@ class SweetWithoutEggView(
     private fun printLn(message: String = "") = cliPrinter.cliPrintLn(message)
 
     override fun start() {
-        getSweetWithoutEggUseCase.initSuggestions()
+        getSweetWithoutEggUseCase.initSuggestedList()
         printHeader()
         printSweetSuggestion()
     }
@@ -24,9 +24,9 @@ class SweetWithoutEggView(
         uiMealPrinter.printTextWithinWidth("you can like the meal to see full detail, or dislike it to get another meal.")
     }
 
-    private fun printSweetSuggestion() {
+    tailrec private fun printSweetSuggestion() {
 
-        val sweetWithoutEgg = getSweetWithoutEggUseCase.suggestSweet()
+        val sweetWithoutEgg = getSweetWithoutEggUseCase.suggestMeal()
 
         if (sweetWithoutEgg == null) {
             printLn("\nNo more meals to suggest!")
@@ -34,9 +34,13 @@ class SweetWithoutEggView(
         }
 
         printMealDescription(sweetWithoutEgg)
+        selectNextUI(sweetWithoutEgg)
+    }
+
+    private fun selectNextUI(meal: Meal){
         printLn("\nDo you like it? (y = like, n = dislike, x = exit): ")
         when (getValidInputFromUser()) {
-            "y" -> uiMealPrinter.printMealDetails(sweetWithoutEgg)
+            "y" -> uiMealPrinter.printMealDetails(meal)
             "n" -> printSweetSuggestion()
             "x" -> printLn("Returning to main menu...")
         }

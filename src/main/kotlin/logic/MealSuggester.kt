@@ -8,7 +8,7 @@ abstract class MealSuggester(
     private val candidateMeals = getMealsFilteredByCondition(::isValidSuggestion)
     private val suggestedMealIDList = mutableSetOf<Int>()
 
-    abstract fun isValidSuggestion(meal: Meal): Boolean
+    abstract protected fun isValidSuggestion(meal: Meal): Boolean
 
     private fun getMealsFilteredByCondition(
         validatingConditionLambda: (Meal) -> Boolean = { true }

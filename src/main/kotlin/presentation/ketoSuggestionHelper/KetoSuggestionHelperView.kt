@@ -16,7 +16,7 @@ class KetoSuggestionHelperView(
     private fun printLn(message: String = "") = cliPrinter.cliPrintLn(message)
 
     override fun start() {
-        getKetoMealUseCase.initSuggestions()
+        getKetoMealUseCase.initSuggestedList()
         printHeader()
         printKetoMealSuggestion()
     }
@@ -26,9 +26,9 @@ class KetoSuggestionHelperView(
         uiMealPrinter.printTextWithinWidth("you can like the meal to see full detail, or dislike it to get another meal.")
     }
 
-    private fun printKetoMealSuggestion() {
+    tailrec private fun printKetoMealSuggestion() {
 
-        val ketoMeal = getKetoMealUseCase.suggestKetoMeal()
+        val ketoMeal = getKetoMealUseCase.suggestMeal()
 
         if (ketoMeal == null) {
             printLn("\nNo more meals to suggest!")
@@ -36,9 +36,13 @@ class KetoSuggestionHelperView(
         }
 
         printMealDescription(ketoMeal)
+        selectNextUI(ketoMeal)
+    }
+
+    private fun selectNextUI(meal: Meal){
         printLn("\nDo you like it? (y = like, n = dislike, x = exit): ")
         when (getValidInputFromUser()) {
-            "y" -> uiMealPrinter.printMealDetails(ketoMeal)
+            "y" -> uiMealPrinter.printMealDetails(meal)
             "n" -> printKetoMealSuggestion()
             "x" -> printLn("Returning to main menu...")
         }

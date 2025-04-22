@@ -6,25 +6,20 @@ import model.Meal
 
 class GetSweetWithoutEggUseCase(mealsDataSource: MealsDataSource) : MealSuggester(mealsDataSource) {
 
-    fun initSuggestions() {
-        initSuggestedList()
-    }
-
-    fun suggestSweet(): Meal? {
-        return suggestMeal()
-    }
-
     override fun isValidSuggestion(meal: Meal): Boolean {
-        return isSweetWithoutEgg(meal)
+        return isSweet(meal) && isMealWithoutEgg(meal)
     }
 
-    private fun isSweetWithoutEgg(meal: Meal): Boolean {
-        meal.apply {
-            val isEggFree =
-                (!(ingredients.contains("egg") || ingredients.contains("eggs")) || tags.contains("egg-free"))
-            val isSweet = tags.contains("sweet")
-
-            return isSweet && isEggFree
+    private fun isMealWithoutEgg(meal: Meal): Boolean =
+        meal.run {
+            tags.any { it.contains("egg-free", ignoreCase = true) }
+                    || !(
+                    ingredients.any { it.contains("egg", ignoreCase = true) }
+                            || ingredients.any { it.contains("eggs", ignoreCase = true) }
+                    )
         }
-    }
+
+    private fun isSweet(meal: Meal): Boolean = meal.tags.any { it.contains("sweet", ignoreCase = true) }
+
 }
+

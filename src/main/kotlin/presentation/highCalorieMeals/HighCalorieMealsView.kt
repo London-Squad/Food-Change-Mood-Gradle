@@ -16,7 +16,7 @@ class HighCalorieMealsView(
     private fun printLn(message: String = "") = cliPrinter.cliPrintLn(message)
 
     override fun start() {
-        getHighCalorieMealsUseCase.initSuggestions()
+        getHighCalorieMealsUseCase.initSuggestedList()
         printHeader()
         printHighCalorieMealSuggestion()
     }
@@ -26,9 +26,9 @@ class HighCalorieMealsView(
         uiMealPrinter.printTextWithinWidth("you can like the meal to see full detail, or dislike it to get another meal.")
     }
 
-    private fun printHighCalorieMealSuggestion() {
+    tailrec private fun printHighCalorieMealSuggestion() {
 
-        val highCalorieMeal = getHighCalorieMealsUseCase.suggestHighCalorieMeal()
+        val highCalorieMeal = getHighCalorieMealsUseCase.suggestMeal()
 
         if (highCalorieMeal == null) {
             printLn("\nNo more meals to suggest!")
@@ -36,9 +36,13 @@ class HighCalorieMealsView(
         }
 
         printMealDescription(highCalorieMeal)
+        selectNextUI(highCalorieMeal)
+    }
+
+    private fun selectNextUI(meal: Meal){
         printLn("\nDo you like it? (y = like, n = dislike, x = exit): ")
         when (getValidInputFromUser()) {
-            "y" -> uiMealPrinter.printMealDetails(highCalorieMeal)
+            "y" -> uiMealPrinter.printMealDetails(meal)
             "n" -> printHighCalorieMealSuggestion()
             "x" -> printLn("Returning to main menu...")
         }
