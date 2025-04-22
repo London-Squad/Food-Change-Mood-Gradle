@@ -1,8 +1,7 @@
 package di
 
 import logic.*
-import logic.ketoMealHelper.KetoFriendlyValidator
-import logic.ketoMealHelper.KetoMealHelper
+import logic.ketoMealHelper.GetKetoMealUseCase
 import logic.getIraqiMeals.GetIraqiMealsUseCase
 import logic.search.byDate.IdIndexBuilder
 import logic.search.byDate.MealDateInvertedIndexBuilder
@@ -23,7 +22,7 @@ import logic.gymHelper.GymHelperUseCase
 import logic.ingredientGame.IngredientGameUseCase
 import logic.mealGuessGame.MealGuessGameUseCase
 import logic.search.*
-import logic.suggestSweetWithoutEgg.SuggestSweetWithoutEggUseCase
+import logic.suggestSweetWithoutEgg.GetSweetWithoutEggUseCase
 import org.koin.dsl.module
 import java.time.LocalDate
 
@@ -58,13 +57,12 @@ val useCaseModule = module {
 
     single { GetIraqiMealsUseCase(get()) }
     single { MealGuessGameUseCase(get()) }
-    single { KetoFriendlyValidator() }
-    single { KetoMealHelper(get(), get()) }
+    single { GetKetoMealUseCase(get()) }
     single { GetHealthyFastFoodMealsUseCase(get()) }
     single { IngredientGameUseCase(get()) }
     single { EasyMealsSuggestionUseCase(get()) }
     single { ExploreCountryFoodCultureUseCase(get()) }
-    single { SuggestSweetWithoutEggUseCase(get()) }
+    single { GetSweetWithoutEggUseCase(get()) }
     single { GetItalianFoodForLargeGroupUseCase(get()) }
     single { GymHelperUseCase(get()) }
     single { GetHighCalorieMealsUseCase(get()) }

@@ -14,12 +14,11 @@ dependencies {
     implementation("io.insert-koin:koin-core")
 
     testImplementation("org.jetbrains.kotlin:kotlin-test")
-    testImplementation("com.google.truth:truth:1.4.2")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.0")
-    testImplementation("io.mockk:mockk:1.13.16")
+    testImplementation("com.google.truth:truth:1.4.4")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.12.1")
+    testImplementation("io.mockk:mockk:1.14.0")
 
 }
-
 
 tasks.test {
     useJUnitPlatform()

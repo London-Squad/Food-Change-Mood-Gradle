@@ -10,7 +10,7 @@ import presentation.getSeaFoodMealsView.GetSeaFoodMealsView
 import presentation.foodCulture.CountryFoodCultureView
 import presentation.healthyFastFoodMeals.GetHealthyFastFoodMealsView
 import presentation.gymHelper.GymHelperView
-import presentation.highCalorieMeals.GetHighCalorieMealsView
+import presentation.highCalorieMeals.HighCalorieMealsView
 import presentation.ingredientGame.IngredientGameView
 import presentation.iraqiMeals.IraqiMealsView
 import presentation.italianFoodForLargeGroup.ItalianFoodForLargeGroupView
@@ -19,7 +19,7 @@ import presentation.mealGuessGame.MealGuessGameView
 import presentation.mealSearchByDate.MealSearchByDateView
 import presentation.mealSearchByName.MealSearchByNameView
 import presentation.mealsContainPotato.GetMealsContainPotatoView
-import presentation.suggestSweetWithoutEgg.SuggestSweetWithoutEggView
+import presentation.suggestSweetWithoutEgg.SweetWithoutEggView
 import presentation.utils.*
 
 
@@ -28,7 +28,7 @@ val presentationModule = module {
     factory { MealSearchByDateView(get(named("byDate")), get(), get(), get()) }
 
     factory { IraqiMealsView(get(), get()) }
-    factory { SuggestSweetWithoutEggView(get(), get(), get(), get()) }
+    factory { SweetWithoutEggView(get(), get(), get(), get()) }
     factory { MealGuessGameView(get(), get(), get(), get()) }
     factory { EasyMealView(get(), get()) }
     factory { ItalianFoodForLargeGroupView(get(), get()) }
@@ -36,12 +36,12 @@ val presentationModule = module {
     factory { IngredientGameView(get(), get(), get(), get()) }
     factory { GymHelperView(get(), get(), get(), get()) }
     factory { GetHealthyFastFoodMealsView(get(), get(), get()) }
-    factory { KetoSuggestionHelperView(get(), get(), get()) }
+    factory { KetoSuggestionHelperView(get(), get(), get(), get()) }
     factory { GetSeaFoodMealsView(get(), get()) }
     factory { GetMealsContainPotatoView(get(), get()) }
-    factory { GetHighCalorieMealsView(get(), get(), get()) }
+    factory { HighCalorieMealsView(get(), get(), get(), get()) }
 
-    factory <UserInputReader>{ UserInputReaderImpl(get()) }
+    factory<UserInputReader> { UserInputReaderImpl(get()) }
     factory { CLIPrinter() }
     factory { UIMealPrinter(get()) }
     factory { UIMealsListPrinter(get(), get(), get()) }
