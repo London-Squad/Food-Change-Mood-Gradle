@@ -65,6 +65,5 @@ class IngredientGameUseCase(
         const val DEFAULT_MAX_NUMBER_OF_ATTEMPTS_TO_FIND_INVALID_INGREDIENT = 10
         const val MAX_POINTS = 15000
         const val POINTS_PER_CORRECT_ANSWER = 1000
-
     }
 }
