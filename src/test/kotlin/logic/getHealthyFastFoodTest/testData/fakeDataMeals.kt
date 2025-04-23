@@ -18,30 +18,47 @@ object FakeDataMeals {
         )
     )
 
-    val longPrepMeal = createMeal(
+    val longPreparationTimeMeal = createMeal(
         minutes = 20, nutrition = createNutrition(
             totalFat = 5f, saturatedFat = 2f, carbohydrates = 10f
         )
     )
 
     val mealWithNullNutritionValue = createMeal(
-        id = 5
+        id = 5,
+        minutes = 15,
     )
 
     val mealWithNullSaturatedFat = createMeal(
-        nutrition = createNutrition(saturatedFat = null)
+        nutrition = createNutrition(
+            totalFat = 20.0f,
+            protein = 5.0f,
+            calories = 4.0f,
+            sugar = 5.0f,
+            sodium = 2.0f,
+            carbohydrates = 5.0f,
+            saturatedFat = null
+        )
     )
 
-    val mealWithNullableCarb = createMeal(
-        nutrition = createNutrition(carbohydrates = null)
+    val mealWithNullCarb = createMeal(
+        nutrition = createNutrition(
+            totalFat = 20.0f,
+            protein = 5.0f,
+            calories = 4.0f,
+            sugar = 5.0f,
+            sodium = 2.0f,
+            carbohydrates = null,
+            saturatedFat = 10.0f
+        )
     )
 
     val malformedMeals = listOf(
         createMeal(minutes = null),
         createMeal(nutrition = createNutrition(totalFat = null)),
-        createMeal(nutrition = createNutrition(saturatedFat = null)),
-        createMeal(nutrition = createNutrition(carbohydrates = null)),
-        createMeal(minutes = 20)
+        mealWithNullSaturatedFat,
+        mealWithNullCarb,
+        longPreparationTimeMeal
     )
 
     val invalidNaNMeals = listOf(
@@ -61,7 +78,7 @@ object FakeDataMeals {
         createMeal(minutes = 16), createMeal(id = 4), createMeal(nutrition = createNutrition(totalFat = null))
     )
 
-    val allSamplesMealsCase = listOf(healthyMeal, longPrepMeal, highFatMeal)
+    val allSamplesMealsCase = listOf(healthyMeal, longPreparationTimeMeal, highFatMeal)
 
     val mealWithFatJustAboveAverage = createMeal(
         id = 6, minutes = 10, nutrition = createNutrition(

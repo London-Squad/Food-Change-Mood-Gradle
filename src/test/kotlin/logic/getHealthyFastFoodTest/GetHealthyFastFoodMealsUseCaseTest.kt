@@ -13,20 +13,20 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
 class GetHealthyFastFoodMealsUseCaseTest {
-    private lateinit var gettingHealthFooduseCase: GetHealthyFastFoodMealsUseCase
+    private lateinit var getHealthFoodUseCase: GetHealthyFastFoodMealsUseCase
     private lateinit var mealsDataSource: MealsDataSource
 
     @BeforeEach
     fun setup() {
         mealsDataSource = mockk(relaxed = true)
-        gettingHealthFooduseCase = GetHealthyFastFoodMealsUseCase(mealsDataSource)
+        getHealthFoodUseCase = GetHealthyFastFoodMealsUseCase(mealsDataSource)
     }
 
     @Test
     fun `getHealthyFastFoodMeals should return meals with prep time less than 15 and complete nutrition`() {
         every { mealsDataSource.getAllMeals() } returns FakeDataMeals.allSamplesMealsCase
 
-        val result = gettingHealthFooduseCase.getHealthyFastFoodMeals()
+        val result = getHealthFoodUseCase.getHealthyFastFoodMeals()
 
         assertThat(result).containsExactly(FakeDataMeals.healthyMeal)
     }
@@ -37,9 +37,9 @@ class GetHealthyFastFoodMealsUseCaseTest {
             emptyList(),
             FakeDataMeals.invalidHealthyFood,
             listOf(FakeDataMeals.mealWithNullNutritionValue),
-            listOf(FakeDataMeals.longPrepMeal),
+            listOf(FakeDataMeals.longPreparationTimeMeal),
             listOf(FakeDataMeals.mealWithNullSaturatedFat),
-            listOf(FakeDataMeals.mealWithNullableCarb),
+            listOf(FakeDataMeals.mealWithNullCarb),
             FakeDataMeals.malformedMeals,
             FakeDataMeals.invalidNaNMeals
         )
@@ -50,7 +50,7 @@ class GetHealthyFastFoodMealsUseCaseTest {
     fun `getHealthyFastFoodMeals should return empty when meals are empty or invalid`(meals: List<Meal>) {
         every { mealsDataSource.getAllMeals() } returns meals
 
-        val result = gettingHealthFooduseCase.getHealthyFastFoodMeals()
+        val result = getHealthFoodUseCase.getHealthyFastFoodMeals()
 
         assertThat(result).isEmpty()
     }
@@ -63,7 +63,7 @@ class GetHealthyFastFoodMealsUseCaseTest {
             FakeDataMeals.mealWithCarbsJustAboveAverage
         )
 
-        val result = gettingHealthFooduseCase.getHealthyFastFoodMeals()
+        val result = getHealthFoodUseCase.getHealthyFastFoodMeals()
 
         assertThat(result).containsExactly(FakeDataMeals.healthyMeal)
     }
@@ -73,7 +73,7 @@ class GetHealthyFastFoodMealsUseCaseTest {
         every { mealsDataSource.getAllMeals() } returns listOf(
             FakeDataMeals.mealWithNullFatButValidCarbs, FakeDataMeals.mealWithNullCarbsButValidFat
         )
-        val result = gettingHealthFooduseCase.getHealthyFastFoodMeals()
+        val result = getHealthFoodUseCase.getHealthyFastFoodMeals()
 
         assertThat(result).isEmpty()
     }
@@ -81,7 +81,7 @@ class GetHealthyFastFoodMealsUseCaseTest {
     @Test
     fun `getHealthyFastFoodMeals should handle floating point averages`() {
         every { mealsDataSource.getAllMeals() } returns listOf(FakeDataMeals.slightlyAbove)
-        assertThat(gettingHealthFooduseCase.getHealthyFastFoodMeals()).isEmpty()
+        assertThat(getHealthFoodUseCase.getHealthyFastFoodMeals()).isEmpty()
     }
 
 }
