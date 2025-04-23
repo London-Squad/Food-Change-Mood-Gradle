@@ -37,6 +37,6 @@ class GymHelperUseCase(
                 calories != null && calories > 0f
     }
     companion object{
-        val  defaultApproximatePercent=0.1
+        val  defaultApproximatePercent: Double=0.1
     }
 }
