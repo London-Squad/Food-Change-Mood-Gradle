@@ -17,6 +17,7 @@ import presentation.italianFoodForLargeGroup.ItalianFoodForLargeGroupView
 import presentation.ketoSuggestionHelper.KetoSuggestionHelperView
 import presentation.mealGuessGame.MealGuessGameView
 import presentation.mealSearchByDate.MealSearchByDateView
+import presentation.mealSearchByDate.UIMealsListPrinterAndSelectByID
 import presentation.mealSearchByName.MealSearchByNameView
 import presentation.mealsContainPotato.GetMealsContainPotatoView
 import presentation.suggestSweetWithoutEgg.SweetWithoutEggView
@@ -25,7 +26,9 @@ import presentation.utils.*
 
 val presentationModule = module {
     factory { MealSearchByNameView(get(named("byName")), get(), get(), get()) }
-    factory { MealSearchByDateView(get(named("byDate")), get(), get(), get()) }
+
+    factory { UIMealsListPrinterAndSelectByID(get(), get(), get()) }
+    factory { MealSearchByDateView(get(named("byDate")), get(), get(), get(), get()) }
 
     factory { IraqiMealsView(get(), get()) }
     factory { SweetWithoutEggView(get(), get(), get(), get()) }
