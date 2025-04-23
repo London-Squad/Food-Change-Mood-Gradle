@@ -1,22 +1,18 @@
 package presentation.ketoSuggestionHelper
 
-import logic.ketoMealHelper.KetoMealHelper
-import presentation.BaseView
+import logic.ketoMealHelper.GetKetoMealUseCase
+
+import presentation.MealSuggesterView
 import presentation.utils.CLIPrinter
 import presentation.utils.UIMealPrinter
+import presentation.utils.UserInputReader
 
 class KetoSuggestionHelperView(
-    private val ketoHelperUseCase: KetoMealHelper,
-    private val uiMealPrinter: UIMealPrinter,
-    private val cliPrinter: CLIPrinter
-) : BaseView {
-    override fun start() {
-        cliPrinter.cliPrintLn("🥑 Keto Meal Suggestion")
-        val suggestedMeal = ketoHelperUseCase.getKetoDishesSuggestion()
+    getKetoMealUseCase: GetKetoMealUseCase,
+    userInputReader: UserInputReader,
+    cliPrinter: CLIPrinter,
+    uiMealPrinter: UIMealPrinter
+) : MealSuggesterView(getKetoMealUseCase, userInputReader, cliPrinter, uiMealPrinter) {
 
-        if (suggestedMeal == null) {
-            cliPrinter.cliPrintLn("no meals found :'("); return
-        }
-        uiMealPrinter.printMealDetails(suggestedMeal)
-    }
+    override var title: String = "🥑 Keto Meal Suggestion"
 }

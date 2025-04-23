@@ -1,6 +1,3 @@
-package test.logic.getHealthyFastFoodTest
-
-import mealHelperTest.createNutrition
 import model.Meal
 import model.Nutrition
 import java.time.LocalDate

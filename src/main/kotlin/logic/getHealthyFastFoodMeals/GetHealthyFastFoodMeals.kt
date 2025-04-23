@@ -3,14 +3,14 @@ package logic.getHealthyFastFoodMeals
 import logic.MealsDataSource
 import model.Meal
 
-class GetHealthyFastFoodMealsUseCase(private val mealRepository: MealsDataSource) {
+class GetHealthyFastFoodMealsUseCase(private val mealsDataSource: MealsDataSource) {
 
     companion object {
         private const val MAX_PREPARATION_TIME = 15
     }
 
     fun getHealthyFastFoodMeals(): List<Meal> {
-        val mealsWithValidNutritionAndTime = mealRepository.getAllMeals().filter {
+        val mealsWithValidNutritionAndTime = mealsDataSource.getAllMeals().filter {
             it.minutes != null &&
                     it.minutes <= MAX_PREPARATION_TIME &&
                     it.nutrition.totalFat != null &&
