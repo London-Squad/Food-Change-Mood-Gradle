@@ -25,7 +25,7 @@ import presentation.utils.*
 
 val presentationModule = module {
     factory { MealSearchByNameView(get(named("byName")), get(), get(), get()) }
-    factory { MealSearchByDateView(get(named("byDate")), get(), get(), get()) }
+    factory { MealSearchByDateView(get(named("byDate")), get(), get(), get(), get()) }
 
     factory { IraqiMealsView(get(), get()) }
     factory { SweetWithoutEggView(get(), get(), get(), get()) }
