@@ -4,7 +4,7 @@ import MealHelperTest.createMeal
 
 
 object FakeIraqiMeals {
-    val iraqiMealsWithTagAndDesc = createMeal(
+    val iraqiMealWithTagAndDesc = createMeal(
         name = "Dolma",
         tags = listOf("iraqi"),
         description = "The best iraqi meal"
@@ -31,7 +31,7 @@ object FakeIraqiMeals {
     )
 
     val allMeals = listOf(
-        iraqiMealsWithTagAndDesc,
+        iraqiMealWithTagAndDesc,
         iraqiMealWithTag,
         iraqiMealWithDesc,
         nonIraqiMeal

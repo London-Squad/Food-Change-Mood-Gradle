@@ -41,7 +41,7 @@ class GetIraqiMealsUseCaseTest {
 
         val result = getIraqiMealsUseCase.getIraqiMeals()
 
-        assertThat(result).contains(FakeIraqiMeals.iraqiMealsWithTagAndDesc)
+        assertThat(result).contains(FakeIraqiMeals.iraqiMealWithTagAndDesc)
     }
 
     @Test
