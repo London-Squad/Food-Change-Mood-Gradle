@@ -92,15 +92,4 @@ object FakeDataMeals {
             totalFat = 10.0001f, carbohydrates = 15f
         )
     )
-    @JvmStatic
-    fun emptyOrInvalidMealsProvider(): List<List<Meal>> = listOf(
-        emptyList(),
-        FakeDataMeals.invalidHealthyFood,
-        listOf(FakeDataMeals.mealWithNullNutritionValue),
-        listOf(FakeDataMeals.longPrepMeal),
-        listOf(FakeDataMeals.mealWithNullSaturatedFat),
-        listOf(FakeDataMeals.mealWithNullableCarb),
-        FakeDataMeals.malformedMeals,
-        FakeDataMeals.invalidNaNMeals
-    )
 }
