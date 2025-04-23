@@ -8,33 +8,37 @@ class MealGuessGameUseCase(
 ) {
 
     fun getRandomMeal(): Meal {
-        return mealsDataSource.getAllMeals()
-            .getRandomMeals(::isMealWithValidTime, 1).first()
+        return getValidTimeMeals().random()
     }
 
-    fun isTwoOrMoreMealsAvailable() = mealsDataSource.getAllMeals().size > 2
+    private fun getValidTimeMeals(): List<Meal> {
+        return mealsDataSource.getAllMeals()
+            .filter(::isMealWithValidTime)
+    }
 
-    fun checkGuessAttempt(guess: Int, correctValue: Int): String {
-        return if (guess > correctValue) "Too high"
-        else if (guess < correctValue) "Too low"
-        else "correct"
+    fun isGamePlayable() = getValidTimeMeals().size >= MIN_MEALS_REQUIRED_TO_START
+
+    fun checkGuess(guess: Int, correctValue: Int): GuessState {
+        return if (guess > correctValue) GuessState.TooHigh
+        else if (guess < correctValue) GuessState.TooLow
+        else GuessState.Correct
     }
 
     fun isAttemptExceeded(currentAttempt: Int): Boolean = (currentAttempt > MAX_NUMBER_OF_ATTEMPT)
 
 
     private fun isMealWithValidTime(meal: Meal): Boolean {
-        return meal.minutes != null
+        return meal.minutes != null && meal.minutes > 0
     }
 
-    private fun List<Meal>.getRandomMeals(condition: (Meal) -> Boolean, count: Int): List<Meal> {
-        return this.filter(condition).run {
-            if (size < count) this
-            else shuffled().take(count)
-        }
+    enum class GuessState(val state: String) {
+        Correct("Correct"),
+        TooHigh("Too High"),
+        TooLow("Too Low")
     }
 
     private companion object {
         const val MAX_NUMBER_OF_ATTEMPT = 3
+        const val MIN_MEALS_REQUIRED_TO_START = 3
     }
 }
