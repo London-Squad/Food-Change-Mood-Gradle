@@ -7,7 +7,10 @@ class GymHelperUseCase(
     fun getGymMembersMeals(
         caloriesUserInput: Float,
         proteinUserInput: Float,
+
         approximatePercent: Double =defaultApproximatePercent
+
+
     ): List<Meal> {
         val calorieRange = getRange(caloriesUserInput, approximatePercent)
         val proteinRange = getRange(proteinUserInput, approximatePercent)
@@ -36,7 +39,10 @@ class GymHelperUseCase(
         return protein != null && protein > 0f &&
                 calories != null && calories > 0f
     }
-    companion object{
-        val  defaultApproximatePercent: Double=0.1
+
+    companion object {
+        val defaultApproximatePercent: Double = 0.1
     }
+
+
 }

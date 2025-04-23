@@ -16,7 +16,9 @@ class GymHelperView(
     override fun start() {
         val calories = getValidFloatInput("Enter desired calories: ")
         val protein = getValidFloatInput("Enter desired protein: ")
+
         val approximate = GymHelperUseCase.defaultApproximatePercent
+
 
         val matchingMeals = gymHelperUseCase.getGymMembersMeals(calories, protein, approximate)
 

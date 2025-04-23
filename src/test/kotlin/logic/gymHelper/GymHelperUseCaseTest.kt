@@ -58,7 +58,9 @@ class GymHelperUseCaseTest {
 
     @Test
     fun `includes meal at the edge of acceptable range`() {
+
         val approx =GymHelperUseCase.defaultApproximatePercent
+
         val caloriesEdge = 500f * (1 + approx).toFloat()
         val proteinEdge = 40f * (1 + approx).toFloat()
 
