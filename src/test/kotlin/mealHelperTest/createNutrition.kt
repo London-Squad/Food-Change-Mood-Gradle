@@ -1,4 +1,5 @@
-package MealHelperTest
+package mealHelperTest
+
 
 import model.Nutrition
 
