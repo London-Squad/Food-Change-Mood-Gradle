@@ -13,7 +13,7 @@ class MealSearchByDateView(
     private val userInputReader: UserInputReader,
     private val cliPrinter: CLIPrinter,
     private val uiMealPrinter: UIMealPrinter,
-    private val uiMealsListPrinterAndSelectByIDTemp: UIMealsListPrinterAndSelectByID
+    private val uiMealsListPrinterAndSelectByID: UIMealsListPrinterAndSelectByID
 ) : BaseView {
 
     private fun printLn(message: String = "") = cliPrinter.cliPrintLn(message)
@@ -38,7 +38,7 @@ class MealSearchByDateView(
             return
         }
 
-        uiMealsListPrinterAndSelectByIDTemp.printMeals(
+        uiMealsListPrinterAndSelectByID.printMeals(
             dateInput,
             searchResults,
             mealSearchUseCase
