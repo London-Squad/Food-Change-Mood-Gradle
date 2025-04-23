@@ -2,25 +2,35 @@ package logic.getMealsContainPotato
 
 import logic.MealsDataSource
 import model.Meal
+import kotlin.random.Random
 
 class GetMealsContainPotatoUseCase(
     private val mealsDataSource: MealsDataSource
 ) {
 
     fun getRandomMeals(): List<Meal> {
-        return mealsDataSource.getAllMeals()
-            .getRandomMeals(::isMealContainPotato, NUMBER_OF_MEALS_TO_PRESENT)
+        val potatoMeals = filterMealsWithPotato(mealsDataSource.getAllMeals())
+        return selectRandomMeals(potatoMeals, NUMBER_OF_MEALS_TO_PRESENT)
     }
 
-    private fun List<Meal>.getRandomMeals(condition: (Meal) -> Boolean, count: Int): List<Meal> {
-        return this.filter(condition).run {
-            if (size < count) this
-            else shuffled().take(count)
+    //  Filtering logic separated
+    private fun filterMealsWithPotato(meals: List<Meal>): List<Meal> {
+        return meals.filter { meal ->
+            meal.tags.any { it.equals(POTATOES_TAG, ignoreCase = true) } ||
+                    meal.ingredients.any { it.contains(POTATO_KEYWORD, ignoreCase = true) }
         }
     }
 
-    private fun isMealContainPotato(meal: Meal): Boolean =
-        meal.tags.contains(POTATOES_TAG) || meal.ingredients.contains(POTATO_KEYWORD)
+    // Random selection using index-based selection instead of .shuffled()
+    private fun selectRandomMeals(meals: List<Meal>, count: Int): List<Meal> {
+        if (meals.size <= count) return meals
+
+        val selectedIndices = mutableSetOf<Int>()
+        while (selectedIndices.size < count) {
+            selectedIndices.add(Random.nextInt(meals.size))
+        }
+        return selectedIndices.map { meals[it] }
+    }
 
     private companion object {
         const val POTATOES_TAG = "potatoes"
