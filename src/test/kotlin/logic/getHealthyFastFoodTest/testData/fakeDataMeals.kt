@@ -1,7 +1,6 @@
 package logic.getHealthyFastFoodTest.testData
 
-import MealHelperTest.createNutrition
-import model.Meal
+import mealHelperTest.createNutrition
 import test.logic.getHealthyFastFoodTest.createMeal
 
 object FakeDataMeals {
@@ -32,10 +31,6 @@ object FakeDataMeals {
     val mealWithNullSaturatedFat = createMeal(
         nutrition = createNutrition(
             totalFat = 20.0f,
-            protein = 5.0f,
-            calories = 4.0f,
-            sugar = 5.0f,
-            sodium = 2.0f,
             carbohydrates = 5.0f,
             saturatedFat = null
         )
@@ -44,16 +39,12 @@ object FakeDataMeals {
     val mealWithNullCarb = createMeal(
         nutrition = createNutrition(
             totalFat = 20.0f,
-            protein = 5.0f,
-            calories = 4.0f,
-            sugar = 5.0f,
-            sodium = 2.0f,
             carbohydrates = null,
             saturatedFat = 10.0f
         )
     )
 
-    val malformedMeals = listOf(
+    val mealsWithMissingOrInvalidData = listOf(
         createMeal(minutes = null),
         createMeal(nutrition = createNutrition(totalFat = null)),
         mealWithNullSaturatedFat,

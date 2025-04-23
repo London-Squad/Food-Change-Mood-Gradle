@@ -40,7 +40,7 @@ class GetHealthyFastFoodMealsUseCaseTest {
             listOf(FakeDataMeals.longPreparationTimeMeal),
             listOf(FakeDataMeals.mealWithNullSaturatedFat),
             listOf(FakeDataMeals.mealWithNullCarb),
-            FakeDataMeals.malformedMeals,
+            FakeDataMeals.mealsWithMissingOrInvalidData,
             FakeDataMeals.invalidNaNMeals
         )
     }
