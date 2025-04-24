@@ -1,6 +1,6 @@
 package logic.getIraqiMeals
 
-import mealHelperTest.createMeal
+import createMeal
 
 
 object FakeIraqiMeals {
