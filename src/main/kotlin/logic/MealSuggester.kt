@@ -5,7 +5,6 @@ import model.Meal
 abstract class MealSuggester(
     private val mealsDataSource: MealsDataSource
 ) {
-    private val candidateMeals = getMealsFilteredByCondition(::isValidSuggestion)
     private val suggestedMealIDList = mutableSetOf<Int>()
 
     abstract protected fun isValidSuggestion(meal: Meal): Boolean
@@ -18,7 +17,7 @@ abstract class MealSuggester(
     }
 
     fun suggestMeal(): Meal? {
-
+        val candidateMeals = getMealsFilteredByCondition(::isValidSuggestion)
         if (candidateMeals.isEmpty()) return null
         if (candidateMeals.size == suggestedMealIDList.size) return null
 
