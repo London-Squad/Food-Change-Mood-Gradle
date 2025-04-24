@@ -22,7 +22,7 @@ class MealSearchByDateUseCaseImplTest {
 
     private val mealA = createMeal(
         id = 101,
-        name = "Pork Ribs",
+        name = "arriba   baked winter squash mexican style",
         dateSubmitted = LocalDate.of(2023, 5, 1),
     )
 
