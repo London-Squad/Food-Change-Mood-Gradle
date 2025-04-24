@@ -21,27 +21,33 @@ class MealGuessGameView(
             printLn("not enough meals available :'("); return
         }
 
-        startNewRound()
-    }
-
-    private fun startNewRound() {
         mealGuessGameUseCase.initGame()
         val mealName = mealGuessGameUseCase.getRandomMealNameWithValidTime()
-
         printLn("\nMeal Name: $mealName")
-        startEvaluateAttempt()
+
+        giveUserNewAttempt()
     }
 
-    private tailrec fun startEvaluateAttempt() {
-        when (val result = mealGuessGameUseCase.evaluateGuessAttempt(getValidGuessFromUser())) {
-            MealGuessGameUseCase.GuessState.Correct -> printLn("Correct!")
-            else -> {
-                printLn(result.state)
-                if (mealGuessGameUseCase.isMaxAttemptExceeded()) {
-                    printLn("Game Over! the correct answer is ${mealGuessGameUseCase.getCorrectAnswer()}")
-                } else startEvaluateAttempt()
-            }
+    private fun giveUserNewAttempt() {
+        val userGuess = getValidGuessFromUser()
+        selectNextCLI(userGuess)
+    }
+
+    private fun selectNextCLI(userGuess: Int) {
+        val result = mealGuessGameUseCase.evaluateGuessAttempt(userGuess)
+        if (result == MealGuessGameUseCase.GuessState.Correct) {
+            printWinMessage()
+            return
         }
+
+        printLn(result.state)
+        if (mealGuessGameUseCase.isMaxAttemptExceeded()) {
+            printLn("Game Over! the correct answer is ${mealGuessGameUseCase.getCorrectAnswer()}")
+        } else giveUserNewAttempt()
+    }
+
+    private fun printWinMessage(){
+        printLn("Correct!")
     }
 
     private fun printHeader() {
