@@ -1,11 +1,14 @@
-import logic.getSeaFoodMealsUseCase.GetSeaFoodMealsUseCase
+package logic.getSeaFoodMealsUseCase
+
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.unmockkAll
 import io.mockk.verify
 import logic.MealsDataSource
-import logic.testutils.MealTestUtils.createMeal
+
+import mealHelperTest.createMeal
+import mealHelperTest.createNutrition
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import kotlin.test.Test
@@ -30,9 +33,9 @@ class GetSeaFoodMealsUseCaseTest {
     @Test
     fun `getSeaFoodMealsSortedByProtein should sort seafood meals by protein descending`() {
         // Given
-        val meal1 = createMeal("Salmon", tags = listOf("Seafood"), protein = 30f)
-        val meal2 = createMeal("Shrimp", tags = listOf("Seafood"), protein = 25f)
-        val meal3 = createMeal("Tuna", tags = listOf("Seafood"), protein = 35f)
+        val meal1 = createMeal(name = "Salmon", tags = listOf("Seafood"),  nutrition = createNutrition(protein = 30f))
+        val meal2 = createMeal(name = "Shrimp", tags = listOf("Seafood"), nutrition = createNutrition(protein = 25f))
+        val meal3 = createMeal(name = "Tuna", tags = listOf("Seafood"),  nutrition = createNutrition(protein = 35f))
 
         every { mockMealsDataSource.getAllMeals() } returns listOf(meal1, meal2, meal3)
 
@@ -47,8 +50,8 @@ class GetSeaFoodMealsUseCaseTest {
     @Test
     fun `given meals with same protein when getSeaFoodMealsSortedByProtein then order remains stable`() {
         // Given
-        val meal1 = createMeal("Seafood Pasta A", tags = listOf("Seafood"), protein = 20f)
-        val meal2 = createMeal("Seafood Pasta B", tags = listOf("Seafood"), protein = 20f)
+        val meal1 = createMeal(name = "Seafood Pasta A", tags = listOf("Seafood"),  nutrition = createNutrition(protein = 20f))
+        val meal2 = createMeal(name = "Seafood Pasta B", tags = listOf("Seafood"),  nutrition = createNutrition(protein = 20f))
 
         every { mockMealsDataSource.getAllMeals() } returns listOf(meal1, meal2)
 
@@ -62,8 +65,8 @@ class GetSeaFoodMealsUseCaseTest {
     @Test
     fun `meals with null protein are ignored`() {
         // Given
-        val meal1 = createMeal("Valid Seafood", tags = listOf("Seafood"), protein = 15f)
-        val meal2 = createMeal("Null Protein", tags = listOf("Seafood"), protein = null)
+        val meal1 = createMeal(name = "Valid Seafood", tags = listOf("Seafood"),  nutrition = createNutrition(protein = 15f))
+        val meal2 = createMeal(name = "Null Protein", tags = listOf("Seafood"),  nutrition = createNutrition(protein = null))
 
         every { mockMealsDataSource.getAllMeals() } returns listOf(meal1, meal2)
 
@@ -77,8 +80,8 @@ class GetSeaFoodMealsUseCaseTest {
     @Test
     fun `meals without Seafood tag are ignored`() {
         // Given
-        val meal1 = createMeal("Chicken Meal", tags = listOf("Chicken"), protein = 10f)
-        val meal2 = createMeal("Fish Meal", tags = listOf("Seafood"), protein = 20f)
+        val meal1 = createMeal(name = "Chicken Meal", tags = listOf("Chicken"), nutrition = createNutrition(protein = 10f))
+        val meal2 = createMeal(name = "Fish Meal", tags = listOf("Seafood"),  nutrition = createNutrition(protein = 20f))
 
         every { mockMealsDataSource.getAllMeals() } returns listOf(meal1, meal2)
 
@@ -104,9 +107,9 @@ class GetSeaFoodMealsUseCaseTest {
     @Test
     fun `duplicate name or tag meals should not cause issues`() {
         // Given
-        val meal1 = createMeal("Fish", tags = listOf("Seafood"), protein = 10f)
-        val meal2 = createMeal("Fish", tags = listOf("Seafood"), protein = 15f)
-        val meal3 = createMeal("Octopus", tags = listOf("Seafood"), protein = 25f)
+        val meal1 = createMeal(name = "Fish", tags = listOf("Seafood"),  nutrition = createNutrition(protein = 10f))
+        val meal2 = createMeal(name = "Fish", tags = listOf("Seafood"),  nutrition = createNutrition(protein = 15f))
+        val meal3 = createMeal(name = "Octopus", tags = listOf("Seafood"),  nutrition = createNutrition(protein = 25f))
 
         every { mockMealsDataSource.getAllMeals() } returns listOf(meal1, meal2, meal3)
         //When
