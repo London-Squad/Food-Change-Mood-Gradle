@@ -60,102 +60,120 @@ class MealSearchByNameUseCaseImplTest {
     @Test
     fun `searchMeals should return cached meals when keyword is in cache`() {
         // Given
+        val input = "beef"
         val cachedMeals = listOf(meal2)
-        every { cache.get("beef") } returns cachedMeals
+        every { cache.get(input) } returns cachedMeals
 
         // When
         val result = mealSearchByNameUseCaseImpl.searchMeals("beef")
 
         // Then
         assertThat(result).isEqualTo(cachedMeals)
-        verify { cache.get("beef") }
+        verify { cache.get(input) }
     }
 
     @Test
     fun `searchMeals should return null when keyword is not in cache`() {
         // Given
+        val input = "beef"
         val cachedMeals = emptyList<Meal>()
-        every { cache.get("beef") } returns cachedMeals
+        every { cache.get(input) } returns cachedMeals
 
         // When
         val result = mealSearchByNameUseCaseImpl.searchMeals("beef")
 
         // Then
         assertThat(result).isEqualTo(cachedMeals)
-        verify { cache.get("beef") }
+        verify { cache.get(input) }
     }
 
     @Test
     fun `searchMeals should return matching meals when keyword matches indexed meals`() {
+        //Given
+        val input = "chicken"
+
         // When
-        val result = mealSearchByNameUseCaseImpl.searchMeals("chicken")
+        val result = mealSearchByNameUseCaseImpl.searchMeals(input)
 
         // Then
         assertThat(result).isEqualTo(listOf(meal1))
-        verify { cache.get("chicken") }
-        verify { cache.put("chicken", listOf(meal1)) }
+        verify { cache.get(input) }
+        verify { cache.put(input, listOf(meal1)) }
         verify { indexBuilder.getIndex() }
     }
 
     @Test
     fun `searchMeals should return matching meals when keyword has typo`() {
+        //Given
+        val input = "chiken"
+
         // When
-        val result = mealSearchByNameUseCaseImpl.searchMeals("chiken")
+        val result = mealSearchByNameUseCaseImpl.searchMeals(input)
 
         // Then
         assertThat(result).isEqualTo(listOf(meal1))
-        verify { cache.put("chiken", listOf(meal1)) }
+        verify { cache.put(input, listOf(meal1)) }
         verify { indexBuilder.getIndex() }
     }
 
     @Test
     fun `searchMeals should return matching meals when multi-word keyword matches indexed meals`() {
+        //Given
+        val input = "chicken curry"
+
         // When
-        val result = mealSearchByNameUseCaseImpl.searchMeals("chicken curry")
+        val result = mealSearchByNameUseCaseImpl.searchMeals(input)
 
         // Then
         assertThat(result).isEqualTo(listOf(meal1))
-        verify { cache.get("chicken curry") }
-        verify { cache.put("chicken curry", listOf(meal1)) }
+        verify { cache.get(input) }
+        verify { cache.put(input, listOf(meal1)) }
         verify { indexBuilder.getIndex() }
     }
 
     @Test
     fun `searchMeals should return matching meals when multi-word keyword with typos matches indexed meals`() {
+        //Given
+        val input = "chicken cury"
+
         // When
-        val result = mealSearchByNameUseCaseImpl.searchMeals("chicken cury")
+        val result = mealSearchByNameUseCaseImpl.searchMeals(input)
 
         // Then
         assertThat(result).isEqualTo(listOf(meal1))
-        verify { cache.get("chicken cury") }
-        verify { cache.put("chicken cury", listOf(meal1)) }
+        verify { cache.get(input) }
+        verify { cache.put(input, listOf(meal1)) }
         verify { indexBuilder.getIndex() }
     }
 
     @Test
     fun `searchMeals should return empty list when keyword does not match indexed meals`() {
+        //Given
+        val input = "pasta"
+
         // When
-        val result = mealSearchByNameUseCaseImpl.searchMeals("pasta")
+        val result = mealSearchByNameUseCaseImpl.searchMeals(input)
 
         // Then
         assertThat(result).isEmpty()
-        verify { cache.get("pasta") }
-        verify { cache.put("pasta", emptyList()) }
+        verify { cache.get(input) }
+        verify { cache.put(input, emptyList()) }
         verify { indexBuilder.getIndex() }
     }
 
     @Test
     fun `searchMeals should return matching meals when index is empty using full scan`() {
         // Given
+        val input = "chicken"
         every { indexBuilder.getIndex() } returns emptyMap()
 
         // When
-        val result = mealSearchByNameUseCaseImpl.searchMeals("chicken")
+        val result = mealSearchByNameUseCaseImpl.searchMeals(input)
 
         // Then
         assertThat(result).isEqualTo(listOf(meal1))
-        verify { cache.get("chicken") }
-        verify { cache.put("chicken", listOf(meal1)) }
+        verify { cache.get(input) }
+        verify { cache.put(input, listOf(meal1)) }
         verify { indexBuilder.getIndex() }
         verify { mealsDataSource.getAllMeals() }
     }
@@ -163,15 +181,16 @@ class MealSearchByNameUseCaseImplTest {
     @Test
     fun `searchMeals should return empty list when index and meals do not match using full scan`() {
         // Given
+        val input = "pasta"
         every { indexBuilder.getIndex() } returns emptyMap()
 
         // When
-        val result = mealSearchByNameUseCaseImpl.searchMeals("pasta")
+        val result = mealSearchByNameUseCaseImpl.searchMeals(input)
 
         // Then
         assertThat(result).isEmpty()
-        verify { cache.get("pasta") }
-        verify { cache.put("pasta", emptyList()) }
+        verify { cache.get(input) }
+        verify { cache.put(input, emptyList()) }
         verify { indexBuilder.getIndex() }
         verify { mealsDataSource.getAllMeals() }
     }
@@ -191,47 +210,50 @@ class MealSearchByNameUseCaseImplTest {
     @Test
     fun `searchMeals should return empty list when meals data source is empty`() {
         // Given
+        val input = "chicken"
         every { mealsDataSource.getAllMeals() } returns emptyList()
 
         // When
-        val result = mealSearchByNameUseCaseImpl.searchMeals("chicken")
+        val result = mealSearchByNameUseCaseImpl.searchMeals(input)
 
         // Then
         assertThat(result).isEmpty()
-        verify { cache.get("chicken") }
-        verify { cache.put("chicken", emptyList()) }
+        verify { cache.get(input) }
+        verify { cache.put(input, emptyList()) }
         verify { indexBuilder.getIndex() }
     }
 
     @Test
     fun `searchMeals should return cached meals when keyword case differs`() {
         // Given
+        val input = "Chicken"
         val cachedMeals = listOf(meal1)
         every { cache.get("chicken") } returns cachedMeals
 
         // When
-        val result = mealSearchByNameUseCaseImpl.searchMeals("Chicken")
+        val result = mealSearchByNameUseCaseImpl.searchMeals(input)
 
         // Then
         assertThat(result).isEqualTo(cachedMeals)
-        verify { cache.get("Chicken") }
+        verify { cache.get(input) }
         verify { mealsDataSource.getAllMeals() }
     }
 
     @Test
     fun `searchMeals should exclude non-matching meals from indexed candidates`() {
         // Given
+        val input = "pasta"
         every { indexBuilder.getIndex() } returns mapOf(
-            "pasta" to setOf(1)
+            input to setOf(1)
         )
 
         // When
-        val result = mealSearchByNameUseCaseImpl.searchMeals("pasta")
+        val result = mealSearchByNameUseCaseImpl.searchMeals(input)
 
         // Then
         assertThat(result).isEmpty()
-        verify { cache.get("pasta") }
-        verify { cache.put("pasta", emptyList()) }
+        verify { cache.get(input) }
+        verify { cache.put(input, emptyList()) }
         verify { indexBuilder.getIndex() }
         verify { mealsDataSource.getAllMeals() }
     }
