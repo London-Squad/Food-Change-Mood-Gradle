@@ -46,7 +46,7 @@ class GetIraqiMealsUseCaseTest {
 
     @Test
     fun `getIraqiMeals should return an empty list when no meals with the iraq keyword in the description or the iraqi tag are present in the database`() {
-        every { mealsDataSource.getAllMeals() } returns FakeIraqiMeals.mealsWithoutIraqi
+        every { mealsDataSource.getAllMeals() } returns FakeIraqiMeals.nonIraqiMeals
 
         val result = getIraqiMealsUseCase.getIraqiMeals()
 

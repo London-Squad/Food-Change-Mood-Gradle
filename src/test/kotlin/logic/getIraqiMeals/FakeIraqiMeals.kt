@@ -26,7 +26,7 @@ object FakeIraqiMeals {
         tags = listOf("some")
     )
 
-    val mealsWithoutIraqi = listOf(
+    val nonIraqiMeals = listOf(
         nonIraqiMeal
     )
 
