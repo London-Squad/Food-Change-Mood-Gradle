@@ -1,19 +1,18 @@
 package logic.search.byName
 
-import logic.search.IndexBuilder
 import logic.MealsDataSource
 import model.Meal
 
 class MealNameInvertedIndexBuilder(
-    private val mealsDataSource: MealsDataSource
-) : IndexBuilder<String, Set<Int>> {
+    mealsDataSource: MealsDataSource
+) {
     private val index: Map<String, Set<Int>>
 
     init {
         index = build(mealsDataSource.getAllMeals())
     }
 
-    override fun getIndex(): Map<String, Set<Int>> {
+    fun getIndex(): Map<String, Set<Int>> {
         return index
     }
 
