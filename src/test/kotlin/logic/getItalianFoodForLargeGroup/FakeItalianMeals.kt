@@ -20,7 +20,7 @@ object FakeItalianMeals {
         tags = listOf("for-large-groups")
     )
 
-    private val nonItalianMeal = createMeal(
+    private val nonItalianNonLargeGroupMeal = createMeal(
         name = "Burger",
         tags = listOf("fast-food")
     )
@@ -31,16 +31,18 @@ object FakeItalianMeals {
     )
 
     val nonItalianMeals = listOf(
-        nonItalianMeal
+        nonItalianNonLargeGroupMeal
     )
 
     val italianMealsWithoutLargeGroupTag = listOf(
         italyMealWithoutLargeGroupTag
     )
+
     val allMeals = listOf(
         mealWithItalianTag,
         mealWithItalianDesc,
         mealWithItalianName,
-        nonItalianMeal
+        nonItalianNonLargeGroupMeal,
+        italyMealWithoutLargeGroupTag
     )
 }
