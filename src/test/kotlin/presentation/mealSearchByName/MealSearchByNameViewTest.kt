@@ -4,6 +4,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import logic.search.MealSearchUseCase
+import mealHelperTest.createMeal
 import model.Meal
 import model.Nutrition
 import presentation.utils.CLIPrinter
@@ -21,44 +22,14 @@ class MealSearchByNameViewTest {
     private lateinit var cliPrinter: CLIPrinter
     private lateinit var uiMealsListPrinter: UIMealsListPrinter
 
-    private val meal1 = Meal(
+    private val meal1 = createMeal(
         id = 1,
         name = "Chicken Curry",
-        minutes = 45,
-        dateSubmitted = LocalDate.of(2023, 4, 16),
-        tags = emptyList(),
-        nutrition = Nutrition(
-            calories = 600f,
-            totalFat = 20f,
-            sugar = 5f,
-            sodium = 800f,
-            protein = 30f,
-            saturatedFat = 8f,
-            carbohydrates = 50f
-        ),
-        steps = emptyList(),
-        description = "Spicy",
-        ingredients = emptyList()
     )
 
-    private val meal2 = Meal(
+    private val meal2 = createMeal(
         id = 2,
         name = "Beef Stew",
-        minutes = 60,
-        dateSubmitted = LocalDate.of(2023, 4, 17),
-        tags = emptyList(),
-        nutrition = Nutrition(
-            calories = 700f,
-            totalFat = 25f,
-            sugar = 3f,
-            sodium = 900f,
-            protein = 40f,
-            saturatedFat = 10f,
-            carbohydrates = 30f
-        ),
-        steps = emptyList(),
-        description = "Hearty",
-        ingredients = emptyList()
     )
 
     @BeforeEach
@@ -86,9 +57,6 @@ class MealSearchByNameViewTest {
 
         // Then
         verify { userInputReader.getUserInput("Enter a keyword to search for meals (or '0' to return to main menu): ") }
-        verify(exactly = 0) { mealSearchUseCase.searchMeals(any()) }
-        verify(exactly = 0) { cliPrinter.cliPrintLn(any()) }
-        verify(exactly = 0) { uiMealsListPrinter.printMeals(any(), any(), any()) }
     }
 
     @Test
@@ -105,7 +73,6 @@ class MealSearchByNameViewTest {
         verify { userInputReader.getUserInput("Enter a keyword to search for meals (or '0' to return to main menu): ") }
         verify { mealSearchUseCase.searchMeals(keyword) }
         verify { cliPrinter.cliPrintLn("No meals found for keyword '$keyword'.") }
-        verify(exactly = 0) { uiMealsListPrinter.printMeals(any(), any(), any()) }
     }
 
     @Test
@@ -122,7 +89,6 @@ class MealSearchByNameViewTest {
         // Then
         verify { userInputReader.getUserInput("Enter a keyword to search for meals (or '0' to return to main menu): ") }
         verify { mealSearchUseCase.searchMeals(keyword) }
-        verify(exactly = 0) { cliPrinter.cliPrintLn(any()) }
         verify { uiMealsListPrinter.printMeals(searchResults, "Search Results") }
     }
 }

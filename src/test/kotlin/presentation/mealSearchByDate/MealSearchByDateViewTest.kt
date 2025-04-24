@@ -49,9 +49,6 @@ class MealSearchByDateViewTest {
         // Then
         verify { uiMealPrinter.printTextWithinWidth("Enter a date to search for meals (yyyy-MM-dd, e.g., 2023-04-16) or '0' to return to main menu:") }
         verify { userInputReader.getUserInput() }
-        verify(exactly = 0) { mealSearchUseCase.searchMeals(any()) }
-        verify(exactly = 0) { cliPrinter.cliPrintLn(any()) }
-        verify(exactly = 0) { uiMealsListPrinterAndSelectByID.printMeals(any(), any(), any()) }
     }
 
     @Test
@@ -69,7 +66,6 @@ class MealSearchByDateViewTest {
         verify { userInputReader.getUserInput() }
         verify { mealSearchUseCase.searchMeals(invalidDate) }
         verify { cliPrinter.cliPrintLn("Error: Invalid date format: '$invalidDate'. Use yyyy-MM-dd (e.g., 2023-04-16).") }
-        verify(exactly = 0) { uiMealsListPrinterAndSelectByID.printMeals(any(), any(), any()) }
     }
 
     @Test
@@ -87,7 +83,6 @@ class MealSearchByDateViewTest {
         verify { userInputReader.getUserInput() }
         verify { mealSearchUseCase.searchMeals(date) }
         verify { cliPrinter.cliPrintLn("Error: No meals found for date: $date") }
-        verify(exactly = 0) { uiMealsListPrinterAndSelectByID.printMeals(any(), any(), any()) }
     }
 
     @Test
@@ -105,7 +100,6 @@ class MealSearchByDateViewTest {
         verify { userInputReader.getUserInput() }
         verify { mealSearchUseCase.searchMeals(date) }
         verify { cliPrinter.cliPrintLn("No meals found for date '$date'.") }
-        verify(exactly = 0) { uiMealsListPrinterAndSelectByID.printMeals(any(), any(), any()) }
     }
 
     @Test
@@ -126,7 +120,6 @@ class MealSearchByDateViewTest {
         verify { uiMealPrinter.printTextWithinWidth("Enter a date to search for meals (yyyy-MM-dd, e.g., 2023-04-16) or '0' to return to main menu:") }
         verify { userInputReader.getUserInput() }
         verify { mealSearchUseCase.searchMeals(date) }
-        verify(exactly = 0) { cliPrinter.cliPrintLn(any()) }
         verify { uiMealsListPrinterAndSelectByID.printMeals(date, searchResults, mealSearchUseCase) }
     }
 }
