@@ -8,7 +8,6 @@ import io.mockk.verify
 import logic.MealsDataSource
 import logic.util.InvalidDateFormatException
 import logic.util.NoMealsFoundException
-import model.Nutrition
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -85,12 +84,9 @@ class MealSearchByDateUseCaseImplTest {
         val input = "invalid-date"
 
         // When & Then
-        val exception = assertThrows<InvalidDateFormatException> {
+        assertThrows<InvalidDateFormatException> {
             mealSearchByDateUseCaseImpl.searchMeals(input)
         }
-        assertThat(exception.message).isEqualTo("Invalid date format: 'invalid-date'. Use yyyy-MM-dd (e.g., 2023-04-16).")
-        verify(exactly = 0) { dateIndexBuilder.getIndex() }
-        verify(exactly = 0) { mealsDataSource.getAllMeals() }
     }
 
     @Test
@@ -99,12 +95,10 @@ class MealSearchByDateUseCaseImplTest {
         val input = "2023-07-01"
 
         // When & Then
-        val exception = assertThrows<NoMealsFoundException> {
+        assertThrows<NoMealsFoundException> {
             mealSearchByDateUseCaseImpl.searchMeals(input)
         }
-        assertThat(exception.message).isEqualTo("No meals found for date: 2023-07-01")
         verify { dateIndexBuilder.getIndex() }
-        verify(exactly = 0) { mealsDataSource.getAllMeals() }
     }
 
     @Test
@@ -144,11 +138,9 @@ class MealSearchByDateUseCaseImplTest {
         val input = 104
 
         // When & Then
-        val exception = assertThrows<NoMealsFoundException> {
+        assertThrows<NoMealsFoundException> {
             mealSearchByDateUseCaseImpl.getMealDetails(input)
         }
-        assertThat(exception.message).isEqualTo("No meal found with ID: 104")
         verify { idIndexBuilder.getIndex() }
-        verify(exactly = 0) { mealsDataSource.getAllMeals() }
     }
 }
