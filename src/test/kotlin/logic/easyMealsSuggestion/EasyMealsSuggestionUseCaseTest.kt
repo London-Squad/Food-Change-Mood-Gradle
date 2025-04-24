@@ -3,102 +3,130 @@ package logic.easyMealsSuggestion
 import io.mockk.every
 import io.mockk.mockk
 import logic.MealsDataSource
-import model.Meal
-import model.Nutrition
-import org.junit.jupiter.api.Assertions.*
+import createMeal
 import org.junit.jupiter.api.Test
-import java.time.LocalDate
+import kotlin.test.assertTrue
+import kotlin.test.assertFalse
+import kotlin.test.assertEquals
 
 class EasyMealsSuggestionUseCaseTest {
 
     private val dataSource = mockk<MealsDataSource>()
     private val useCase = EasyMealsSuggestionUseCase(dataSource)
 
-    private fun createMeal(
-        id: Int = 1,
-        minutes: Int?,
-        ingredientsCount: Int,
-        stepsCount: Int
-    ): Meal {
-        return Meal(
-            id = id,
-            name = "Meal $id",
-            minutes = minutes,
-            dateSubmitted = LocalDate.now(),
-            tags = listOf("easy"),
-            nutrition = Nutrition(100f, 10f, 5f, 200f, 7f, 2f, 30f),
-            steps = List(stepsCount) { "Step $it" },
-            description = "Test meal",
-            ingredients = List(ingredientsCount) { "Ingredient $it" }
-        )
-    }
-
+    // Test to return only easy meals
     @Test
-    fun `returns only easy meals`() {
-        val easy = createMeal(1, 20, 4, 5)
-        val hard = createMeal(2, 35, 6, 7)
-        every { dataSource.getAllMeals() } returns listOf(easy, hard)
+    fun `getRandomMeals should returns easy meals`() {
+        val easy = createMeal(id = 1, minutes = 20, ingredients = listOf("1", "2", "3","4"), steps = listOf("1", "2", "3","4","5"))
+        every { dataSource.getAllMeals() } returns listOf(easy)
 
         val result = useCase.getRandomMeals()
 
-        assertTrue(result.contains(easy))
-        assertFalse(result.contains(hard))
+        assertTrue(result.contains(easy))  // Assert that the easy meal is included
     }
 
+    // Test to exclude hard meals
     @Test
-    fun `returns empty list when no easy meals`() {
-        val hard1 = createMeal(1, 50, 8, 7)
-        val hard2 = createMeal(2, 45, 6, 6)
+    fun `getRandomMeals should excludes hard meals`() {
+        val hard = createMeal(id = 2, minutes = 35, ingredients = listOf("1", "2", "3","4","5","6"), steps = listOf("1", "2", "3","4","5","6","7"))
+        every { dataSource.getAllMeals() } returns listOf(hard)
+
+        val result = useCase.getRandomMeals()
+
+        assertFalse(result.contains(hard))  // Assert that the hard meal is excluded
+    }
+
+    // Test to return an empty list when no easy meals
+    @Test
+    fun ` getRandomMeals should returns empty list when no easy meals`() {
+        val hard1 = createMeal(id = 1, minutes = 50, ingredients = listOf("1", "2", "3","4","5","6","7","8"), steps = listOf("1", "2", "3","4","5","6","7"))
+        val hard2 = createMeal(id = 2, minutes = 45, ingredients = listOf("1", "2", "3","4","5","6"), steps = listOf("1", "2", "3","4","5","6"))
         every { dataSource.getAllMeals() } returns listOf(hard1, hard2)
 
         val result = useCase.getRandomMeals()
 
-        assertTrue(result.isEmpty())
+        assertTrue(result.isEmpty())  // Assert that the result is an empty list
     }
 
+    // Test to return the correct number of meals
     @Test
-    fun `returns correct number of meals up to limit`() {
-        val meals = List(20) { createMeal(it, 25, 3, 4) }
+    fun `getRandomMeals should returns correct number of meals up to limit`() {
+        val meals = List(20) { createMeal(id = it, minutes = 25, ingredients = listOf("1", "2", "3"), steps = listOf("1", "2", "3","4")) }
         every { dataSource.getAllMeals() } returns meals
 
         val result = useCase.getRandomMeals(10)
 
-        assertEquals(10, result.size)
+        assertEquals(10, result.size)  // Assert the correct number of meals
+    }
+
+    // Test to ensure meals are within the time limit
+    @Test
+    fun `getRandomMeals should ensures meals are within the time limit`() {
+        val meals = List(20) { createMeal(id = it, minutes = 25, ingredients = listOf("1", "2", "3"), steps = listOf("1", "2", "3","4")) }
+        every { dataSource.getAllMeals() } returns meals
+
+        val result = useCase.getRandomMeals(10)
+
         result.forEach {
-            assertTrue(it.minutes!! <= 30)
-            assertTrue(it.ingredients.size <= 5)
-            assertTrue(it.steps.size <= 6)
+            assertTrue(it.minutes!! <= 30)  // Assert that each meal has preparation time <= 30
         }
     }
 
+    // Test to ensure meals have no more than 5 ingredients
     @Test
-    fun `excludes meals with null minutes`() {
-        val nullMinutes = createMeal(1, null, 3, 3)
-        val valid = createMeal(2, 30, 3, 3)
+    fun `getRandomMeals should ensures meals have no more than 5 ingredients`() {
+        val meals = List(20) { createMeal(id = it, minutes = 25, ingredients = listOf("1", "2", "3"), steps= listOf("1", "2", "3","4")) }
+        every { dataSource.getAllMeals() } returns meals
+
+        val result = useCase.getRandomMeals(10)
+
+        result.forEach {
+            assertTrue(it.ingredients.size <= 5)  // Assert that each meal has <= 5 ingredients
+        }
+    }
+
+    // Test to ensure meals have no more than 6 steps
+    @Test
+    fun `getRandomMeals should ensures meals have no more than 6 steps`() {
+        val meals = List(20) { createMeal(id = it, minutes = 25, ingredients = listOf("1", "2", "3"), steps = listOf("1", "2", "3","4")) }
+        every { dataSource.getAllMeals() } returns meals
+
+        val result = useCase.getRandomMeals(10)
+
+        result.forEach {
+            assertTrue(it.steps.size <= 6)  // Assert that each meal has <= 6 steps
+        }
+    }
+
+    // Test to exclude meals with null minutes
+    @Test
+    fun `getRandomMeals should excludes meals with null minutes`() {
+        val nullMinutes = createMeal(id = 1, minutes = null, ingredients = listOf("1", "2", "3"), steps = listOf("1", "2", "3"))
+        val valid = createMeal(id = 2, minutes = 30, ingredients = listOf("1", "2", "3"), steps = listOf("1", "2", "3"))
         every { dataSource.getAllMeals() } returns listOf(nullMinutes, valid)
 
         val result = useCase.getRandomMeals()
 
-        assertEquals(1, result.size)
-        assertTrue(result.contains(valid))
+        assertEquals(1, result.size)  // Assert that only one valid meal is returned
     }
 
+    // Test to include meals with exactly max limits
     @Test
-    fun `edge case - meal with exactly max limits is included`() {
-        val exact = createMeal(1, 30, 5, 6)
+    fun ` getRandomMeals should includes meals with exactly max limits`() {
+        val exact = createMeal(id = 1, minutes = 30, ingredients = listOf("1", "2", "3","4","5"), steps = listOf("1", "2", "3","4","5","6"))
         every { dataSource.getAllMeals() } returns listOf(exact)
 
         val result = useCase.getRandomMeals()
 
-        assertEquals(1, result.size)
-        assertTrue(result.contains(exact))
+        assertTrue(result.contains(exact))  // Assert that the meal with exact max limits is included
     }
 
+    // Test to exclude meals exceeding any one limit
     @Test
-    fun `edge case - meal exceeding any one limit is excluded`() {
-        val tooManyIngredients = createMeal(1, 25, 6, 4)
-        val tooManySteps = createMeal(2, 25, 4, 7)
-        val tooLongTime = createMeal(3, 40, 4, 4)
+    fun `getRandomMeals should excludes meals exceeding any one limit`() {
+        val tooManyIngredients = createMeal(id = 1, minutes = 25, ingredients = listOf("1", "2", "3","4","5","6"), steps = listOf("1", "2", "3","4"))
+        val tooManySteps = createMeal(id = 2, minutes = 25, ingredients = listOf("1", "2", "3","4"), steps = listOf("1", "2", "3","4","5","6","7"))
+        val tooLongTime = createMeal(id = 3, minutes = 40, ingredients = listOf("1", "2", "3","4"), steps = listOf("1", "2", "3","4"))
         every { dataSource.getAllMeals() } returns listOf(
             tooManyIngredients,
             tooManySteps,
@@ -107,6 +135,6 @@ class EasyMealsSuggestionUseCaseTest {
 
         val result = useCase.getRandomMeals()
 
-        assertTrue(result.isEmpty())
+        assertTrue(result.isEmpty())  // Assert that no meals are returned
     }
 }
