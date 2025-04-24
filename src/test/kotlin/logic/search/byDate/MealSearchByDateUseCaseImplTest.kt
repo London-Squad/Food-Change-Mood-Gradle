@@ -30,41 +30,13 @@ class MealSearchByDateUseCaseImplTest {
     private val mealB = createMeal(
         id = 102,
         name = "Lamb Chops",
-        minutes = 40,
         dateSubmitted = LocalDate.of(2023, 5, 1),
-        tags = emptyList(),
-        nutrition = Nutrition(
-            calories = 650f,
-            totalFat = 28f,
-            sugar = 1f,
-            sodium = 850f,
-            protein = 38f,
-            saturatedFat = 10f,
-            carbohydrates = 15f
-        ),
-        steps = emptyList(),
-        description = "Savory",
-        ingredients = emptyList()
     )
 
     private val mealC = createMeal(
         id = 103,
         name = "Fish Tacos",
-        minutes = 30,
         dateSubmitted = LocalDate.of(2023, 6, 1),
-        tags = emptyList(),
-        nutrition = Nutrition(
-            calories = 500f,
-            totalFat = 15f,
-            sugar = 4f,
-            sodium = 700f,
-            protein = 25f,
-            saturatedFat = 5f,
-            carbohydrates = 40f
-        ),
-        steps = emptyList(),
-        description = "Fresh",
-        ingredients = emptyList()
     )
 
     private val meals = listOf(mealA, mealB, mealC)
