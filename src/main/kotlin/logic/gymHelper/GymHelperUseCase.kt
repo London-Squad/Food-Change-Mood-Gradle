@@ -7,13 +7,9 @@ class GymHelperUseCase(
     fun getGymMembersMeals(
         caloriesUserInput: Float,
         proteinUserInput: Float,
-
-        approximatePercent: Double =defaultApproximatePercent
-
-
     ): List<Meal> {
-        val calorieRange = getRange(caloriesUserInput, approximatePercent)
-        val proteinRange = getRange(proteinUserInput, approximatePercent)
+        val calorieRange = getRange(caloriesUserInput, defaultApproximatePercent)
+        val proteinRange = getRange(proteinUserInput, defaultApproximatePercent)
 
         return mealsDataSource.getAllMeals()
             .filter { isHighQualityMeal(it) }
@@ -27,10 +23,8 @@ class GymHelperUseCase(
     private fun isWithinRange(meal: Meal, calorieRange: Pair<Float, Float>, proteinRange: Pair<Float, Float>): Boolean {
         val calories = meal.nutrition.calories
         val protein = meal.nutrition.protein
-
-        return calories != null && protein != null &&
-                calories in calorieRange.first..calorieRange.second &&
-                protein in proteinRange.first..proteinRange.second
+        return   calories!! in calorieRange.first..calorieRange.second &&
+                  protein!! in proteinRange.first..proteinRange.second
     }
 
     private fun isHighQualityMeal(meal: Meal): Boolean {
@@ -43,6 +37,4 @@ class GymHelperUseCase(
     companion object {
         val defaultApproximatePercent: Double = 0.1
     }
-
-
 }
