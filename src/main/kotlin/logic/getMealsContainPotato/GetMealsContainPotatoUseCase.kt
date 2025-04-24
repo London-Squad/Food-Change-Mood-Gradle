@@ -8,7 +8,7 @@ class GetMealsContainPotatoUseCase(
     private val mealsDataSource: MealsDataSource
 ) {
 
-    fun getRandomMeals(): List<Meal> {
+    fun getRandomMealsWithPotato(): List<Meal> {
         val potatoMeals = filterMealsWithPotato(mealsDataSource.getAllMeals())
         return selectRandomMeals(potatoMeals, NUMBER_OF_MEALS_TO_PRESENT)
     }
