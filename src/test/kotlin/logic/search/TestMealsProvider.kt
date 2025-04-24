@@ -70,7 +70,7 @@ object TestMealsProvider {
 
     val mealForDateSearchB = Meal(
         id = 102,
-        name = "Lamb Chops",
+        name = "chicken",
         minutes = 40,
         dateSubmitted = LocalDate.of(2023, 5, 1),
         tags = emptyList(),

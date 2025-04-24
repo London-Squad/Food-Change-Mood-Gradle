@@ -4,7 +4,7 @@ import model.Meal
 import model.Nutrition
 import java.time.LocalDate
 
-object fackDataMeals {
+object fakeDataMeals {
 
     val healthyMeal = Meal(
         id = 27752,
