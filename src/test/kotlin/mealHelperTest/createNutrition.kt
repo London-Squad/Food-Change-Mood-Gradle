@@ -1,6 +1,5 @@
 package mealHelperTest
 
-
 import model.Nutrition
 
 fun createNutrition(
