@@ -4,18 +4,18 @@ import mealHelperTest.createMeal
 
 
 object FakeItalianMeals {
-    val italianMealWithTags = createMeal(
+    val mealWithItalianTag = createMeal(
         name = "Pasta",
         tags = listOf("italian", "for-large-groups")
     )
 
-    val italianMealWithDesc = createMeal(
+    val mealWithItalianDesc = createMeal(
         name = "Pizza",
         tags = listOf("for-large-groups"),
         description = "A classic meal from Italy"
     )
 
-    val italianMealWithName = createMeal(
+    val mealWithItalianName = createMeal(
         name = "Italy Special",
         tags = listOf("for-large-groups")
     )
@@ -38,9 +38,9 @@ object FakeItalianMeals {
         italyMealWithoutLargeGroupTag
     )
     val allMeals = listOf(
-        italianMealWithTags,
-        italianMealWithDesc,
-        italianMealWithName,
+        mealWithItalianTag,
+        mealWithItalianDesc,
+        mealWithItalianName,
         nonItalianMeal
     )
 }

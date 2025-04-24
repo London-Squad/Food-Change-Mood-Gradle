@@ -23,7 +23,7 @@ class GetItalianFoodForLargeGroupUseCaseTest {
 
   val result = getItalianFoodForLargeGroupUseCase.getItalianMealsForLargeGroup()
 
-  assertThat(result).contains(FakeItalianMeals.italianMealWithTags)
+  assertThat(result).contains(FakeItalianMeals.mealWithItalianTag)
  }
 
  @Test
@@ -32,7 +32,7 @@ class GetItalianFoodForLargeGroupUseCaseTest {
 
   val result = getItalianFoodForLargeGroupUseCase.getItalianMealsForLargeGroup()
 
-  assertThat(result).contains(FakeItalianMeals.italianMealWithDesc)
+  assertThat(result).contains(FakeItalianMeals.mealWithItalianDesc)
  }
 
  @Test
@@ -41,7 +41,7 @@ class GetItalianFoodForLargeGroupUseCaseTest {
 
   val result = getItalianFoodForLargeGroupUseCase.getItalianMealsForLargeGroup()
 
-  assertThat(result).contains(FakeItalianMeals.italianMealWithName)
+  assertThat(result).contains(FakeItalianMeals.mealWithItalianName)
  }
 
  @Test
