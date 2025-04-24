@@ -56,7 +56,7 @@ class GetItalianFoodForLargeGroupUseCaseTest {
 
  @Test
  fun `getItalianMealsForLargeGroup should return an empty list when no Italian meals for large groups are present in the database`() {
-  every { mealsDataSource.getAllMeals() } returns FakeItalianMeals.mealsWithoutItalian
+  every { mealsDataSource.getAllMeals() } returns FakeItalianMeals.nonItalianMeals
 
   val result = getItalianFoodForLargeGroupUseCase.getItalianMealsForLargeGroup()
 

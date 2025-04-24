@@ -30,7 +30,7 @@ object FakeItalianMeals {
         tags = listOf("italian")
     )
 
-    val mealsWithoutItalian = listOf(
+    val nonItalianMeals = listOf(
         nonItalianMeal
     )
 
