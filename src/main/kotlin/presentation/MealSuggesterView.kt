@@ -20,10 +20,11 @@ abstract class MealSuggesterView(
     override fun start() {
         mealSuggesterUseCase.initSuggestedList()
         printTitleAndInstructions(title)
+        mealSuggesterUseCase.loadSuggestedMealsToMemory()
         printNewSuggestion()
     }
 
-    tailrec private fun printNewSuggestion() {
+    private fun printNewSuggestion() {
 
         val suggestedMeal = mealSuggesterUseCase.suggestMeal()
 
