@@ -5,9 +5,10 @@ import model.Meal
 abstract class MealSuggester(
     private val mealsDataSource: MealsDataSource
 ) {
+    private lateinit var candidateMeals : List<Meal>
     private val suggestedMealIDList = mutableSetOf<Int>()
 
-    abstract protected fun isValidSuggestion(meal: Meal): Boolean
+    protected abstract fun isValidSuggestion(meal: Meal): Boolean
 
     private fun getMealsFilteredByCondition(
         validatingConditionLambda: (Meal) -> Boolean = { true }
@@ -16,8 +17,12 @@ abstract class MealSuggester(
             .filter(validatingConditionLambda)
     }
 
+    fun loadSuggestedMealsToMemory() {
+        candidateMeals = getMealsFilteredByCondition(::isValidSuggestion)
+    }
+
     fun suggestMeal(): Meal? {
-        val candidateMeals = getMealsFilteredByCondition(::isValidSuggestion)
+
         if (candidateMeals.isEmpty()) return null
         if (candidateMeals.size == suggestedMealIDList.size) return null
 
@@ -31,4 +36,3 @@ abstract class MealSuggester(
         suggestedMealIDList.clear()
     }
 }
-

@@ -246,6 +246,61 @@ class GetKetoMealUseCaseTest {
         every { mealsDataSource.getAllMeals() } returns listOf(meal)
         assertNull(getKetoMealUseCase.suggestMeal())
     }
+    @Test
+    fun `suggestMeal skips meal when sugar percent is above allowed threshold`() {
+        val meal = createMeal(
+            id = 11,
+            nutrition = createNutrition(
+                calories = 500f,
+                carbohydrates = 5f,
+                sugar = 30f, // too much sugar
+                totalFat = 40f,
+                protein = 32f,
+                saturatedFat = 10f
+            ),
+            ingredients = listOf("chicken")
+        )
+        every { mealsDataSource.getAllMeals() } returns listOf(meal)
+        assertNull(getKetoMealUseCase.suggestMeal())
+    }
+
+    @Test
+    fun `suggestMeal skips meal when total fat percent is below minimum`() {
+        val meal = createMeal(
+            id = 12,
+            nutrition = createNutrition(
+                calories = 500f,
+                carbohydrates = 5f,
+                sugar = 2f,
+                totalFat = 10f, // too low fat
+                protein = 32f,
+                saturatedFat = 3f
+            ),
+            ingredients = listOf("chicken")
+        )
+        every { mealsDataSource.getAllMeals() } returns listOf(meal)
+        assertNull(getKetoMealUseCase.suggestMeal())
+    }
+
+    @Test
+    fun `suggestMeal skips meal when protein percent is below minimum`() {
+        val meal = createMeal(
+            id = 13,
+            nutrition = createNutrition(
+                calories = 500f,
+                carbohydrates = 5f,
+                sugar = 2f,
+                totalFat = 40f,
+                protein = 5f, // too low protein
+                saturatedFat = 9f
+            ),
+            ingredients = listOf("chicken")
+        )
+        every { mealsDataSource.getAllMeals() } returns listOf(meal)
+        assertNull(getKetoMealUseCase.suggestMeal())
+    }
+   
+
 
 //  --- here invalid cases for
 val disallowedItems = listOf(
@@ -286,6 +341,7 @@ val disallowedItems = listOf(
             assertNull(result, "Meal with disallowed ingredient '$item' should return null")
         }
     }
+
 
 
 
