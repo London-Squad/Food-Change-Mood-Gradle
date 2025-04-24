@@ -30,17 +30,13 @@ object FakeDataMeals {
 
     val mealWithNullSaturatedFat = createMeal(
         nutrition = createNutrition(
-            totalFat = 20.0f,
-            carbohydrates = 5.0f,
-            saturatedFat = null
+            totalFat = 20.0f, carbohydrates = 5.0f, saturatedFat = null
         )
     )
 
     val mealWithNullCarb = createMeal(
         nutrition = createNutrition(
-            totalFat = 20.0f,
-            carbohydrates = null,
-            saturatedFat = 10.0f
+            totalFat = 20.0f, carbohydrates = null, saturatedFat = 10.0f
         )
     )
 
@@ -65,8 +61,12 @@ object FakeDataMeals {
     )
 
 
-    val invalidHealthyFood = listOf(
-        createMeal(minutes = 16), createMeal(id = 4), createMeal(nutrition = createNutrition(totalFat = null))
+    val mealsWithNullNutritionValues = listOf(
+        createMeal(
+            minutes = 16, nutrition = createNutrition(
+                totalFat = 5f, saturatedFat = 1f, carbohydrates = 10f, sugar = 3f, protein = 5f, calories = 200f
+            )
+        ), createMeal(id = 4), createMeal()
     )
 
     val allSamplesMealsCase = listOf(healthyMeal, longPreparationTimeMeal, highFatMeal)
@@ -95,7 +95,7 @@ object FakeDataMeals {
         )
     )
 
-    val slightlyAbove = createMeal(
+    val mealwithsaturatedFatNull = createMeal(
         minutes = 10, nutrition = createNutrition(
             totalFat = 10.0001f, carbohydrates = 15f
         )

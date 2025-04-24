@@ -35,7 +35,7 @@ class GetHealthyFastFoodMealsUseCaseTest {
         @JvmStatic
         fun emptyOrInvalidMealsProvider(): List<List<Meal>> = listOf(
             emptyList(),
-            FakeDataMeals.invalidHealthyFood,
+            FakeDataMeals.mealsWithNullNutritionValues,
             listOf(FakeDataMeals.mealWithNullNutritionValue),
             listOf(FakeDataMeals.longPreparationTimeMeal),
             listOf(FakeDataMeals.mealWithNullSaturatedFat),
@@ -79,8 +79,8 @@ class GetHealthyFastFoodMealsUseCaseTest {
     }
 
     @Test
-    fun `getHealthyFastFoodMeals should handle floating point averages`() {
-        every { mealsDataSource.getAllMeals() } returns listOf(FakeDataMeals.slightlyAbove)
+    fun `getHealthyFastFoodMeals should Ignore meal when saturatedFat is null`() {
+        every { mealsDataSource.getAllMeals() } returns listOf(FakeDataMeals.mealwithsaturatedFatNull)
         assertThat(getHealthFoodUseCase.getHealthyFastFoodMeals()).isEmpty()
     }
 
