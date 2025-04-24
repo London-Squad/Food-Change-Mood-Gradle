@@ -20,7 +20,7 @@ class GymHelperUseCaseTest {
 
 // لما ادخل بيانات خارج نطاق البحث
     @Test
-    fun `GymHelperUseCase should return empty list when no meals match the input ranges`() {
+    fun `getGymMembersMeals should return empty list when no meals match the input ranges`() {
         val caloriesUserInput = 10000f
         val proteinUserInput = 20000f
         every { mealsDataSource.getAllMeals() } returns fakeGymMeals.allMeals
@@ -31,7 +31,7 @@ class GymHelperUseCaseTest {
     }
 // مش هيرجع وجبه بيانتها غير مكتمله
 @Test
-fun `GymHelperUseCase should exclude incomplete meals from results`() {
+fun `getGymMembersMeals should exclude incomplete meals from results`() {
     val caloriesUserInput = 250f
     val proteinUserInput = 30f
     every { mealsDataSource.getAllMeals() } returns fakeGymMeals.invalidMeals
@@ -42,7 +42,7 @@ fun `GymHelperUseCase should exclude incomplete meals from results`() {
 }
 
     @Test
-    fun `GymHelperUseCase should exclude incomplete Meal No Calories meals from results`() {
+    fun `getGymMembersMeals should exclude incomplete Meal No Calories meals from results`() {
         val caloriesUserInput = 250f
         val proteinUserInput = 30f
         every { mealsDataSource.getAllMeals() } returns fakeGymMeals.invalidMeals
@@ -52,7 +52,7 @@ fun `GymHelperUseCase should exclude incomplete meals from results`() {
         assertThat(result).doesNotContain(fakeGymMeals.incompleteMealNoCalories)
     }
     @Test
-    fun `GymHelperUseCase should exclude incomplete Meal No Protein meals from results`() {
+    fun `getGymMembersMeals should exclude incomplete Meal No Protein meals from results`() {
         val caloriesUserInput = 250f
         val proteinUserInput = 30f
         every { mealsDataSource.getAllMeals() } returns fakeGymMeals.invalidMeals
@@ -64,7 +64,7 @@ fun `GymHelperUseCase should exclude incomplete meals from results`() {
 
     //هيرجع الوجبه الصح
     @Test
-    fun `GymHelperUseCase should returns meals within desired range big calories give energy `() {
+    fun `getGymMembersMeals should returns meals within desired range big calories give energy `() {
         val caloriesUserInput=500f
         val proteinUserInput=3f
 
@@ -75,7 +75,7 @@ fun `GymHelperUseCase should exclude incomplete meals from results`() {
         assertThat(result).containsExactly(fakeGymMeals.energyMeal)
     }
     @Test
-    fun `GymHelperUseCase should returns meals within desired range low calories give low Fat Meal `() {
+    fun `getGymMembersMeals should returns meals within desired range low calories give low Fat Meal `() {
         val caloriesUserInput=200f
         val proteinUserInput=4f
 
@@ -86,7 +86,7 @@ fun `GymHelperUseCase should exclude incomplete meals from results`() {
         assertThat(result).containsExactly(fakeGymMeals.lowFatMeal)
     }
     @Test
-    fun `GymHelperUseCase should returns meals within desired range`() {
+    fun `getGymMembersMeals should returns meals within desired range`() {
         val caloriesUserInput=250f
         val proteinUserInput=1f
 
@@ -98,44 +98,3 @@ fun `GymHelperUseCase should exclude incomplete meals from results`() {
     }
     }
 
-//    @Test
-//    fun `returns empty list when no meals match`() {
-//        every { dataSource.getAllMeals() } returns listOf(
-//            createMeal("Meal A", 900f, 15f) // both out of range
-//        )
-//
-//        val result = useCase.getGymMembersMeals(500f, 40f)
-//
-//        assertThat(result).isEmpty()
-//    }
-//
-//    @Test
-//    fun `ignores meals with null nutrition values`() {
-//        every { dataSource.getAllMeals() } returns listOf(
-//            createMeal("Meal A", null, 40f),
-//            createMeal("Meal B", 500f, null)
-//        )
-//
-//        val result = useCase.getGymMembersMeals(500f, 40f)
-//
-//        assertEquals(0, result.size)
-//    }
-//
-//    @Test
-//    fun `includes meal at the edge of acceptable range`() {
-//
-//        val approx =GymHelperUseCase.defaultApproximatePercent
-//
-//        val caloriesEdge = 500f * (1 + approx).toFloat()
-//        val proteinEdge = 40f * (1 + approx).toFloat()
-//
-//        every { dataSource.getAllMeals() } returns listOf(
-//            createMeal("Edge Meal", caloriesEdge, proteinEdge)
-//        )
-//
-//        val result = useCase.getGymMembersMeals(500f, 40f)
-//
-//        assertEquals(1, result.size)
-//        assertEquals("Edge Meal", result[0].name)
-//    }
-//}
