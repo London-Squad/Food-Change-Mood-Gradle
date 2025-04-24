@@ -11,7 +11,7 @@ class GetMealsContainPotatoView(
 
     override fun start() {
         uiMealsListPrinter.printMeals(
-            getMealsContainPotatoUseCase.getRandomMeals(),
+            getMealsContainPotatoUseCase.getRandomMealsWithPotato(),
             "I Love Potato"
         )
     }
