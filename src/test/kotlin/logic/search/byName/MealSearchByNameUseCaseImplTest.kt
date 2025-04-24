@@ -7,8 +7,8 @@ import io.mockk.verify
 import logic.MealsDataSource
 import logic.search.LevenshteinSearch
 import logic.search.SearchCache
-import logic.search.TestMealsProvider
 import logic.search.TextSearchAlgorithm
+import mealHelperTest.createMeal
 import model.Meal
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -21,9 +21,17 @@ class MealSearchByNameUseCaseImplTest {
     private lateinit var cache: SearchCache
     private lateinit var indexBuilder: MealNameInvertedIndexBuilder
 
-    private val meal1 = TestMealsProvider.mealForNameSearch1
-    private val meal2 = TestMealsProvider.mealForNameSearch2
-    private val meals = TestMealsProvider.mealsForNameSearch
+    private val meal1 = createMeal(
+        id = 1,
+        name = "Chicken Curry",
+    )
+
+    private val meal2 = createMeal(
+        id = 2,
+        name = "Beef Stew",
+    )
+
+    private val meals = listOf(meal1, meal2)
 
     @BeforeEach
     fun setUp() {

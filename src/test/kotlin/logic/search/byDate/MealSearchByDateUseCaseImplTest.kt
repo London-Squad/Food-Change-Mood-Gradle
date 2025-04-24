@@ -5,12 +5,13 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import logic.MealsDataSource
-import logic.search.TestMealsProvider
 import logic.util.InvalidDateFormatException
 import logic.util.NoMealsFoundException
+import mealHelperTest.createMeal
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import java.time.LocalDate
 
 class MealSearchByDateUseCaseImplTest {
 
@@ -19,10 +20,25 @@ class MealSearchByDateUseCaseImplTest {
     private lateinit var dateIndexBuilder: MealDateInvertedIndexBuilder
     private lateinit var idIndexBuilder: IdIndexBuilder
 
-    private val mealA = TestMealsProvider.mealForDateSearchA
-    private val mealB = TestMealsProvider.mealForDateSearchB
-    private val mealC = TestMealsProvider.mealForDateSearchC
-    private val meals = TestMealsProvider.mealsForDateSearch
+    private val mealA = createMeal(
+        id = 101,
+        name = "Pork Ribs",
+        dateSubmitted = LocalDate.of(2023, 5, 1),
+    )
+
+    private val mealB = createMeal(
+        id = 102,
+        name = "Lamb Chops",
+        dateSubmitted = LocalDate.of(2023, 5, 1),
+    )
+
+    private val mealC = createMeal(
+        id = 103,
+        name = "Fish Tacos",
+        dateSubmitted = LocalDate.of(2023, 6, 1),
+    )
+
+    private val meals = listOf(mealA, mealB, mealC)
 
     @BeforeEach
     fun setUp() {
@@ -58,8 +74,8 @@ class MealSearchByDateUseCaseImplTest {
 
         // Then
         assertThat(result).isEqualTo(listOf(mealA.id to mealA.name, mealB.id to mealB.name))
-//        verify { dateIndexBuilder.getIndex() }
-//        verify { mealsDataSource.getAllMeals() }
+        verify { dateIndexBuilder.getIndex() }
+        verify { mealsDataSource.getAllMeals() }
     }
 
     @Test
@@ -72,8 +88,8 @@ class MealSearchByDateUseCaseImplTest {
             mealSearchByDateUseCaseImpl.searchMeals(invalidDate)
         }
         assertThat(exception.message).isEqualTo("Invalid date format: 'invalid-date'. Use yyyy-MM-dd (e.g., 2023-04-16).")
-//        verify(exactly = 0) { dateIndexBuilder.getIndex() }
-//        verify(exactly = 0) { mealsDataSource.getAllMeals() }
+         verify(exactly = 0) { dateIndexBuilder.getIndex() }
+         verify(exactly = 0) { mealsDataSource.getAllMeals() }
     }
 
     @Test
@@ -86,8 +102,8 @@ class MealSearchByDateUseCaseImplTest {
             mealSearchByDateUseCaseImpl.searchMeals(date)
         }
         assertThat(exception.message).isEqualTo("No meals found for date: 2023-07-01")
-//        verify { dateIndexBuilder.getIndex() }
-//        verify(exactly = 0) { mealsDataSource.getAllMeals() }
+         verify { dateIndexBuilder.getIndex() }
+         verify(exactly = 0) { mealsDataSource.getAllMeals() }
     }
 
     @Test
@@ -102,8 +118,8 @@ class MealSearchByDateUseCaseImplTest {
 
         // Then
         assertThat(result).isEmpty()
-//        verify { dateIndexBuilder.getIndex() }
-//        verify { mealsDataSource.getAllMeals() }
+         verify { dateIndexBuilder.getIndex() }
+         verify { mealsDataSource.getAllMeals() }
     }
 
     @Test
@@ -116,8 +132,8 @@ class MealSearchByDateUseCaseImplTest {
 
         // Then
         assertThat(result).isEqualTo(mealA)
-//        verify { idIndexBuilder.getIndex() }
-//        verify { mealsDataSource.getAllMeals() }
+         verify { idIndexBuilder.getIndex() }
+         verify { mealsDataSource.getAllMeals() }
     }
 
     @Test
@@ -130,7 +146,7 @@ class MealSearchByDateUseCaseImplTest {
             mealSearchByDateUseCaseImpl.getMealDetails(id)
         }
         assertThat(exception.message).isEqualTo("No meal found with ID: 104")
-//        verify { idIndexBuilder.getIndex() }
-//        verify(exactly = 0) { mealsDataSource.getAllMeals() }
+         verify { idIndexBuilder.getIndex() }
+         verify(exactly = 0) { mealsDataSource.getAllMeals() }
     }
 }
