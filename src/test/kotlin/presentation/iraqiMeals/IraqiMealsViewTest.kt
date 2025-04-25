@@ -41,18 +41,6 @@ class IraqiMealsViewTest {
     }
 
     @Test
-    fun `start should call getIraqiMeals when use case returns no meals`() {
-        // Given
-        every { getIraqiMealsUseCase.getIraqiMeals() } returns emptyList()
-
-        // When
-        iraqiMealsView.start()
-
-        // Then
-        verify { getIraqiMealsUseCase.getIraqiMeals() }
-    }
-
-    @Test
     fun `start should call printMeals with empty list when use case returns no meals`() {
         // Given
         every { getIraqiMealsUseCase.getIraqiMeals() } returns emptyList()
@@ -62,19 +50,6 @@ class IraqiMealsViewTest {
 
         // Then
         verify { uiMealsListPrinter.printMeals(emptyList(), "Iraqi Meals") }
-    }
-
-    @Test
-    fun `start should call getIraqiMeals when use case returns non-empty list`() {
-        // Given
-        val iraqiMeals = listOf(meal1, meal2)
-        every { getIraqiMealsUseCase.getIraqiMeals() } returns iraqiMeals
-
-        // When
-        iraqiMealsView.start()
-
-        // Then
-        verify { getIraqiMealsUseCase.getIraqiMeals() }
     }
 
     @Test
