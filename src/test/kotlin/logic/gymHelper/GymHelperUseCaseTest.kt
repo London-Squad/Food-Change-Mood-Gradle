@@ -117,6 +117,11 @@ class GymHelperUseCaseTest {
 
         assertThat(result).isEmpty()
     }
+     @Test
+    fun `test defaultApproximatePercent value`() {
+        val defaultPercent = GymHelperUseCase.defaultApproximatePercent
+        assertThat(defaultPercent).isEqualTo(0.1)
+    }
 }
 
 
