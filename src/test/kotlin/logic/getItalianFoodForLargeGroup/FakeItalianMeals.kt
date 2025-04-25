@@ -1,7 +1,6 @@
 package logic.getItalianFoodForLargeGroup
 
-import mealHelperTest.createMeal
-
+import createMeal
 
 object FakeItalianMeals {
     val mealWithItalianTag = createMeal(
