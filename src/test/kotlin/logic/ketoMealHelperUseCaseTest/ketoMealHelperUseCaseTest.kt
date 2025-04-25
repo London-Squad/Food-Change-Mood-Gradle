@@ -139,6 +139,7 @@ class GetKetoMealUseCaseTest {
 
         assertNull(getKetoMealUseCase.suggestMeal())
     }
+
     // here condition meal test in class Meal suggester
     @Test
     fun `suggestMeal returns null when candidateMeals is empty`() {
@@ -146,7 +147,6 @@ class GetKetoMealUseCaseTest {
         mealSuggester.loadSuggestedMealsToMemory()
         assertNull(mealSuggester.suggestMeal())
     }
-
 
 
 }
