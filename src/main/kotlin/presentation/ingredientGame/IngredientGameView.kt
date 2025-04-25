@@ -84,8 +84,7 @@ class IngredientGameView(
     }
 
     private fun getValidGuessFromUser(): Int =
-        userInputReader.getValidUserInput(
-            {it in listOf("1", "2", "3")},
+        userInputReader.getValidUserInput({it in listOf("1", "2", "3")},
             message = "Your Choice: ",
             invalidInputMessage = "Invalid Choice, Please input a 1, 2, or 3."
         ).toInt()
