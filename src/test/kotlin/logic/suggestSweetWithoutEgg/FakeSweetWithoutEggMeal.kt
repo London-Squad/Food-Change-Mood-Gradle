@@ -29,15 +29,34 @@ object FakeSweetWithoutEggMeal {
     )
 
 
-    val mealWithEgg = createMeal(
+    private val mealWithEgg = createMeal(
         name = "Dish with Egg",
         tags = listOf("sweet"),
         ingredients = listOf("flour", "egg")
     )
 
-    val mealWithEggs = createMeal(
+    private val mealWithEggs = createMeal(
         name = "Dish with Eggs",
         tags = listOf("sweet"),
         ingredients = listOf("flour", "eggs")
+    )
+
+    val mealsWithEggs = listOf(
+        mealWithEgg,
+        mealWithEggs
+    )
+
+    val sweetMealsWithoutEggs = listOf(
+        sweetEggFreeMeal,
+        sweetEggFreeMeal2,
+        sweetEggFreeMeal3
+    )
+
+    val allMeals = listOf(
+        mealWithEgg,
+        mealWithEggs,
+        sweetEggFreeMeal,
+        sweetEggFreeMeal2,
+        sweetEggFreeMeal3
     )
 }
