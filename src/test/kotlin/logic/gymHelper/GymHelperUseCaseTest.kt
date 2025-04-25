@@ -17,8 +17,6 @@ class GymHelperUseCaseTest {
         gymHelperUseCase = GymHelperUseCase(mealsDataSource)
     }
 
-
-// لما ادخل بيانات خارج نطاق البحث
     @Test
     fun `getGymMembersMeals should return empty list when no meals match the input ranges`() {
         val caloriesUserInput = 10000f
@@ -29,7 +27,7 @@ class GymHelperUseCaseTest {
 
         assertThat(result).isEmpty()
     }
-// مش هيرجع وجبه بيانتها غير مكتمله
+    
 @Test
 fun `getGymMembersMeals should exclude incomplete meals from results`() {
     val caloriesUserInput = 250f
@@ -62,7 +60,7 @@ fun `getGymMembersMeals should exclude incomplete meals from results`() {
         assertThat(result).doesNotContain(fakeGymMeals.incompleteMealNoProtein)
     }
 
-    //هيرجع الوجبه الصح
+  
     @Test
     fun `getGymMembersMeals should returns meals within desired range big calories give energy `() {
         val caloriesUserInput=500f
