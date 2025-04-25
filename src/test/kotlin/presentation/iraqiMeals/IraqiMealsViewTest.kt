@@ -41,6 +41,15 @@ class IraqiMealsViewTest {
     }
 
     @Test
+    fun `start should call getIraqiMeals`() {
+        // When
+        iraqiMealsView.start()
+
+        // Then
+        verify { getIraqiMealsUseCase.getIraqiMeals() }
+    }
+
+    @Test
     fun `start should call printMeals with meals when use case returns non-empty list`() {
         // Given
         val iraqiMeals = listOf(meal1, meal2)
