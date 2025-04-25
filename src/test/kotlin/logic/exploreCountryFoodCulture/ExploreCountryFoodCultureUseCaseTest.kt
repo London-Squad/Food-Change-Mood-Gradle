@@ -8,6 +8,8 @@ import logic.util.InvalidCountryNameException
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 class ExploreCountryFoodCultureUseCaseTest {
     private lateinit var exploreCountryFoodCultureUseCase: ExploreCountryFoodCultureUseCase
@@ -19,10 +21,43 @@ class ExploreCountryFoodCultureUseCaseTest {
         exploreCountryFoodCultureUseCase = ExploreCountryFoodCultureUseCase(dataSource)
     }
 
-    @Test
-    fun `when meal has country in tags, then should return 20 random meals`() {
+    @ParameterizedTest
+    @CsvSource("egypt","Egypt", "EGYPT")
+    fun `getMealsOfCountry should return 20 random meals when meal has country in tags`(countryName: String) {
         //given
         every { dataSource.getAllMeals() } returns MealsFakeData.mealsWithEgyptInTags
+        //when
+        val mealsOfCountry = exploreCountryFoodCultureUseCase.getMealsOfCountry(countryName)
+        //then
+        assertThat(mealsOfCountry).hasSize(20)
+    }
+
+    @ParameterizedTest
+    @CsvSource("italy","Italy", "ITALY")
+    fun `getMealsOfCountry should return 20 random meals when meal has country in description`(countryName: String) {
+        //given
+        every { dataSource.getAllMeals() } returns MealsFakeData.mealsWithItalianInDescription
+        //when
+        val mealsOfCountry = exploreCountryFoodCultureUseCase.getMealsOfCountry(countryName)
+        //then
+        assertThat(mealsOfCountry).hasSize(20)
+    }
+
+    @ParameterizedTest
+    @CsvSource("iraq","Iraq", "IRAQ")
+    fun `getMealsOfCountry should return 20 random meals when meal has country in name`(countryName: String) {
+        //given
+        every { dataSource.getAllMeals() } returns MealsFakeData.mealsWithIraqInName
+        //when
+        val mealsOfCountry = exploreCountryFoodCultureUseCase.getMealsOfCountry(countryName)
+        //then
+        assertThat(mealsOfCountry).hasSize(20)
+    }
+
+    @Test
+    fun `getMealsOfCountry should return 20 random meals when meal has country in any relevant column`() {
+        //given
+        every { dataSource.getAllMeals() } returns MealsFakeData.mealList
         val countryName = "egypt"
         //when
         val mealsOfCountry = exploreCountryFoodCultureUseCase.getMealsOfCountry(countryName)
@@ -31,43 +66,10 @@ class ExploreCountryFoodCultureUseCaseTest {
     }
 
     @Test
-    fun `when meal has country in description, then should return 20 random meals`() {
+    fun `getMealsOfCountry should return empty list when country not in any relevant column`() {
         //given
-        every { dataSource.getAllMeals() } returns MealsFakeData.mealsWithEgyptInDescription
-        val countryName = "egypt"
-        //when
-        val mealsOfCountry = exploreCountryFoodCultureUseCase.getMealsOfCountry(countryName)
-        //then
-        assertThat(mealsOfCountry).hasSize(20)
-    }
-
-    @Test
-    fun `when meal has country in name, then should return 20 random meals`() {
-        //given
-        every { dataSource.getAllMeals() } returns MealsFakeData.mealsWithEgyptInName
-        val countryName = "egypt"
-        //when
-        val mealsOfCountry = exploreCountryFoodCultureUseCase.getMealsOfCountry(countryName)
-        //then
-        assertThat(mealsOfCountry).hasSize(20)
-    }
-
-    @Test
-    fun `when meal has country in any relevant column, then should return 20 random meals`() {
-        //given
-        every { dataSource.getAllMeals() } returns MealsFakeData.egyptianMealList
-        val countryName = "egypt"
-        //when
-        val mealsOfCountry = exploreCountryFoodCultureUseCase.getMealsOfCountry(countryName)
-        //then
-        assertThat(mealsOfCountry).hasSize(20)
-    }
-
-    @Test
-    fun `when country not in any relevant column, then should return empty list`() {
-        //given
-        every { dataSource.getAllMeals() } returns MealsFakeData.egyptianMealList
-        val countryName = "iraq"
+        every { dataSource.getAllMeals() } returns MealsFakeData.mealList
+        val countryName = "france"
         //when
         val mealsOfCountry = exploreCountryFoodCultureUseCase.getMealsOfCountry(countryName)
         //then
@@ -75,7 +77,7 @@ class ExploreCountryFoodCultureUseCaseTest {
     }
 
     @Test
-    fun `when country name is empty string, then should throw exception Invalid country name`() {
+    fun `getMealsOfCountry should throw exception Invalid country name when country name is empty string`() {
         //given
         val countryName = ""
         //when and then
