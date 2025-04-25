@@ -7,10 +7,12 @@ import logic.MealsDataSource
 import logic.ketoMealHelper.GetKetoMealUseCase
 import logic.ketoMealHelperUseCaseTest.fakeData.FackDataMeals
 import mealHelperTest.createMeal
+import model.Meal
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
+
 
 class GetKetoMealUseCaseTest {
 
@@ -41,6 +43,8 @@ class GetKetoMealUseCaseTest {
 
         assertEquals(FackDataMeals.validMealWithValidNutrition, result)
     }
+
+
 
     //hasDisallowedIngredient
     @Test
@@ -107,6 +111,13 @@ class GetKetoMealUseCaseTest {
 
         assertNull(getKetoMealUseCase.suggestMeal())
     }
+    @Test
+    fun `suggestMeal returns null when total fat percentage is too low`() {
+        every { mealsDataSource.getAllMeals() } returns listOf(FackDataMeals.mealWithLowTotalFatPercentage)
+        getKetoMealUseCase.loadSuggestedMealsToMemory()
+
+        assertNull(getKetoMealUseCase.suggestMeal())
+    }
 
     @Test
     fun `suggestMeal returns null when protein is null`() {
@@ -147,6 +158,7 @@ class GetKetoMealUseCaseTest {
         mealSuggester.loadSuggestedMealsToMemory()
         assertNull(mealSuggester.suggestMeal())
     }
+
 
 
 }

@@ -97,4 +97,20 @@ object FackDataMeals {
             totalFat = 100f, saturatedFat = 19f, calories = 1000f, carbohydrates = 10f, sugar = 5f, protein = 30f
         )
     )
+
+    val mealWithLowTotalFatPercentage = createMeal(
+        id = 10,
+        nutrition = createNutrition(
+            calories = 500f,
+            carbohydrates = 5.0f,
+            sugar = 4.0f,
+            totalFat = 2.0f,  // دهون قليلة جدًا
+            protein = 25.0f,
+            saturatedFat = 1.0f
+        ),
+        ingredients = listOf("chicken", "spinach", "olive oil")
+    )
+
+
 }
+
