@@ -16,8 +16,6 @@ object fakeGymMeals {
         description = "A healthy and high-protein meal for muscle gain.",
         ingredients = listOf("Chicken breast", "Spinach", "Olive oil")
     )
-
-    // وجبة تحتوي على كاربوهيدرات عالية للطاقة
     val energyMeal = Meal(
         id = 102,
         name = "Pasta with Tomato Sauce",
