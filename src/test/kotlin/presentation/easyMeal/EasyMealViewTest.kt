@@ -32,4 +32,13 @@ class EasyMealViewTest {
         // Then
         verify { easyMealsSuggestionUseCase.getRandomMeals() }
     }
+
+    @Test
+    fun `start should call printMeals`() {
+        // When
+        easyMealView.start()
+
+        // Then
+        verify { uiMealsListPrinter.printMeals(emptyList(), "Easy Meals") }
+    }
 }
