@@ -9,7 +9,8 @@ class EasyMealsSuggestionUseCase(
 ) {
     fun getRandomMeals(count: Int = 10): List<Meal> {
         return mealsDataSource.getAllMeals()
-            .getRandomMeals(count, ::isEasyMeal)
+            .filter(::isEasyMeal)
+            .getRandomMeals(count)
     }
 
     private fun isEasyMeal(meal: Meal): Boolean {
