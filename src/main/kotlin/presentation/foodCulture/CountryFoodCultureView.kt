@@ -23,7 +23,7 @@ class CountryFoodCultureView(
         val country = getValidCountryOrNull() ?: return
         country.runCatching(useCase::getMealsOfCountry)
             .onSuccess { mealList -> printMealListOfCountry(mealList, country) }
-            .onFailure { throwable -> println(throwable.message ?: "error in displaying meals list") }
+            .onFailure { throwable -> cliPrinter.cliPrintLn(throwable.message ?: "error in displaying meals list") }
     }
 
     private fun getValidCountryOrNull(): String? {

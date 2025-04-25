@@ -1,4 +1,4 @@
-package logic.exploreCountryFoodCulture
+package fakeData.exploreCountryFoodCulture
 
 import mealHelperTest.createMeal
 
