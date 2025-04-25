@@ -6,7 +6,7 @@ import model.Meal
 
 class GetSweetWithoutEggUseCase(mealsDataSource: MealsDataSource) : MealSuggester(mealsDataSource) {
 
-    public override fun isValidSuggestion(meal: Meal): Boolean {
+    override fun isValidSuggestion(meal: Meal): Boolean {
         return isSweet(meal) && isMealWithoutEgg(meal)
     }
 
