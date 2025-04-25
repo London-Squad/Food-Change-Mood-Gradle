@@ -20,7 +20,7 @@ class GymHelperUseCaseTest {
     }
 
     @Test
-    fun `returns meals within desired range`() {
+    fun ` getGymMembersMeals should returns meals within desired range`() {
         every { mealsDataSource.getAllMeals() } returns listOf(
             createMeal(name = "false meal", nutrition = createNutrition(calories = 255f, protein = 20f))
         )
@@ -30,7 +30,7 @@ class GymHelperUseCaseTest {
         assertThat(result).containsExactly(createMeal(name = "false meal", nutrition = createNutrition(calories = 255f, protein = 20f)))
     }
     @Test
-    fun `includes all meals within both calorie and protein range`() {
+    fun `  getGymMembersMeals should includes all meals within both calorie and protein range`() {
         every { mealsDataSource.getAllMeals() } returns listOf(
             createMeal(name = "valid1", nutrition = createNutrition(calories = 240f, protein = 18f)),
             createMeal(name = "valid2", nutrition = createNutrition(calories = 260f, protein = 22f)),
@@ -46,7 +46,7 @@ class GymHelperUseCaseTest {
     }
 
     @Test
-    fun `ignores meals with null or zero protein or calories`() {
+    fun ` getGymMembersMeals should ignores meals with null or zero protein or calories`() {
         every { mealsDataSource.getAllMeals() } returns listOf(
             createMeal(name = "null protein", nutrition = createNutrition(calories = 200f, protein = null)),
             createMeal(name = "zero protein", nutrition = createNutrition(calories = 200f, protein = 0f)),
@@ -63,7 +63,7 @@ class GymHelperUseCaseTest {
         )
     }
     @Test
-    fun `ignores meals outside calorie or protein range`() {
+    fun ` getGymMembersMeals should ignores meals outside calorie or protein range`() {
         every { mealsDataSource.getAllMeals() } returns listOf(
             createMeal(name = "low calories", nutrition = createNutrition(calories = 190f, protein = 20f)),
             createMeal(name = "high calories", nutrition = createNutrition(calories = 310f, protein = 20f)),
@@ -81,7 +81,7 @@ class GymHelperUseCaseTest {
 
 
     @Test
-    fun `accepts meals within 10 percent of calorie and protein input`() {
+    fun ` getGymMembersMeals usnig getRange should accepts meals within 10 percent of calorie and protein input`() {
         every { mealsDataSource.getAllMeals() } returns listOf(
             createMeal(name = "lower bound", nutrition = createNutrition(calories = 225f, protein = 18f)), // -10%
             createMeal(name = "upper bound", nutrition = createNutrition(calories = 275f, protein = 22f)), // +10%
@@ -98,7 +98,7 @@ class GymHelperUseCaseTest {
 
 
     @Test
-    fun `returns empty list when no meals available`() {
+    fun `getGymMembersMeals should returns empty list when no meals available`() {
         every { mealsDataSource.getAllMeals() } returns emptyList()
 
         val result = gymHelperUseCase.getGymMembersMeals(200f, 20f)
@@ -108,7 +108,7 @@ class GymHelperUseCaseTest {
 
 
     @Test
-    fun `ignores meals with negative calories or protein`() {
+    fun `getGymMembersMeals should ignores meals with negative calories or protein`() {
         every { mealsDataSource.getAllMeals() } returns listOf(
             createMeal(name ="negative calories", nutrition = createNutrition(-200f, -20f)),
         )
