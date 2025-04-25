@@ -12,7 +12,7 @@ class UIMealsListPrinter(
     fun printMeals(
         meals: List<Meal>,
         listTitle: String = "Meals List",
-        mealTextInList: (Meal) -> String = { it.name }
+        mealTextInList: (Meal) -> String = { it.name },
     ) {
 
         val iraqiMealsChunks = meals.chunked(MAX_NUMBER_OF_MEALS_TO_BE_PRINTED_AT_ONCE)
