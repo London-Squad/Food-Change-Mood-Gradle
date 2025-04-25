@@ -12,40 +12,42 @@ class MealGuessGameView(
     private val cliPrinter: CLIPrinter,
     private val uiMealPrinter: UIMealPrinter
 ) : BaseView {
-    private fun printLn(message: String = "") = cliPrinter.cliPrintLn(message)
 
     override fun start() {
         printHeader()
         printRules()
 
-        if (!mealGuessGameUseCase.isTwoOrMoreMealsAvailable()) {printLn("not enough meals available :'("); return}
+        if (!mealGuessGameUseCase.isGamePlayable()) {
+            printLn("not enough meals available :'("); return
+        }
 
-        do {
+        mealGuessGameUseCase.initGame()
+        val mealName = mealGuessGameUseCase.getRandomMealNameWithValidTime()
+        printLn("\nMeal Name: $mealName")
 
-            startGuessGame()
-            cliPrinter.cliPrint("\nEnter anything to continue or 0 to to exit: ")
-
-        } while (userInputReader.getUserInput() != "0")
+        giveUserNewAttempt()
     }
 
-    private fun startGuessGame() {
+    private fun giveUserNewAttempt() {
+        val userGuess = getValidGuessFromUser()
+        selectNextCLI(userGuess)
+    }
 
-        val randomMeal = mealGuessGameUseCase.getRandomMeal()
-
-        printLn("\nMeal Name: ${randomMeal.name}")
-        var attempt = 1
-        var result: String
-        do {
-            val guess = getValidGuess(attempt)
-            result = mealGuessGameUseCase.checkGuessAttempt(guess, randomMeal.minutes!!)
-            printLn(result)
-            attempt++
-        } while (!mealGuessGameUseCase.isAttemptExceeded(attempt) && result != "correct")
-
-        if (result != "correct") {
-            printLn("Game Over! the correct answer is ${randomMeal.minutes}")
-
+    private fun selectNextCLI(userGuess: Int) {
+        val result = mealGuessGameUseCase.evaluateGuessAttempt(userGuess)
+        if (result == MealGuessGameUseCase.GuessState.Correct) {
+            printWinMessage()
+            return
         }
+
+        printLn(result.state)
+        if (mealGuessGameUseCase.isMaxAttemptExceeded()) {
+            printLn("Game Over! the correct answer is ${mealGuessGameUseCase.getCorrectAnswer()}")
+        } else giveUserNewAttempt()
+    }
+
+    private fun printWinMessage(){
+        printLn("Correct!")
     }
 
     private fun printHeader() {
@@ -53,21 +55,18 @@ class MealGuessGameView(
     }
 
     private fun printRules() {
-        printLn("Rules: ")
-        printLn("1. A random meal will be presented and you have to guess how many minutes are needed to prepare it.")
-        printLn("2. You have 3 attempts only.")
-        printLn("3. If the guess is incorrect, there will be hint for next attempt.\n")
+        printLn("Rules:")
+        uiMealPrinter.printTextWithinWidth("1. A random meal will be presented and you have to guess how many minutes are needed to prepare it.")
+        uiMealPrinter.printTextWithinWidth("2. You have 3 attempts only.")
+        uiMealPrinter.printTextWithinWidth("3. If the guess is incorrect, there will be hint for next attempt.\n")
     }
 
-    private fun getValidGuess(attempt: Int): Int {
+    private fun getValidGuessFromUser(): Int =
+        userInputReader.getValidUserInput(
+            { it.toIntOrNull() != null && it.toInt() > 0 },
+            message = "Guess no.${mealGuessGameUseCase.getAttemptNumber()}: ",
+            invalidInputMessage = "Invalid number."
+        ).toInt()
 
-        cliPrinter.cliPrint("Guess no.$attempt: ")
-        val guessInput = userInputReader.getUserInput().toIntOrNull()
-        if (guessInput == null) {
-            printLn("invalid input")
-            return getValidGuess(attempt)
-        } else {
-            return guessInput
-        }
-    }
+    private fun printLn(message: String = "") = cliPrinter.cliPrintLn(message)
 }

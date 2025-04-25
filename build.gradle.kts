@@ -18,7 +18,6 @@ dependencies {
     testImplementation("com.google.truth:truth:1.4.4")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.12.1")
     testImplementation("io.mockk:mockk:1.14.0")
-
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.0")
 }
 
