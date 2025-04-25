@@ -25,23 +25,23 @@ class MealGuessGameUseCaseTest {
  @Test
  fun `getRandomMealNameWithValidTime should return a meal name when meal has valid time`() {
   every { mealsDataSource.getAllMeals() } returns listOf(
-   FakeDataMeals.mealWithValidTime1
+   FakeGuessGameMeals.mealWithValidTime1
   )
   mealGuessGameUseCase.initGame()
 
   val result = mealGuessGameUseCase.getRandomMealNameWithValidTime()
 
-  assertThat(result).isEqualTo(FakeDataMeals.mealWithValidTime1.name)
+  assertThat(result).isEqualTo(FakeGuessGameMeals.mealWithValidTime1.name)
  }
 
  @Test
  fun `getRandomMealNameWithValidTime should return random meal name when there are meals with valid time`() {
-  every { mealsDataSource.getAllMeals() } returns FakeDataMeals.allMeals
+  every { mealsDataSource.getAllMeals() } returns FakeGuessGameMeals.allMeals
   mealGuessGameUseCase.initGame()
 
   val result = mealGuessGameUseCase.getRandomMealNameWithValidTime()
 
-  assertThat(result).isIn(FakeDataMeals.allValidTimeMeals.map { it.name })
+  assertThat(result).isIn(FakeGuessGameMeals.allValidTimeMeals.map { it.name })
  }
 
  @Test
@@ -55,7 +55,7 @@ class MealGuessGameUseCaseTest {
 
  @Test
  fun `initGame should throw exception when there is no meal with valid time (null or Negative time)`() {
-  every { mealsDataSource.getAllMeals() } returns FakeDataMeals.allInvalidTimeMeals
+  every { mealsDataSource.getAllMeals() } returns FakeGuessGameMeals.allInvalidTimeMeals
 
   assertThrows<Exception> {
    mealGuessGameUseCase.initGame()
@@ -65,7 +65,7 @@ class MealGuessGameUseCaseTest {
  @Test
  fun `checkGuessAttempt should return GuessState tooLow when guess is less than correct value`() {
   every { mealsDataSource.getAllMeals() } returns listOf(
-   FakeDataMeals.mealWithValidTime20min
+   FakeGuessGameMeals.mealWithValidTime20min
   )
   mealGuessGameUseCase.initGame()
   val guess = 15
@@ -78,7 +78,7 @@ class MealGuessGameUseCaseTest {
  @Test
  fun `checkGuessAttempt should return GuessState tooHigh when guess is larger than correct value`() {
   every { mealsDataSource.getAllMeals() } returns listOf(
-   FakeDataMeals.mealWithValidTime20min
+   FakeGuessGameMeals.mealWithValidTime20min
   )
   mealGuessGameUseCase.initGame()
   val guess = 25
@@ -91,7 +91,7 @@ class MealGuessGameUseCaseTest {
  @Test
  fun `checkGuessAttempt should return GuessState correct when guess is equal correct value`() {
   every { mealsDataSource.getAllMeals() } returns listOf(
-   FakeDataMeals.mealWithValidTime20min
+   FakeGuessGameMeals.mealWithValidTime20min
   )
   mealGuessGameUseCase.initGame()
   val guess = 20
@@ -142,7 +142,7 @@ class MealGuessGameUseCaseTest {
  @Test
  fun `getCorrectAnswer should return the correct time needed to prepare the currentMeal`() {
   every { mealsDataSource.getAllMeals() } returns listOf(
-   FakeDataMeals.mealWithValidTime20min
+   FakeGuessGameMeals.mealWithValidTime20min
   )
   mealGuessGameUseCase.initGame()
 
@@ -155,9 +155,9 @@ class MealGuessGameUseCaseTest {
  @Test
  fun `isGamePlayable should return false when there are less than 3 valid time meals`() {
   every { mealsDataSource.getAllMeals() } returns listOf(
-   FakeDataMeals.mealWithValidTime1,
-   FakeDataMeals.mealWithValidTime2,
-   FakeDataMeals.mealWithNullTime
+   FakeGuessGameMeals.mealWithValidTime1,
+   FakeGuessGameMeals.mealWithValidTime2,
+   FakeGuessGameMeals.mealWithNullTime
   )
 
   val result = mealGuessGameUseCase.isGamePlayable()
@@ -167,7 +167,7 @@ class MealGuessGameUseCaseTest {
 
  @Test
  fun `isGamePlayable should return true when there are more than 3 valid time meals`() {
-  every { mealsDataSource.getAllMeals() } returns FakeDataMeals.allValidTimeMeals
+  every { mealsDataSource.getAllMeals() } returns FakeGuessGameMeals.allValidTimeMeals
 
   val result = mealGuessGameUseCase.isGamePlayable()
 
@@ -177,9 +177,9 @@ class MealGuessGameUseCaseTest {
  @Test
  fun `isGamePlayable should return true when there are 3 valid time meals`() {
   every { mealsDataSource.getAllMeals() } returns listOf(
-   FakeDataMeals.mealWithValidTime1,
-   FakeDataMeals.mealWithValidTime2,
-   FakeDataMeals.mealWithValidTime3
+   FakeGuessGameMeals.mealWithValidTime1,
+   FakeGuessGameMeals.mealWithValidTime2,
+   FakeGuessGameMeals.mealWithValidTime3
   )
 
   val result = mealGuessGameUseCase.isGamePlayable()

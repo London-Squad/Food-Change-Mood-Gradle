@@ -1,7 +1,7 @@
 package logic.search.byDate
 
 import com.google.common.truth.Truth.assertThat
-import createMeal
+import mealHelperTest.createMeal
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

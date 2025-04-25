@@ -2,7 +2,7 @@ package logic.mealGuessGame
 
 import mealHelperTest.createMeal
 
-object FakeDataMeals {
+object FakeGuessGameMeals {
     val mealWithNullTime = createMeal(
         name = "Null Time Meal",
     )
