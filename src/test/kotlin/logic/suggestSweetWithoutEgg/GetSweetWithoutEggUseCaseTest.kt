@@ -61,28 +61,19 @@ class GetSweetWithoutEggUseCaseTest {
 
     @Test
     fun `suggestMeal should return one of the valid sweet and egg-free meals when multiple are available`() {
-        every { mealsDataSource.getAllMeals() } returns listOf(
-            FakeSweetWithoutEggMeal.sweetEggFreeMeal,
-            FakeSweetWithoutEggMeal.sweetEggFreeMeal2
-        )
+        every { mealsDataSource.getAllMeals() } returns FakeSweetWithoutEggMeal.sweetMealsWithoutEggs
 
         getSweetWithoutEggUseCase.loadSuggestedMealsToMemory()
         val result = getSweetWithoutEggUseCase.suggestMeal()
 
         assertThat(result).isIn(
-            listOf(
-                FakeSweetWithoutEggMeal.sweetEggFreeMeal,
-                FakeSweetWithoutEggMeal.sweetEggFreeMeal2
-            )
+            FakeSweetWithoutEggMeal.sweetMealsWithoutEggs
         )
     }
 
     @Test
     fun `suggestMeal should return null when all meals contain egg or eggs in ingredients`() {
-        every { mealsDataSource.getAllMeals() } returns listOf(
-            FakeSweetWithoutEggMeal.mealWithEgg,
-            FakeSweetWithoutEggMeal.mealWithEggs
-        )
+        every { mealsDataSource.getAllMeals() } returns FakeSweetWithoutEggMeal.mealsWithEggs
 
         getSweetWithoutEggUseCase.loadSuggestedMealsToMemory()
         val result = getSweetWithoutEggUseCase.suggestMeal()
@@ -98,5 +89,17 @@ class GetSweetWithoutEggUseCaseTest {
         val result = getSweetWithoutEggUseCase.suggestMeal()
 
         assertThat(result).isEqualTo(FakeSweetWithoutEggMeal.sweetEggFreeMeal3)
+    }
+
+    @Test
+    fun `suggestMeal should return one of valid sweet and egg-free meals when getting all the meals`() {
+        every { mealsDataSource.getAllMeals() } returns FakeSweetWithoutEggMeal.allMeals
+
+        getSweetWithoutEggUseCase.loadSuggestedMealsToMemory()
+        val result = getSweetWithoutEggUseCase.suggestMeal()
+
+        assertThat(result).isIn(
+            FakeSweetWithoutEggMeal.allMeals
+        )
     }
 }
