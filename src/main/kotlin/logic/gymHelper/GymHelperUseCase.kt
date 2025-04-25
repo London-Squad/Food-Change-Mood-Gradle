@@ -28,10 +28,8 @@ class GymHelperUseCase(
     }
 
     private fun isHighQualityMeal(meal: Meal): Boolean {
-        val protein = meal.nutrition.protein
-        val calories = meal.nutrition.calories
-        return protein != null && protein > 0f &&
-                calories != null && calories > 0f
+        return meal.nutrition.run { protein != null && protein > 0f &&
+                calories != null && calories > 0f  }
     }
 
     companion object {
