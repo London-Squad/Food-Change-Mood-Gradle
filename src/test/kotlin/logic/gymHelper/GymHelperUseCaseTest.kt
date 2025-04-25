@@ -117,7 +117,6 @@ class GymHelperUseCaseTest {
 
         assertThat(result).isEmpty()
     }
-
 }
 
 
