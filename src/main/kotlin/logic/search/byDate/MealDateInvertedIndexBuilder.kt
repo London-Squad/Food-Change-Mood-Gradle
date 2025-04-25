@@ -1,13 +1,12 @@
 package logic.search.byDate
 
-import logic.search.IndexBuilder
 import logic.MealsDataSource
 import model.Meal
 import java.time.LocalDate
 
 class MealDateInvertedIndexBuilder(
-    private val mealsDataSource: MealsDataSource
-) : IndexBuilder<LocalDate, List<Int>> {
+    mealsDataSource: MealsDataSource
+) {
 
     private val index: Map<LocalDate, List<Int>>
 
@@ -15,7 +14,7 @@ class MealDateInvertedIndexBuilder(
         index = build(mealsDataSource.getAllMeals())
     }
 
-    override fun getIndex(): Map<LocalDate, List<Int>> {
+    fun getIndex(): Map<LocalDate, List<Int>> {
         return index
     }
 

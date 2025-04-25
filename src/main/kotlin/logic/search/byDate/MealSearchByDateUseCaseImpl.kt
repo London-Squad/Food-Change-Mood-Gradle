@@ -1,6 +1,5 @@
 package logic.search.byDate
 
-import logic.search.IndexBuilder
 import logic.search.MealSearchUseCase
 import logic.MealsDataSource
 import model.Meal
@@ -11,8 +10,8 @@ import java.time.format.DateTimeParseException
 
 class MealSearchByDateUseCaseImpl(
     private val mealsDataSource: MealsDataSource,
-    private val dateIndexBuilder: IndexBuilder<LocalDate, List<Int>>,
-    private val idIndexBuilder: IndexBuilder<Int, Int>
+    private val dateIndexBuilder: MealDateInvertedIndexBuilder,
+    private val idIndexBuilder: IdIndexBuilder
 ) : MealSearchUseCase<List<Pair<Int, String>>> {
 
     override fun searchMeals(keyword: String): List<Pair<Int, String>> {

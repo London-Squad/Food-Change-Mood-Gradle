@@ -4,20 +4,32 @@ class LevenshteinSearch(private val maxDistance: Int = 2) : TextSearchAlgorithm 
     override fun search(keyword: String, actualValue: String): Boolean =
         levenshteinDistance(keyword.lowercase(), actualValue.lowercase()) <= maxDistance
 
-    private fun levenshteinDistance(s1: String, s2: String): Int {
-        // Initialize matrix declaratively
-        val dp = Array(s1.length + 1) { i -> IntArray(s2.length + 1) { j -> if (i == 0) j else if (j == 0) i else 0 } }
 
-        (1..s1.length).forEach { i ->
-            (1..s2.length).forEach { j ->
-                val cost = if (s1[i - 1] == s2[j - 1]) 0 else 1
-                dp[i][j] = minOf(
-                    dp[i - 1][j] + 1,      // Deletion
-                    dp[i][j - 1] + 1,      // Insertion
-                    dp[i - 1][j - 1] + cost // Substitution
+    private fun levenshteinDistance(source: String, target: String): Int {
+        val matrix = createMatrix(source.length + 1, target.length + 1)
+
+        for (row in 1..source.length) {
+            for (col in 1..target.length) {
+                val cost = if (source[row - 1] == target[col - 1]) 0 else 1
+                matrix[row][col] = minOf(
+                    matrix[row - 1][col] + 1,      // Deletion
+                    matrix[row][col - 1] + 1,      // Insertion
+                    matrix[row - 1][col - 1] + cost // Substitution
                 )
             }
         }
-        return dp[s1.length][s2.length]
+        return matrix[source.length][target.length]
     }
+
+
+    private fun createMatrix(rows: Int, cols: Int): Array<IntArray> =
+        Array(rows) { row ->
+            IntArray(cols) { col ->
+                when {
+                    row == 0 -> col // First row: cost of inserting target chars
+                    col == 0 -> row // First column: cost of deleting source chars
+                    else -> 0       // Inner cells: to be computed
+                }
+            }
+        }
 }
