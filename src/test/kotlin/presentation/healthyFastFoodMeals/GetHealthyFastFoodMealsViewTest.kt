@@ -62,10 +62,7 @@ class GetHealthyFastFoodMealsViewTest {
     }
 
     @Test
-    fun `start should call getHealthyFastFoodMeals when use case returns empty list`() {
-        // Given
-        every { getHealthyFastFoodMealsUseCase.getHealthyFastFoodMeals() } returns emptyList()
-
+    fun `start should call getHealthyFastFoodMeals`() {
         // When
         getHealthyFastFoodMealsView.start()
 
@@ -83,20 +80,6 @@ class GetHealthyFastFoodMealsViewTest {
 
         // Then
         verify { cliPrinter.cliPrintLn("no meals found :'(") }
-    }
-
-
-    @Test
-    fun `start should call getHealthyFastFoodMeals when use case returns non-empty list`() {
-        // Given
-        val healthyMeals = listOf(meal1, meal2)
-        every { getHealthyFastFoodMealsUseCase.getHealthyFastFoodMeals() } returns healthyMeals
-
-        // When
-        getHealthyFastFoodMealsView.start()
-
-        // Then
-        verify { getHealthyFastFoodMealsUseCase.getHealthyFastFoodMeals() }
     }
 
     @Test
