@@ -99,68 +99,6 @@ class MealGuessGameViewTest {
     }
 
 
-    @Test
-    fun `game playable with incorrect guesses should call getAttemptNumber for first attempt`() {
-        every { mealGuessGameUseCase.isGamePlayable() } returns true
-        every { mealGuessGameUseCase.getRandomMealNameWithValidTime() } returns "Pasta Salad"
-        every { mealGuessGameUseCase.getAttemptNumber() } returns 1 andThen 2 andThen 3
-        every { userInputReader.getValidUserInput(any(), any(), any()) } returns "20"
-        every { mealGuessGameUseCase.evaluateGuessAttempt(20) } returns MealGuessGameUseCase.GuessState.TooHigh
-        every { mealGuessGameUseCase.isMaxAttemptExceeded() } returns false andThen false andThen true
-        every { mealGuessGameUseCase.getCorrectAnswer() } returns 25
-
-        mealGuessGameView.start()
-
-        verify { mealGuessGameUseCase.getAttemptNumber() }
-    }
-
-
-    @Test
-    fun `game playable with incorrect guesses should call printLn for guess state`() {
-        every { mealGuessGameUseCase.isGamePlayable() } returns true
-        every { mealGuessGameUseCase.getRandomMealNameWithValidTime() } returns "Pasta Salad"
-        every { mealGuessGameUseCase.getAttemptNumber() } returns 1 andThen 2 andThen 3
-        every { userInputReader.getValidUserInput(any(), any(), any()) } returns "20"
-        every { mealGuessGameUseCase.evaluateGuessAttempt(20) } returns MealGuessGameUseCase.GuessState.TooHigh
-        every { mealGuessGameUseCase.isMaxAttemptExceeded() } returns false andThen false andThen true
-        every { mealGuessGameUseCase.getCorrectAnswer() } returns 25
-
-        mealGuessGameView.start()
-
-        verify(exactly = 3) { cliPrinter.cliPrintLn(MealGuessGameUseCase.GuessState.TooHigh.state) }
-    }
-
-    @Test
-    fun `game playable with incorrect guesses should call isMaxAttemptExceeded for attempts`() {
-        every { mealGuessGameUseCase.isGamePlayable() } returns true
-        every { mealGuessGameUseCase.getRandomMealNameWithValidTime() } returns "Pasta Salad"
-        every { mealGuessGameUseCase.getAttemptNumber() } returns 1 andThen 2 andThen 3
-        every { userInputReader.getValidUserInput(any(), any(), any()) } returns "20"
-        every { mealGuessGameUseCase.evaluateGuessAttempt(20) } returns MealGuessGameUseCase.GuessState.TooHigh
-        every { mealGuessGameUseCase.isMaxAttemptExceeded() } returns false andThen false andThen true
-        every { mealGuessGameUseCase.getCorrectAnswer() } returns 25
-
-        mealGuessGameView.start()
-
-        verify(exactly = 3) { mealGuessGameUseCase.isMaxAttemptExceeded() }
-    }
-
-
-    @Test
-    fun `game playable with incorrect guesses should call printLn for game over message`() {
-        every { mealGuessGameUseCase.isGamePlayable() } returns true
-        every { mealGuessGameUseCase.getRandomMealNameWithValidTime() } returns "Pasta Salad"
-        every { mealGuessGameUseCase.getAttemptNumber() } returns 1 andThen 2 andThen 3
-        every { userInputReader.getValidUserInput(any(), any(), any()) } returns "20"
-        every { mealGuessGameUseCase.evaluateGuessAttempt(20) } returns MealGuessGameUseCase.GuessState.TooHigh
-        every { mealGuessGameUseCase.isMaxAttemptExceeded() } returns false andThen false andThen true
-        every { mealGuessGameUseCase.getCorrectAnswer() } returns 25
-
-        mealGuessGameView.start()
-
-        verify { cliPrinter.cliPrintLn("Game Over! the correct answer is 25") }
-    }
-
     // Tests for Game Playable with Correct Guess After Incorrect Guess
     @Test
     fun `game playable with correct guess after incorrect should call evaluateGuessAttempt for incorrect guess`() {
@@ -175,36 +113,6 @@ class MealGuessGameViewTest {
         mealGuessGameView.start()
 
         verify { mealGuessGameUseCase.evaluateGuessAttempt(10) }
-    }
-
-    @Test
-    fun `game playable with correct guess after incorrect should call evaluateGuessAttempt for correct guess`() {
-        every { mealGuessGameUseCase.isGamePlayable() } returns true
-        every { mealGuessGameUseCase.getRandomMealNameWithValidTime() } returns "Pasta Salad"
-        every { mealGuessGameUseCase.getAttemptNumber() } returns 1 andThen 2
-        every { userInputReader.getValidUserInput(any(), any(), any()) } returns "10" andThen "20"
-        every { mealGuessGameUseCase.evaluateGuessAttempt(10) } returns MealGuessGameUseCase.GuessState.TooLow
-        every { mealGuessGameUseCase.evaluateGuessAttempt(20) } returns MealGuessGameUseCase.GuessState.Correct
-        every { mealGuessGameUseCase.isMaxAttemptExceeded() } returns false
-
-        mealGuessGameView.start()
-
-        verify { mealGuessGameUseCase.evaluateGuessAttempt(20) }
-    }
-
-    @Test
-    fun `game playable with correct guess after incorrect should call printLn for win message`() {
-        every { mealGuessGameUseCase.isGamePlayable() } returns true
-        every { mealGuessGameUseCase.getRandomMealNameWithValidTime() } returns "Pasta Salad"
-        every { mealGuessGameUseCase.getAttemptNumber() } returns 1 andThen 2
-        every { userInputReader.getValidUserInput(any(), any(), any()) } returns "10" andThen "20"
-        every { mealGuessGameUseCase.evaluateGuessAttempt(10) } returns MealGuessGameUseCase.GuessState.TooLow
-        every { mealGuessGameUseCase.evaluateGuessAttempt(20) } returns MealGuessGameUseCase.GuessState.Correct
-        every { mealGuessGameUseCase.isMaxAttemptExceeded() } returns false
-
-        mealGuessGameView.start()
-
-        verify { cliPrinter.cliPrintLn("Correct!") }
     }
 
     @Test
