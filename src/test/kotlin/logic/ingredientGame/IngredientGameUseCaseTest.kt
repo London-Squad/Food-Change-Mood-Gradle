@@ -25,7 +25,7 @@ class IngredientGameUseCaseTest {
      }
 
     @ParameterizedTest
-    @MethodSource("getAllMealsListsWithTwoOrLessMeals")
+    @MethodSource("getAllMealsListsWithLessThanTwoMeals")
     fun `isGamePlayable should return false when the number of meals available is less than 2`(meals: List<Meal>) {
         // Given
         every { mealsDataSource.getAllMeals() } returns meals
@@ -274,7 +274,7 @@ class IngredientGameUseCaseTest {
 
     private companion object {
         @JvmStatic
-        fun getAllMealsListsWithTwoOrLessMeals(): List<List<Meal>> = listOf(
+        fun getAllMealsListsWithLessThanTwoMeals(): List<List<Meal>> = listOf(
             FakeDataForIngredientGameUseCase.mealsListWithOneMeal,
             FakeDataForIngredientGameUseCase.emptyMealsList,
         )
