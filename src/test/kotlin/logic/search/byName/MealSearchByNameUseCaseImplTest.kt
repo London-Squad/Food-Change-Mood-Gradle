@@ -1,6 +1,7 @@
 package logic.search.byName
 
 import com.google.common.truth.Truth.assertThat
+import mealHelperTest.createMeal
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -8,7 +9,6 @@ import logic.MealsDataSource
 import logic.search.LevenshteinSearch
 import logic.search.SearchCache
 import logic.search.TextSearchAlgorithm
-import mealHelperTest.createMeal
 import model.Meal
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -65,7 +65,7 @@ class MealSearchByNameUseCaseImplTest {
         every { cache.get(input) } returns cachedMeals
 
         // When
-        val result = mealSearchByNameUseCaseImpl.searchMeals("beef")
+        val result = mealSearchByNameUseCaseImpl.searchMeals(input)
 
         // Then
         assertThat(result).isEqualTo(cachedMeals)
@@ -80,7 +80,7 @@ class MealSearchByNameUseCaseImplTest {
         every { cache.get(input) } returns cachedMeals
 
         // When
-        val result = mealSearchByNameUseCaseImpl.searchMeals("beef")
+        val result = mealSearchByNameUseCaseImpl.searchMeals(input)
 
         // Then
         assertThat(result).isEqualTo(cachedMeals)
@@ -89,7 +89,7 @@ class MealSearchByNameUseCaseImplTest {
 
     @Test
     fun `searchMeals should return matching meals when keyword matches indexed meals`() {
-        //Given
+        // Given
         val input = "chicken"
 
         // When
@@ -104,7 +104,7 @@ class MealSearchByNameUseCaseImplTest {
 
     @Test
     fun `searchMeals should return matching meals when keyword has typo`() {
-        //Given
+        // Given
         val input = "chiken"
 
         // When
@@ -118,7 +118,7 @@ class MealSearchByNameUseCaseImplTest {
 
     @Test
     fun `searchMeals should return matching meals when multi-word keyword matches indexed meals`() {
-        //Given
+        // Given
         val input = "chicken curry"
 
         // When
@@ -133,7 +133,7 @@ class MealSearchByNameUseCaseImplTest {
 
     @Test
     fun `searchMeals should return matching meals when multi-word keyword with typos matches indexed meals`() {
-        //Given
+        // Given
         val input = "chicken cury"
 
         // When
@@ -148,7 +148,7 @@ class MealSearchByNameUseCaseImplTest {
 
     @Test
     fun `searchMeals should return empty list when keyword does not match indexed meals`() {
-        //Given
+        // Given
         val input = "pasta"
 
         // When
@@ -197,13 +197,16 @@ class MealSearchByNameUseCaseImplTest {
 
     @Test
     fun `searchMeals should return empty list when keyword is empty`() {
+        // Given
+        val input = ""
+
         // When
-        val result = mealSearchByNameUseCaseImpl.searchMeals("")
+        val result = mealSearchByNameUseCaseImpl.searchMeals(input)
 
         // Then
         assertThat(result).isEmpty()
-        verify { cache.get("") }
-        verify { cache.put("", emptyList()) }
+        verify { cache.get(input) }
+        verify { cache.put(input, emptyList()) }
         verify { indexBuilder.getIndex() }
     }
 
@@ -244,7 +247,7 @@ class MealSearchByNameUseCaseImplTest {
         // Given
         val input = "pasta"
         every { indexBuilder.getIndex() } returns mapOf(
-            input to setOf(1)
+            "pasta" to setOf(1)
         )
 
         // When

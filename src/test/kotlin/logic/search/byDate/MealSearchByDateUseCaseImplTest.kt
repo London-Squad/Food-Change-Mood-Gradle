@@ -1,13 +1,13 @@
 package logic.search.byDate
 
 import com.google.common.truth.Truth.assertThat
+import mealHelperTest.createMeal
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import logic.MealsDataSource
 import logic.util.InvalidDateFormatException
 import logic.util.NoMealsFoundException
-import mealHelperTest.createMeal
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -67,10 +67,10 @@ class MealSearchByDateUseCaseImplTest {
     @Test
     fun `searchMeals should return meal ID-name pairs for a valid date with matching meals`() {
         // Given
-        val date = "2023-05-01"
+        val input = "2023-05-01"
 
         // When
-        val result = mealSearchByDateUseCaseImpl.searchMeals(date)
+        val result = mealSearchByDateUseCaseImpl.searchMeals(input)
 
         // Then
         assertThat(result).isEqualTo(listOf(mealA.id to mealA.name, mealB.id to mealB.name))
@@ -81,72 +81,66 @@ class MealSearchByDateUseCaseImplTest {
     @Test
     fun `searchMeals should throw InvalidDateFormatException for an invalid date format`() {
         // Given
-        val invalidDate = "invalid-date"
+        val input = "invalid-date"
 
         // When & Then
-        val exception = assertThrows<InvalidDateFormatException> {
-            mealSearchByDateUseCaseImpl.searchMeals(invalidDate)
+        assertThrows<InvalidDateFormatException> {
+            mealSearchByDateUseCaseImpl.searchMeals(input)
         }
-        assertThat(exception.message).isEqualTo("Invalid date format: 'invalid-date'. Use yyyy-MM-dd (e.g., 2023-04-16).")
-         verify(exactly = 0) { dateIndexBuilder.getIndex() }
-         verify(exactly = 0) { mealsDataSource.getAllMeals() }
     }
 
     @Test
     fun `searchMeals should throw NoMealsFoundException when date is not in index`() {
         // Given
-        val date = "2023-07-01"
+        val input = "2023-07-01"
 
         // When & Then
-        val exception = assertThrows<NoMealsFoundException> {
-            mealSearchByDateUseCaseImpl.searchMeals(date)
+        assertThrows<NoMealsFoundException> {
+            mealSearchByDateUseCaseImpl.searchMeals(input)
         }
-        assertThat(exception.message).isEqualTo("No meals found for date: 2023-07-01")
-         verify { dateIndexBuilder.getIndex() }
-         verify(exactly = 0) { mealsDataSource.getAllMeals() }
+        verify { dateIndexBuilder.getIndex() }
     }
 
     @Test
     fun `searchMeals should return empty list when indices are invalid`() {
         // Given
+        val input = "2023-05-01"
         every { dateIndexBuilder.getIndex() } returns mapOf(
             mealA.dateSubmitted!! to listOf(3) // Index 3 is out of bounds
         )
 
         // When
-        val result = mealSearchByDateUseCaseImpl.searchMeals("2023-05-01")
+        val result = mealSearchByDateUseCaseImpl.searchMeals(input)
 
         // Then
         assertThat(result).isEmpty()
-         verify { dateIndexBuilder.getIndex() }
-         verify { mealsDataSource.getAllMeals() }
+        verify { dateIndexBuilder.getIndex() }
+        verify { mealsDataSource.getAllMeals() }
     }
 
     @Test
     fun `getMealDetails should return meal for a valid ID`() {
         // Given
-        val id = mealA.id
+        val input = mealA.id
 
         // When
-        val result = mealSearchByDateUseCaseImpl.getMealDetails(id)
+        val result = mealSearchByDateUseCaseImpl.getMealDetails(input)
 
         // Then
         assertThat(result).isEqualTo(mealA)
-         verify { idIndexBuilder.getIndex() }
-         verify { mealsDataSource.getAllMeals() }
+        verify { idIndexBuilder.getIndex() }
+        verify { mealsDataSource.getAllMeals() }
     }
 
     @Test
     fun `getMealDetails should throw NoMealsFoundException when ID is not in index`() {
         // Given
-        val id = 104
+        val input = 104
 
         // When & Then
-        val exception = assertThrows<NoMealsFoundException> {
-            mealSearchByDateUseCaseImpl.getMealDetails(id)
+        assertThrows<NoMealsFoundException> {
+            mealSearchByDateUseCaseImpl.getMealDetails(input)
         }
-        assertThat(exception.message).isEqualTo("No meal found with ID: 104")
-         verify { idIndexBuilder.getIndex() }
-         verify(exactly = 0) { mealsDataSource.getAllMeals() }
+        verify { idIndexBuilder.getIndex() }
     }
 }

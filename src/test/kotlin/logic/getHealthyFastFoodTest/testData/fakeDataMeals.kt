@@ -1,59 +1,103 @@
 package logic.getHealthyFastFoodTest.testData
 
-import model.Meal
-import model.Nutrition
-import java.time.LocalDate
+import mealHelperTest.createMeal
+import mealHelperTest.createNutrition
 
-object fakeDataMeals {
+object FakeDataMeals {
 
-    val healthyMeal = Meal(
-        id = 27752,
-        name = "zucchini with pine nuts and orange",
-        minutes = 10,
-        dateSubmitted = LocalDate.parse("2020-01-01"),
-        tags = listOf("healthy", "fast"),
-        nutrition = Nutrition(73.7f, 8.0f, 13.0f, 0.0f, 2.0f, 3.0f, 1.0f),
-        steps = listOf(),
-        description = "",
-        ingredients = listOf()
+    val healthyMeal = createMeal(
+        id = 1, minutes = 10, nutrition = createNutrition(
+            totalFat = 5f, saturatedFat = 2f, carbohydrates = 10f
+        )
     )
 
-    val longPrepMeal = Meal(
-        id = 357551,
-        name = "any sauce",
-        minutes = 20,
-        dateSubmitted = LocalDate.parse("2020-01-01"),
-        tags = listOf(),
-        nutrition = Nutrition(239.9f, 30.0f, 19.0f, 22.0f, 1.0f, 14.0f, 5.0f),
-        steps = listOf(),
-        description = "",
-        ingredients = listOf()
+    val highFatMeal = createMeal(
+        id = 2, name = "Too Fatty", minutes = 10, nutrition = createNutrition(
+            totalFat = 20f, saturatedFat = 5f, carbohydrates = 30f
+        )
     )
 
-    val mealwithHighNutrition = Meal(
-        id = 357551,
-        name = "Souce meal ",
-        minutes = 20,
-        dateSubmitted = LocalDate.parse("2020-01-01"),
-        tags = listOf(),
-        nutrition = Nutrition(500.9f, 50.0f, 50.0f, 30.0f, 1.0f, 14.0f, 5.0f),
-        steps = listOf(),
-        description = "",
-        ingredients = listOf()
+    val longPreparationTimeMeal = createMeal(
+        minutes = 20, nutrition = createNutrition(
+            totalFat = 5f, saturatedFat = 2f, carbohydrates = 10f
+        )
     )
 
-    val incompleteMeal = Meal(
-        id = 12345,
-        name = "incomplete meal",
-        minutes = 10,
-        dateSubmitted = LocalDate.parse("2020-01-01"),
-        tags = listOf(),
-        nutrition = Nutrition(null, null, null, null, null, null, null),
-        steps = listOf(),
-        description = "",
-        ingredients = listOf()
+    val mealWithNullNutritionValue = createMeal(
+        id = 5,
+        minutes = 15,
     )
 
-    val allMeals = listOf(healthyMeal, longPrepMeal, incompleteMeal)
-    val invalidHealthyFood = listOf(longPrepMeal, mealwithHighNutrition,incompleteMeal)
+    val mealWithNullSaturatedFat = createMeal(
+        nutrition = createNutrition(
+            totalFat = 20.0f, carbohydrates = 5.0f, saturatedFat = null
+        )
+    )
+
+    val mealWithNullCarb = createMeal(
+        nutrition = createNutrition(
+            totalFat = 20.0f, carbohydrates = null, saturatedFat = 10.0f
+        )
+    )
+
+    val mealsWithMissingOrInvalidData = listOf(
+        createMeal(minutes = null),
+        createMeal(nutrition = createNutrition(totalFat = null)),
+        mealWithNullSaturatedFat,
+        mealWithNullCarb,
+        longPreparationTimeMeal
+    )
+
+    val invalidNaNMeals = listOf(
+        createMeal(
+            minutes = 10, nutrition = createNutrition(
+                totalFat = 5f, saturatedFat = Float.NaN, carbohydrates = 10f
+            )
+        ), createMeal(
+            minutes = 10, nutrition = createNutrition(
+                totalFat = 6f, saturatedFat = Float.NaN, carbohydrates = 12f
+            )
+        )
+    )
+
+
+    val mealsWithNullNutritionValues = listOf(
+        createMeal(
+            minutes = 16, nutrition = createNutrition(
+                totalFat = 5f, saturatedFat = 1f, carbohydrates = 10f, sugar = 3f, protein = 5f, calories = 200f
+            )
+        ), createMeal(id = 4), createMeal()
+    )
+
+    val allSamplesMealsCase = listOf(healthyMeal, longPreparationTimeMeal, highFatMeal)
+
+    val mealWithFatJustAboveAverage = createMeal(
+        id = 6, minutes = 10, nutrition = createNutrition(
+            totalFat = 15.1f, saturatedFat = 2f, carbohydrates = 10f
+        )
+    )
+
+    val mealWithCarbsJustAboveAverage = createMeal(
+        id = 7, minutes = 10, nutrition = createNutrition(
+            totalFat = 5f, saturatedFat = 2f, carbohydrates = 25.1f
+        )
+    )
+
+    val mealWithNullFatButValidCarbs = createMeal(
+        id = 8, minutes = 10, nutrition = createNutrition(
+            totalFat = null, saturatedFat = null, carbohydrates = 10f
+        )
+    )
+
+    val mealWithNullCarbsButValidFat = createMeal(
+        id = 9, minutes = 10, nutrition = createNutrition(
+            totalFat = 5f, saturatedFat = 2f, carbohydrates = null
+        )
+    )
+
+    val mealwithsaturatedFatNull = createMeal(
+        minutes = 10, nutrition = createNutrition(
+            totalFat = 10.0001f, carbohydrates = 15f
+        )
+    )
 }
