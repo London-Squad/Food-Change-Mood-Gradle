@@ -61,7 +61,6 @@ class GetHealthyFastFoodMealsViewTest {
         )
     }
 
-    // Tests for Empty List Scenario
     @Test
     fun `start should call getHealthyFastFoodMeals when use case returns empty list`() {
         // Given
