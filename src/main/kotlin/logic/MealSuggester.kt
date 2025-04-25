@@ -36,4 +36,3 @@ abstract class MealSuggester(
         suggestedMealIDList.clear()
     }
 }
-
