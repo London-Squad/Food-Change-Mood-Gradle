@@ -85,7 +85,7 @@ class IngredientGameUseCaseTest {
         every { mealsDataSource.getAllMeals() } returns FakeDataForIngredientGameUseCase.mealsList
 
         // When
-        val mealName = ingredientGameUseCase.getRandomMealNameAndIngredientOptions()
+        val mealName = ingredientGameUseCase.getRandomMealNameAndIngredientOptions().first
 
         // Then
         assertThat(mealName).isNotEqualTo("")
