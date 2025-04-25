@@ -4,14 +4,14 @@ import model.Nutrition
 import java.time.LocalDate
 
 object fakeGymMeals {
-    // وجبة صحية تحتوي على قيمة غذائية متوازنة
+  
     val desiredMeal = Meal(
         id = 101,
         name = "Chicken Breast with Veggies",
         minutes = 15,
         dateSubmitted = LocalDate.parse("2025-04-24"),
         tags = listOf("high protein", "healthy", "low fat"),
-        nutrition = Nutrition(250f, 50f, 5f, 10f, 1f, 3f, 2f), // البروتين، الكاربوهيدرات، الدهون، إلخ.
+        nutrition = Nutrition(250f, 50f, 5f, 10f, 1f, 3f, 2f), 
         steps = listOf("Grill chicken", "Prepare veggies", "Mix together"),
         description = "A healthy and high-protein meal for muscle gain.",
         ingredients = listOf("Chicken breast", "Spinach", "Olive oil")
@@ -30,7 +30,7 @@ object fakeGymMeals {
         ingredients = listOf("Pasta", "Tomato sauce", "Parmesan")
     )
 
-    // وجبة منخفضة الدهون ومناسبة للتخسيس
+    
     val lowFatMeal = Meal(
         id = 103,
         name = "Salmon with Asparagus",
@@ -43,9 +43,6 @@ object fakeGymMeals {
         ingredients = listOf("Salmon", "Asparagus", "Lemon")
     )
 
-
-
-    // وجبات غير فيها null للبروتين و الكربوهيدات
     val incompleteMeal = Meal(
         id = 104,
         name = "Incomplete Meal",
@@ -79,9 +76,7 @@ object fakeGymMeals {
         description = "",
         ingredients = listOf()
     )
-    // قائمة بجميع الوجبات
+   
     val allMeals = listOf(desiredMeal, energyMeal, lowFatMeal, incompleteMeal,incompleteMealNoCalories,incompleteMealNoProtein)
-
-    // وجبات غير صالحة (مثل الوجبات الغير مكتملة أو التي تحتوي على مكونات غير صحية)
     val invalidMeals = listOf(incompleteMeal)
 }
