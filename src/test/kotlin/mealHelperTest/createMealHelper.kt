@@ -1,4 +1,5 @@
-import mealHelperTest.createNutrition
+package mealHelperTest
+
 import model.Meal
 import model.Nutrition
 import java.time.LocalDate

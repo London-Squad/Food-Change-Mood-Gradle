@@ -1,6 +1,6 @@
 package logic.getHealthyFastFoodTest.testData
 
-import createMeal
+import mealHelperTest.createMeal
 import mealHelperTest.createNutrition
 
 object FakeDataMeals {
