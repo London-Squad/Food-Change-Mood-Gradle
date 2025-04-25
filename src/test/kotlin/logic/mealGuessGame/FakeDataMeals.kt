@@ -33,15 +33,9 @@ object FakeDataMeals {
         name = "Valid Meal 5",
         minutes = 5
     )
-
-    val allMeals = listOf(
-        mealWithValidTime1,
-        mealWithValidTime2,
-        mealWithValidTime3,
-        mealWithValidTime4,
-        mealWithValidTime5,
-        mealWithNegativeTime,
-        mealWithNullTime
+    val mealWithValidTime20min = createMeal(
+        name = "test meal",
+        minutes = 20
     )
 
     val allInvalidTimeMeals = listOf(
@@ -54,6 +48,9 @@ object FakeDataMeals {
         mealWithValidTime2,
         mealWithValidTime3,
         mealWithValidTime4,
-        mealWithValidTime5
+        mealWithValidTime5,
+        mealWithValidTime20min
     )
+
+    val allMeals = allInvalidTimeMeals + allValidTimeMeals
 }
