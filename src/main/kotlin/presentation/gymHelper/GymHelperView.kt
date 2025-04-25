@@ -16,9 +16,8 @@ class GymHelperView(
     override fun start() {
         val calories = getValidFloatInput("Enter desired calories: ")
         val protein = getValidFloatInput("Enter desired protein: ")
-        val approximate = 0.1
 
-        val matchingMeals = gymHelperUseCase.getGymMembersMeals(calories, protein, approximate)
+        val matchingMeals = gymHelperUseCase.getGymMembersMeals(calories, protein)
 
         if (matchingMeals.isEmpty()) {
             cliPrinter.cliPrintLn("Sorry, no meals match your criteria.\nPress Enter to return to main menu.")
@@ -39,8 +38,11 @@ class GymHelperView(
             "❌ Invalid input. Please enter a valid number."
         ).toFloat()
 
-    private fun isValidFloatInput(userInput: String): Boolean{
+
+    private fun isValidFloatInput(userInput: String): Boolean {
         val number = userInput.toFloatOrNull()
         return number != null && number > 0
     }
+
+
 }

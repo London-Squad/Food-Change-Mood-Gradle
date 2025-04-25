@@ -1,30 +1,38 @@
 package logic.gymHelper
-
 import logic.MealsDataSource
 import model.Meal
-
 class GymHelperUseCase(
     private val mealsDataSource: MealsDataSource
 ) {
     fun getGymMembersMeals(
-        desiredCalories: Float,
-        desiredProtein: Float,
-        approximatePercent: Double = 0.1
+        caloriesUserInput: Float,
+        proteinUserInput: Float,
     ): List<Meal> {
-        val minCalories = desiredCalories * (1 - approximatePercent).toFloat()
-        val maxCalories = desiredCalories * (1 + approximatePercent).toFloat()
-        val minProtein = desiredProtein * (1 - approximatePercent).toFloat()
-        val maxProtein = desiredProtein * (1 + approximatePercent).toFloat()
+        val calorieRange = getRange(caloriesUserInput, defaultApproximatePercent)
+        val proteinRange = getRange(proteinUserInput, defaultApproximatePercent)
 
         return mealsDataSource.getAllMeals()
             .filter { isHighQualityMeal(it) }
-            .filter { meal ->
-                meal.nutrition.calories!! in minCalories..maxCalories ||
-                        meal.nutrition.protein!! in minProtein..maxProtein
-            }
+            .filter { isWithinRange(it, calorieRange, proteinRange) }
+    }
+    private fun getRange(value: Float, percent: Double): Pair<Float, Float> {
+        val min = value * (1 - percent).toFloat()
+        val max = value * (1 + percent).toFloat()
+        return Pair(min, max)
+    }
+    private fun isWithinRange(meal: Meal, calorieRange: Pair<Float, Float>, proteinRange: Pair<Float, Float>): Boolean {
+        val calories = meal.nutrition.calories
+        val protein = meal.nutrition.protein
+        return   calories!! in calorieRange.first..calorieRange.second &&
+                  protein!! in proteinRange.first..proteinRange.second
     }
 
-    private fun isHighQualityMeal(meal: Meal): Boolean =
-        meal.nutrition.protein != null && meal.nutrition.protein > 0f &&
-                meal.nutrition.calories != null && meal.nutrition.calories > 0f
+    private fun isHighQualityMeal(meal: Meal): Boolean {
+        return meal.nutrition.run { protein != null && protein > 0f &&
+                calories != null && calories > 0f  }
+    }
+
+    companion object {
+        val defaultApproximatePercent: Double = 0.1
+    }
 }
