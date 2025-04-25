@@ -11,6 +11,7 @@ class IraqiMealsView(
 
     override fun start() {
         val iraqiMeals = getIraqiMealsUseCase.getIraqiMeals()
+
         uiMealsListPrinter.printMeals(iraqiMeals, "Iraqi Meals")
     }
 }

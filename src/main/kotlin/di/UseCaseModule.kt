@@ -29,9 +29,9 @@ import java.time.LocalDate
 val useCaseModule = module {
 
     // Index Builders
-    single<IndexBuilder<String, Set<Int>>>(named("NAME")) { MealNameInvertedIndexBuilder(get<MealsDataSource>()) }
-    single<IndexBuilder<LocalDate, List<Int>>>(named("DATE")) { MealDateInvertedIndexBuilder(get<MealsDataSource>()) }
-    single<IndexBuilder<Int, Int>>(named("ID")) { IdIndexBuilder(get<MealsDataSource>()) }
+    single { MealNameInvertedIndexBuilder(get<MealsDataSource>()) }
+    single { MealDateInvertedIndexBuilder(get<MealsDataSource>()) }
+    single{ IdIndexBuilder(get<MealsDataSource>()) }
 
     // Search Cache and Algorithm
     single<SearchCache> { InMemorySearchCache() }
@@ -43,15 +43,15 @@ val useCaseModule = module {
             mealsDataSource = get<MealsDataSource>(),
             searchAlgorithm = get<TextSearchAlgorithm>(),
             cache = get<SearchCache>(),
-            indexBuilder = get<IndexBuilder<String, Set<Int>>>(named("NAME"))
+            indexBuilder = get()
         )
     }
 
     single<MealSearchUseCase<List<Pair<Int, String>>>>(named("byDate")) {
         MealSearchByDateUseCaseImpl(
             mealsDataSource = get<MealsDataSource>(),
-            dateIndexBuilder = get<IndexBuilder<LocalDate, List<Int>>>(named("DATE")),
-            idIndexBuilder = get<IndexBuilder<Int, Int>>(named("ID"))
+            dateIndexBuilder = get(),
+            idIndexBuilder = get()
         )
     }
 

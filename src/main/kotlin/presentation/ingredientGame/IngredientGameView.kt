@@ -35,7 +35,7 @@ class IngredientGameView(
         ingredientGameUseCase.apply {
             evaluateChoice(getValidGuessFromUser())
             when {
-                isChoiceWrong() -> printLossMessage()
+                isGameLost() -> printLossMessage()
                 isAllRoundsFinished() -> printWinMessage()
                 else -> {
                     printCorrectChoiceMessage(); startNewRound()
