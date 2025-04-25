@@ -1,6 +1,6 @@
 package logic.ingredientGame
 
-import createMeal
+import mealHelperTest.createMeal
 import model.Meal
 
 object FakeDataForIngredientGameUseCase {
