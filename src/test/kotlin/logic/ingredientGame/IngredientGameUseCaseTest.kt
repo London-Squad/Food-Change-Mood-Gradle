@@ -206,7 +206,7 @@ class IngredientGameUseCaseTest {
     @CsvSource(
         "true", "false"
     )
-    fun `isChoiceWrong return the value of loss`(testLoss: Boolean) {
+    fun `isGameLost return the value of loss`(testLoss: Boolean) {
         // Given
         setPrivate<Boolean>("loss", testLoss, ingredientGameUseCase)
 
