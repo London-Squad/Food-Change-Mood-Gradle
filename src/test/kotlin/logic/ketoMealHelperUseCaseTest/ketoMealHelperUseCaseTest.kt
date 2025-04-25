@@ -2,347 +2,152 @@ package logic.ketoMealHelperUseCaseTest
 
 import io.mockk.every
 import io.mockk.mockk
+import logic.MealSuggester
 import logic.MealsDataSource
 import logic.ketoMealHelper.GetKetoMealUseCase
+import logic.ketoMealHelperUseCaseTest.fakeData.FackDataMeals
 import mealHelperTest.createMeal
-import mealHelperTest.createNutrition
-import model.Meal
-import model.Nutrition
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import kotlin.test.*
+import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 class GetKetoMealUseCaseTest {
 
     private lateinit var getKetoMealUseCase: GetKetoMealUseCase
     private lateinit var mealsDataSource: MealsDataSource
+    private lateinit var mealSuggester: MealSuggester
 
     @BeforeEach
     fun setup() {
         mealsDataSource = mockk(relaxed = true)
         getKetoMealUseCase = GetKetoMealUseCase(mealsDataSource)
+        mealSuggester = getKetoMealUseCase
     }
 
     @Test
     fun `suggestMeal returns null when no meals available`() {
         every { mealsDataSource.getAllMeals() } returns emptyList()
+        getKetoMealUseCase.loadSuggestedMealsToMemory()
+
         assertNull(getKetoMealUseCase.suggestMeal())
     }
 
     @Test
     fun `suggestMeal returns valid keto meal when all nutrition values meet the requirements`() {
-        val validNutrition = createNutrition(
-            calories = 500f,
-            carbohydrates = 5f,
-            sugar = 2f,
-            totalFat = 40f,
-            protein = 32f,
-            saturatedFat = 10f
-        )
-
-        val validMeal = createMeal(
-            id = 9,
-            nutrition = validNutrition,
-            ingredients = listOf("chicken", "avocado")
-        )
-
-        every { mealsDataSource.getAllMeals() } returns listOf(validMeal)
-
+        every { mealsDataSource.getAllMeals() } returns listOf(FackDataMeals.validMealWithValidNutrition)
+        getKetoMealUseCase.loadSuggestedMealsToMemory()
         val result = getKetoMealUseCase.suggestMeal()
 
-        assertNotNull(result)
-        assertEquals(validMeal, result)
+        assertEquals(FackDataMeals.validMealWithValidNutrition, result)
     }
 
-
-    /// test all edge cases for isPassesKetoNutritionCheck
-    @Test
-    fun `suggestMeal skips meal when values of nutrition high and does not meet keto requirements`() {
-        every { mealsDataSource.getAllMeals() } returns emptyList()
-
-        val invalidNutrition = createNutrition(
-            calories = 1000f,
-            carbohydrates = 50f,
-            sugar = 10f,
-            totalFat = 40f,
-            protein = 20f,
-            saturatedFat = 30f
-        )
-
-        val invalidMeal = createMeal(
-            id = 8,
-            nutrition = invalidNutrition,
-            ingredients = listOf("chicken", "avocado")
-        )
-
-        every { mealsDataSource.getAllMeals() } returns listOf(invalidMeal)
-
-        val result = getKetoMealUseCase.suggestMeal()
-        assertNull(result)
-    }
-    @Test
-    fun `suggestMeal skips meal when values of nutrition it's all null`() {
-        every { mealsDataSource.getAllMeals() } returns emptyList()
-
-        val invalidNutrition = createNutrition(
-            calories = null,
-            carbohydrates = null,
-            sugar = null,
-            totalFat = null,
-            protein = null,
-            saturatedFat = null
-        )
-
-        val invalidMeal = createMeal(
-            id = 8,
-            nutrition = invalidNutrition,
-            ingredients = listOf("chicken", "avocado")
-        )
-
-        every { mealsDataSource.getAllMeals() } returns listOf(invalidMeal)
-
-        val result = getKetoMealUseCase.suggestMeal()
-        assertNull(result)
-    }
-    @Test
-    fun `suggestMeal skips meal when calories is null`() {
-        val meal = createMeal(
-            id = 1,
-            nutrition = createNutrition(
-                calories = null,
-                carbohydrates = 20f,
-                sugar = 2f,
-                totalFat = 70f,
-                protein = 40f,
-                saturatedFat = 15f
-            ),
-            ingredients = listOf("chicken")
-        )
-        every { mealsDataSource.getAllMeals() } returns listOf(meal)
-        assertNull(getKetoMealUseCase.suggestMeal())
-    }
-
-    @Test
-    fun `suggestMeal skips meal when carbohydrates is null`() {
-        val meal = createMeal(
-            id = 2,
-            nutrition = createNutrition(
-                calories = 500f,
-                carbohydrates = null,
-                sugar = 2f,
-                totalFat = 70f,
-                protein = 40f,
-                saturatedFat = 15f
-            ),
-            ingredients = listOf("chicken")
-        )
-        every { mealsDataSource.getAllMeals() } returns listOf(meal)
-        assertNull(getKetoMealUseCase.suggestMeal())
-    }
-
-    @Test
-    fun `suggestMeal skips meal when sugar is null`() {
-        val meal = createMeal(
-            id = 3,
-            nutrition = createNutrition(
-                calories = 500f,
-                carbohydrates = 20f,
-                sugar = null,
-                totalFat = 70f,
-                protein = 40f,
-                saturatedFat = 15f
-            ),
-            ingredients = listOf("chicken")
-        )
-        every { mealsDataSource.getAllMeals() } returns listOf(meal)
-        assertNull(getKetoMealUseCase.suggestMeal())
-    }
-
-    @Test
-    fun `suggestMeal skips meal when totalFat is null`() {
-        val meal = createMeal(
-            id = 4,
-            nutrition = createNutrition(
-                calories = 500f,
-                carbohydrates = 20f,
-                sugar = 2f,
-                totalFat = null,
-                protein = 40f,
-                saturatedFat = 15f
-            ),
-            ingredients = listOf("chicken")
-        )
-        every { mealsDataSource.getAllMeals() } returns listOf(meal)
-        assertNull(getKetoMealUseCase.suggestMeal())
-    }
-
-    @Test
-    fun `suggestMeal skips meal when protein is null`() {
-        val meal = createMeal(
-            id = 5,
-            nutrition = createNutrition(
-                calories = 500f,
-                carbohydrates = 20f,
-                sugar = 2f,
-                totalFat = 70f,
-                protein = null,
-                saturatedFat = 15f
-            ),
-            ingredients = listOf("chicken")
-        )
-        every { mealsDataSource.getAllMeals() } returns listOf(meal)
-        assertNull(getKetoMealUseCase.suggestMeal())
-    }
-
-    @Test
-    fun `suggestMeal skips meal when saturatedFat is null`() {
-        val meal = createMeal(
-            id = 6,
-            nutrition = createNutrition(
-                calories = 500f,
-                carbohydrates = 20f,
-                sugar = 2f,
-                totalFat = 70f,
-                protein = 40f,
-                saturatedFat = null
-            ),
-            ingredients = listOf("chicken")
-        )
-        every { mealsDataSource.getAllMeals() } returns listOf(meal)
-        assertNull(getKetoMealUseCase.suggestMeal())
-    }
-
-    @Test
-    fun `suggestMeal skips meal when saturatedFat too low and percent not in allowed range`() {
-        val meal = createMeal(
-            id = 7,
-            nutrition = createNutrition(
-                calories = 500f,
-                carbohydrates = 20f,
-                sugar = 2f,
-                totalFat = 70f,
-                protein = 40f,
-                saturatedFat = 1f
-            ),
-            ingredients = listOf("chicken")
-        )
-        every { mealsDataSource.getAllMeals() } returns listOf(meal)
-        assertNull(getKetoMealUseCase.suggestMeal())
-    }
-    @Test
-    fun `suggestMeal skips meal when saturatedFat too high and percent not in allowed range`() {
-        val meal = createMeal(
-            id = 7,
-            nutrition = createNutrition(
-                calories = 500f,
-                carbohydrates = 20f,
-                sugar = 2f,
-                totalFat = 70f,
-                protein = 40f,
-                saturatedFat = 45f
-            ),
-            ingredients = listOf("chicken")
-        )
-        every { mealsDataSource.getAllMeals() } returns listOf(meal)
-        assertNull(getKetoMealUseCase.suggestMeal())
-    }
-    @Test
-    fun `suggestMeal skips meal when sugar percent is above allowed threshold`() {
-        val meal = createMeal(
-            id = 11,
-            nutrition = createNutrition(
-                calories = 500f,
-                carbohydrates = 5f,
-                sugar = 30f, // too much sugar
-                totalFat = 40f,
-                protein = 32f,
-                saturatedFat = 10f
-            ),
-            ingredients = listOf("chicken")
-        )
-        every { mealsDataSource.getAllMeals() } returns listOf(meal)
-        assertNull(getKetoMealUseCase.suggestMeal())
-    }
-
-    @Test
-    fun `suggestMeal skips meal when total fat percent is below minimum`() {
-        val meal = createMeal(
-            id = 12,
-            nutrition = createNutrition(
-                calories = 500f,
-                carbohydrates = 5f,
-                sugar = 2f,
-                totalFat = 10f, // too low fat
-                protein = 32f,
-                saturatedFat = 3f
-            ),
-            ingredients = listOf("chicken")
-        )
-        every { mealsDataSource.getAllMeals() } returns listOf(meal)
-        assertNull(getKetoMealUseCase.suggestMeal())
-    }
-
-    @Test
-    fun `suggestMeal skips meal when protein percent is below minimum`() {
-        val meal = createMeal(
-            id = 13,
-            nutrition = createNutrition(
-                calories = 500f,
-                carbohydrates = 5f,
-                sugar = 2f,
-                totalFat = 40f,
-                protein = 5f, // too low protein
-                saturatedFat = 9f
-            ),
-            ingredients = listOf("chicken")
-        )
-        every { mealsDataSource.getAllMeals() } returns listOf(meal)
-        assertNull(getKetoMealUseCase.suggestMeal())
-    }
-   
-
-
-//  --- here invalid cases for
-val disallowedItems = listOf(
-    "bread", "pasta", "rice", "potato", "sugar", "high fructose corn syrup",
-    "corn", "wheat", "flour", "legume", "bean", "soda", "milk", "skim milk",
-    "honey", "agave", "cereal", "oat", "quinoa", "yogurt", "juice"
-)
-
+    //hasDisallowedIngredient
     @Test
     fun `suggestMeal returns null for all meals with disallowed ingredients`() {
-        val validNutrition = createNutrition(
-            calories = 500f,
-            carbohydrates = 5f,
-            sugar = 2f,
-            totalFat = 40f,
-            protein = 32f,
-            saturatedFat = 9.2f,
-            sodium = 1f
-        )
-
-        val disallowedItems = listOf(
-            "bread", "pasta", "rice", "potato", "sugar", "high fructose corn syrup",
-            "corn", "wheat", "flour", "legume", "bean", "soda", "milk", "skim milk",
-            "honey", "agave", "cereal", "oat", "quinoa", "yogurt", "juice"
-        )
-
-        disallowedItems.forEachIndexed { index, item ->
-            val meal = createMeal(
-                id = index,
-                nutrition = validNutrition,
-                ingredients = listOf("chicken", item)
+        val meals = FackDataMeals.disallowedIngredients.mapIndexed { index, ingredient ->
+            createMeal(
+                id = index, nutrition = FackDataMeals.validNutrition, ingredients = listOf("chicken", ingredient)
             )
-
-            every { mealsDataSource.getAllMeals() } returns listOf(meal)
-
-            val result = getKetoMealUseCase.suggestMeal()
-
-            assertNull(result, "Meal with disallowed ingredient '$item' should return null")
         }
+
+        every { mealsDataSource.getAllMeals() } returns meals
+        getKetoMealUseCase.loadSuggestedMealsToMemory()
+
+        val result = getKetoMealUseCase.suggestMeal()
+        assertNull(result)
     }
 
+    //--------------------------- isPassesKetoNutritionCheck
+    @Test
+    fun `suggestMeal returns null when calories is null`() {
+        every { mealsDataSource.getAllMeals() } returns listOf(FackDataMeals.mealWithCaloriesNull)
+        getKetoMealUseCase.loadSuggestedMealsToMemory()
+
+        assertNull(getKetoMealUseCase.suggestMeal())
+    }
+
+    @Test
+    fun `suggestMeal returns null when carbohydrates is null`() {
+        every { mealsDataSource.getAllMeals() } returns listOf(FackDataMeals.mealWithCarbohydratesNull)
+        getKetoMealUseCase.loadSuggestedMealsToMemory()
+
+        assertNull(getKetoMealUseCase.suggestMeal())
+    }
+
+    @Test
+    fun `suggestMeal returns null when carbohydrates exceed max allowed`() {
+
+        every { mealsDataSource.getAllMeals() } returns listOf(FackDataMeals.mealWithCarbohydratesThatExceedMaxAllowed)
+        getKetoMealUseCase.loadSuggestedMealsToMemory()
+
+        assertNull(getKetoMealUseCase.suggestMeal())
+    }
+
+    @Test
+    fun `suggestMeal returns null when sugar is null`() {
+        every { mealsDataSource.getAllMeals() } returns listOf(FackDataMeals.mealWithNullSugar)
+        getKetoMealUseCase.loadSuggestedMealsToMemory()
+
+        assertNull(getKetoMealUseCase.suggestMeal())
+    }
+
+    @Test
+    fun `suggestMeal returns null when sugar exceeds max allowed`() {
+        every { mealsDataSource.getAllMeals() } returns listOf(FackDataMeals.mealWithHighSugar)
+        getKetoMealUseCase.loadSuggestedMealsToMemory()
+
+        assertNull(getKetoMealUseCase.suggestMeal())
+    }
+
+    @Test
+    fun `suggestMeal returns null when total fat is null`() {
+        every { mealsDataSource.getAllMeals() } returns listOf(FackDataMeals.mealWithNullTotalFat)
+        getKetoMealUseCase.loadSuggestedMealsToMemory()
+
+        assertNull(getKetoMealUseCase.suggestMeal())
+    }
+
+    @Test
+    fun `suggestMeal returns null when protein is null`() {
+        every { mealsDataSource.getAllMeals() } returns listOf(FackDataMeals.mealWithNullProtein)
+        getKetoMealUseCase.loadSuggestedMealsToMemory()
+
+        assertNull(getKetoMealUseCase.suggestMeal())
+    }
+
+    @Test
+    fun `suggestMeal returns null when protein is too low`() {
+        every { mealsDataSource.getAllMeals() } returns listOf(FackDataMeals.mealWithLowProtein)
+        getKetoMealUseCase.loadSuggestedMealsToMemory()
+
+        assertNull(getKetoMealUseCase.suggestMeal())
+    }
+
+    @Test
+    fun `suggestMeal returns null when saturated fat is null`() {
+        every { mealsDataSource.getAllMeals() } returns listOf(FackDataMeals.mealWithNullSaturatedFat)
+        getKetoMealUseCase.loadSuggestedMealsToMemory()
+
+        assertNull(getKetoMealUseCase.suggestMeal())
+    }
+
+    @Test
+    fun `suggestMeal returns null when saturated fat is outside allowed range`() {
+        every { mealsDataSource.getAllMeals() } returns listOf(FackDataMeals.mealWithInvalidSaturatedFat)
+        getKetoMealUseCase.loadSuggestedMealsToMemory()
+
+        assertNull(getKetoMealUseCase.suggestMeal())
+    }
+    // here condition meal test in class Meal suggester
+    @Test
+    fun `suggestMeal returns null when candidateMeals is empty`() {
+        every { mealsDataSource.getAllMeals() } returns emptyList()
+        mealSuggester.loadSuggestedMealsToMemory()
+        assertNull(mealSuggester.suggestMeal())
+    }
 
 
 
 }
+
