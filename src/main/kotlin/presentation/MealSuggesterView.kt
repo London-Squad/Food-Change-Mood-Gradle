@@ -18,7 +18,6 @@ abstract class MealSuggesterView(
     protected abstract val title: String
 
     override fun start() {
-        mealSuggesterUseCase.initSuggestedList()
         printTitleAndInstructions(title)
         mealSuggesterUseCase.loadSuggestedMealsToMemory()
         printNewSuggestion()

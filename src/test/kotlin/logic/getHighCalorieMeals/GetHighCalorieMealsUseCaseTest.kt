@@ -24,7 +24,6 @@ class GetHighCalorieMealsUseCaseTest {
     fun `suggestMeal should return null when there are no meals with calories more than 700`() {
         every { mealsDataSource.getAllMeals() } returns FakeHighCaloriesMeals.allLowCaloriesMeals
 
-        getHighCalorieMealsUseCase.initSuggestedList()
         getHighCalorieMealsUseCase.loadSuggestedMealsToMemory()
         val result = getHighCalorieMealsUseCase.suggestMeal()
 
@@ -35,7 +34,6 @@ class GetHighCalorieMealsUseCaseTest {
     fun `suggestMeal should return null when there are no meals are available`() {
         every { mealsDataSource.getAllMeals() } returns emptyList()
 
-        getHighCalorieMealsUseCase.initSuggestedList()
         getHighCalorieMealsUseCase.loadSuggestedMealsToMemory()
         val result = getHighCalorieMealsUseCase.suggestMeal()
 
@@ -48,7 +46,6 @@ class GetHighCalorieMealsUseCaseTest {
             FakeHighCaloriesMeals.mealWithNullCalories
         )
 
-        getHighCalorieMealsUseCase.initSuggestedList()
         getHighCalorieMealsUseCase.loadSuggestedMealsToMemory()
         val result = getHighCalorieMealsUseCase.suggestMeal()
 
@@ -60,7 +57,6 @@ class GetHighCalorieMealsUseCaseTest {
         every { mealsDataSource.getAllMeals() } returns FakeHighCaloriesMeals.allMeals
 
 
-        getHighCalorieMealsUseCase.initSuggestedList()
         getHighCalorieMealsUseCase.loadSuggestedMealsToMemory()
         val result = getHighCalorieMealsUseCase.suggestMeal()
 
@@ -69,39 +65,36 @@ class GetHighCalorieMealsUseCaseTest {
 
 
     // TODO: CHECK WHATS WRONG WITH THESE
-//    @Test
-//    fun `suggestMeal should return a random high calories meal with no repetition`() {
-//        every { mealsDataSource.getAllMeals() } returns FakeHighCaloriesMeals.allMeals
-//
-//        getHighCalorieMealsUseCase.initSuggestedList()
-//        getHighCalorieMealsUseCase.loadSuggestedMealsToMemory()
-//getHighCalorieMealsUseCase.suggestMeal()
-//        val firstSuggestion = getHighCalorieMealsUseCase.suggestMeal()
-//
-//        assertThat(firstSuggestion).isNotNull()
-//    }
+    @Test
+    fun `suggestMeal should return a random high calories meal with no repetition`() {
+        every { mealsDataSource.getAllMeals() } returns FakeHighCaloriesMeals.allMeals
 
-//    @Test
-//    fun `suggestMeal should return a null when there are no more non-suggested meals`() {
-//        every { mealsDataSource.getAllMeals() } returns listOf(
-//            FakeHighCaloriesMeals.mealWithHighCalories701,
-//            FakeHighCaloriesMeals.mealWithHighCalories1200
-//        )
-//
-//        getHighCalorieMealsUseCase.initSuggestedList()
-//        getHighCalorieMealsUseCase.loadSuggestedMealsToMemory()
-//        getHighCalorieMealsUseCase.suggestMeal()
-//        getHighCalorieMealsUseCase.suggestMeal()
-//        val result = getHighCalorieMealsUseCase.suggestMeal()
-//
-//        assertThat(result).isNull()
-//    }
+        getHighCalorieMealsUseCase.loadSuggestedMealsToMemory()
+        val firstSuggestion = getHighCalorieMealsUseCase.suggestMeal()
+        println(firstSuggestion)
+        val secondSuggestion =getHighCalorieMealsUseCase.suggestMeal()
+        println(secondSuggestion)
+
+        assertThat(firstSuggestion).isNotEqualTo(secondSuggestion)
+    }
+
+    @Test
+    fun `suggestMeal should return a null when there are no more non-suggested meals`() {
+        every { mealsDataSource.getAllMeals() } returns listOf(
+            FakeHighCaloriesMeals.mealWithHighCalories701
+        )
+
+        getHighCalorieMealsUseCase.loadSuggestedMealsToMemory()
+        getHighCalorieMealsUseCase.suggestMeal()
+        val result = getHighCalorieMealsUseCase.suggestMeal()
+
+        assertThat(result).isNull()
+    }
 
     @ParameterizedTest
     @MethodSource("highCaloriesMealsProvider")
     fun `suggestMeal should return meal with calories more than 700`(meals: List<Meal>) {
         every { mealsDataSource.getAllMeals() } returns meals
-        getHighCalorieMealsUseCase.initSuggestedList()
 
         getHighCalorieMealsUseCase.loadSuggestedMealsToMemory()
         val result = getHighCalorieMealsUseCase.suggestMeal()

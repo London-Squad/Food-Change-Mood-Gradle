@@ -5,35 +5,28 @@ import model.Meal
 abstract class MealSuggester(
     private val mealsDataSource: MealsDataSource
 ) {
-    private lateinit var candidateMeals : List<Meal>
-    private val suggestedMealIDList = mutableSetOf<Int>()
+    private lateinit var candidateMeals: MutableList<Meal>
 
     protected abstract fun isValidSuggestion(meal: Meal): Boolean
 
     private fun getMealsFilteredByCondition(
-        validatingConditionLambda: (Meal) -> Boolean = { true }
-    ): List<Meal> {
+        validatingConditionLambda: (Meal) -> Boolean)
+    : List<Meal> {
         return mealsDataSource.getAllMeals()
             .filter(validatingConditionLambda)
     }
 
     fun loadSuggestedMealsToMemory() {
-        candidateMeals = getMealsFilteredByCondition(::isValidSuggestion)
+        candidateMeals = getMealsFilteredByCondition(::isValidSuggestion).toMutableList()
     }
 
     fun suggestMeal(): Meal? {
 
         if (candidateMeals.isEmpty()) return null
-        if (candidateMeals.size == suggestedMealIDList.size) return null
 
-        do {
-            val suggestion = candidateMeals.random().takeIf { suggestedMealIDList.add(it.id) }
-            if (suggestion != null) return suggestion
-        } while (true)
-    }
-
-    fun initSuggestedList() {
-        suggestedMealIDList.clear()
+        val suggestion = candidateMeals.random()
+        candidateMeals.remove(suggestion)
+        return suggestion
     }
 }
 
